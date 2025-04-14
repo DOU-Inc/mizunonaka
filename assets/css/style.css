@@ -4,7 +4,7 @@ a {
 
 body,
 html {
-    overflow: hidden;
+    /* overflow: hidden; */
     height: 100%;
     margin: 0;
     padding: 0;
@@ -76,7 +76,6 @@ section {
     backdrop-filter: blur(4px);
     border-radius: 40px 40px 0 0;
     border: 1px solid #fff;
-    opacity: 0;
 }
 
 .theater-news {
@@ -194,6 +193,7 @@ section {
     margin: 0 calc(50% - 50vw);
     width: 100vw;
     height: 100vh;
+    z-index: 100;
 }
 
 #lottie-animation {
@@ -433,7 +433,6 @@ video {
     justify-content: center;
     flex-direction: column;
     gap: 25px 0;
-    opacity: 0;
     z-index: 10;
 }
 
@@ -554,6 +553,7 @@ video {
 */
 
 .intro .inner {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -683,6 +683,7 @@ video {
 // ----------------------------------------------------------------- 
 */
 .story .inner {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -811,6 +812,12 @@ video {
     transform: translate(-50%, -50%);
 }
 
+@media screen and (max-width: 768px) {
+    .trailer .movie-box {
+        width: 100%;
+    }
+}
+
 /*
 // -----------------------------------------------------------------
 // trailer
@@ -894,7 +901,8 @@ video {
 
 .footer {
     /* height: auto; */
-    height: 100vh;
+    /* height: 100vh; */
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -903,11 +911,16 @@ video {
     padding-bottom: 20px !important;
 }
 
+.footer .inner {
+    overflow-x: hidden;
+    padding-bottom: 0;
+}
+
 .footer .cast-lists {
     width: 100%;
-    /* height: 100vh; */
+    height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     flex-direction: column;
     gap: 200px 0;
@@ -924,9 +937,9 @@ video {
     flex-direction: column;
     gap: 55px 0;
     width: 100%;
-    /* height: 100vh; */
+    height: 100vh;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.8s;
 }
 
 .footer .sns {
