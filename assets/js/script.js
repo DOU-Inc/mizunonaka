@@ -1,10 +1,40 @@
+function moveTitleSmoothly(titleElement) {
+    const rect = titleElement.getBoundingClientRect();
+    const offsetFromTop = rect.top;
+  
+    // CSS変数として書き込む
+    titleElement.style.setProperty('--offset', `${offsetFromTop}px`);
+  
+    // .-activeを付けることで transform が効く
+    titleElement.classList.add('-active');
+  }
+
+  function resetTitlePosition(titleElement) {
+    titleElement.classList.remove('-active');
+    titleElement.style.removeProperty('--offset');
+  }
+  
+
+function disableScroll() {
+    document.body.classList.add('-noscroll');
+    lenis.stop(); // ← Lenisも止める！
+  }
+  
+  function enableScroll() {
+    document.body.classList.remove('-noscroll');
+    lenis.start(); // ← Lenis再開！
+  }
+
 function setupToggle(sectionSelector, buttonSelector) {
     const section = document.querySelector(sectionSelector);
     if (!section) return;
 
     const blurLayer = section.querySelector('.blur-layer'); // 各セクションに分けた方が安全
     const text = section.querySelector('.js-text');
+    const inner = section.querySelector('.js-inner');
+
     const allText = section.querySelector('.js-all-text');
+    const textBox = section.querySelector('.js-text-box');
     const title = section.querySelector('.js-title');
     const btn = section.querySelector('.js-btn');
 
@@ -18,8 +48,19 @@ function setupToggle(sectionSelector, buttonSelector) {
             section.classList.toggle('-active');
             text.classList.toggle('-active');
             allText.classList.toggle('-active');
+            textBox.classList.toggle('-active');
             title.classList.toggle('-active');
             btn.classList.toggle('-active');
+
+            const isActive = section.classList.contains('-active');
+            if (isActive) {
+                disableScroll();
+                moveTitleSmoothly(title);
+
+            } else {
+                enableScroll();
+                resetTitlePosition(title);
+            }
         });
     });
 }

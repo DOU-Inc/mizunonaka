@@ -36,7 +36,6 @@ section {
     position: relative;
     width: 100%;
     height: 100vh;
-    scroll-snap-align: start;
 }
 
 .inner {
@@ -44,6 +43,13 @@ section {
     width: 100%;
     height: 100%;
     padding: 74px 94px;
+    transition: top 0.4s ease, left 0.4s ease;
+}
+
+.inner.-active {
+    /* position: fixed;
+    top: 0;
+    left: 0; */
 }
 
 @media screen and (max-width: 768px) {
@@ -206,7 +212,7 @@ section {
 }
 
 #lottie-animation svg {
-    transform: scale(3) !important;
+    transform: scale(2.8) !important;
 }
 
 .mv .catch {
@@ -224,7 +230,7 @@ section {
 
 @media screen and (max-width: 1600px) {
     #lottie-animation svg {
-        transform: scale(4) !important;
+        transform: scale(3) !important;
     }
 }
 
@@ -337,7 +343,10 @@ video {
 */
 
 .js-title.-active {
-    transition: all 0.8s ease-in-out 1s;
+    transform: translateY(calc(-1 * var(--offset) + 40px));    
+    transition: right 0.8s ease-in-out 1s,
+        left 0.8s ease-in-out 1s,
+        top 0.8s ease-in-out 1s;
 }
 
 .js-all-text.-active {
@@ -354,7 +363,14 @@ video {
 }
 
 .js-title {
-    transition: all 0.8s ease-in-out 1s;
+    transition: transform 0.6s ease;
+    will-change: transform;
+
+
+    /* transition: all 0.8s ease-in-out 1s; */
+    transition: right 0.8s ease-in-out 1s,
+        left 0.8s ease-in-out 1s,
+        top 0.8s ease-in-out 1s;
 }
 
 .js-text {
@@ -598,12 +614,16 @@ video {
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    pointer-events: none;
 }
 
 .intro .all-text-box::-webkit-scrollbar {
     display: none;
 }
 
+.intro .all-text-box.-active{
+    pointer-events: all;
+}
 
 .intro .button {
     z-index: 10;
@@ -696,12 +716,14 @@ video {
     display: block;
     position: absolute;
     top: 240px;
+    /* 重要 */
+    left: auto;
     right: 430px;
 }
 
 .story .title-box.-active {
     top: 50px;
-    right: 1470px;
+    right: calc(100vw - 284px - 100px); /* 284pxはタイトルの幅 */
 }
 
 .story .desc .text-box {
