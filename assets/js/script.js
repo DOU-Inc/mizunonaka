@@ -25,6 +25,11 @@ function disableScroll() {
     lenis.start(); // ← Lenis再開！
   }
 
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//intro,storyのモーダルのアニメーション
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 function setupToggle(sectionSelector, buttonSelector) {
     const section = document.querySelector(sectionSelector);
     if (!section) return;
@@ -70,24 +75,10 @@ setupToggle('#intro', '.button');
 setupToggle('#story', '.button');
 
 
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//intro,storyのPCとSPの文字数制御
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
-const target = document.querySelector('.footer');
-
-window.addEventListener('scroll', () => {
-    const rect = target.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // 要素の下端が、画面の下端に「ほぼ」一致するタイミング
-    const isBottomTouching = Math.abs(rect.bottom - windowHeight) < 5;
-
-    if (isBottomTouching) {
-        target.classList.add('end');
-    } else {
-        target.classList.remove('end'); // 必要なら消す処理も
-    }
-});
-
-//文字数制御
 function truncateHTMLText(maxChars, removeBr = false) {
     const elements = document.querySelectorAll(".text");
 
@@ -167,10 +158,36 @@ window.addEventListener("resize", applyTruncate);
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//footerのタイトルのアニメーション
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+const target = document.querySelector('.footer');
+
+window.addEventListener('scroll', () => {
+    const rect = target.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // 要素の下端が、画面の下端に「ほぼ」一致するタイミング
+    const isBottomTouching = Math.abs(rect.bottom - windowHeight) < 1;
+
+    if (isBottomTouching) {
+        target.classList.add('end');
+    } else {
+        target.classList.remove('end'); // 必要なら消す処理も
+    }
+});
+
+
+
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 // gsap
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 gsap.registerPlugin(ScrollTrigger);
+
+
 gsap.fromTo(
     "#story video", // アニメーションしたい要素
     {
@@ -240,6 +257,7 @@ gsap.fromTo(
     }
 );
 
+
 window.addEventListener('load', () => {
     const tl = gsap.timeline();
 
@@ -281,21 +299,26 @@ window.addEventListener('load', () => {
         delay: 4,
     });
 
-    // 5. SNS出す
-    tl.to('.sns', {
-        opacity: 1,
-        ease: 'power2.inOut',
-    });
-
-
-    // 6. 劇場情報出す
-    tl.to('.theater', {
-        opacity: 1,
-        ease: 'power2.inOut',
-    });
 
 
 });
+
+gsap.fromTo(
+    ".sns", // アニメーションしたい要素
+    {
+        x: 0, // アニメーション開始前（透明）
+    },
+    {
+        x: -160, // アニメーション後（表示）
+        duration: 1, // アニメーションの時間
+        ease: "power2.inout",
+        scrollTrigger: {
+            trigger: "#news", // アニメーションを発動させるトリガー要素
+            start: "center center", // #newsの上端が画面の上端に来たら発動
+            toggleActions: "play reverse play reverse",
+        },
+    }
+);
 
 
 
