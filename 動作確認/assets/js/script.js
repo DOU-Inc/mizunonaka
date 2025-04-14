@@ -130,131 +130,134 @@ window.addEventListener("resize", applyTruncate);
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 gsap.registerPlugin(ScrollTrigger);
-gsap.fromTo(
-    "#story video", // アニメーションしたい要素
-    {
-        autoAlpha: 0, // アニメーション開始前（透明）
-    },
-    {
-        autoAlpha: 1, // アニメーション後（表示）
-        duration: 1, // アニメーションの時間
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: "#story", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
-        },
-    }
-);
+// gsap.fromTo(
+//     "#story video", // アニメーションしたい要素
+//     {
+//         autoAlpha: 0, // アニメーション開始前（透明）
+//     },
+//     {
+//         autoAlpha: 1, // アニメーション後（表示）
+//         duration: 1, // アニメーションの時間
+//         ease: "power2.out",
+//         scrollTrigger: {
+//             trigger: "#story", // アニメーションを発動させるトリガー要素
+//             start: "top top", // #story の上端が画面の上端に来たら発動
+//             toggleActions: "play reverse play reverse",
+//         },
+//     }
+// );
 
-gsap.fromTo(
-    "#trailer video", // アニメーションしたい要素
-    {
-        autoAlpha: 0, // アニメーション開始前（透明）
-    },
-    {
-        autoAlpha: 1, // アニメーション後（表示）
-        duration: 1, // アニメーションの時間
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: "#trailer", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
-        },
-    }
-);
+// gsap.fromTo(
+//     "#trailer video", // アニメーションしたい要素
+//     {
+//         autoAlpha: 0, // アニメーション開始前（透明）
+//     },
+//     {
+//         autoAlpha: 1, // アニメーション後（表示）
+//         duration: 1, // アニメーションの時間
+//         ease: "power2.out",
+//         scrollTrigger: {
+//             trigger: "#trailer", // アニメーションを発動させるトリガー要素
+//             start: "top center", // #story の上端が画面の上端に来たら発動
+//             toggleActions: "play reverse play reverse",
+//         },
+//     }
+// );
 
-gsap.fromTo(
-    ".cast .swiper", // アニメーションしたい要素
-    {
-        autoAlpha: 0, // アニメーション開始前（透明）
-    },
-    {
-        autoAlpha: 1, // アニメーション後（表示）
-        duration: 1, // アニメーションの時間
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: ".cast", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
-        },
-    }
-);
-
-
-gsap.fromTo(
-    "#footer video", // アニメーションしたい要素
-    {
-        autoAlpha: 0, // アニメーション開始前（透明）
-    },
-    {
-        autoAlpha: 1, // アニメーション後（表示）
-        duration: 1, // アニメーションの時間
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: "#footer", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
-        },
-    }
-);
-
-window.addEventListener('load', () => {
-    const tl = gsap.timeline();
-
-    // 1. 文字をフェードイン
-    tl.to('.catch', {
-        duration: 3,
-        opacity: 1,
-        ease: 'power2.out',
-        delay: 0.5,
-    });
-
-    // 2. 文字を右にスライド
-    tl.to('.catch', {
-        left: '95%',
-        ease: 'power1.out',
-        duration: 3,
-        delay: 1.5,
-    }, '-=1.0');
-
-    // 3. littie再生
-    tl.to('#lottie-animation', {
-        opacity: 1,
-        onComplete: () => {
-            lottie.loadAnimation({
-                container: document.getElementById('lottie-animation'),
-                renderer: 'svg',
-                loop: false,
-                autoplay: true,
-                path: './assets/json/data.json'
-            });
-        }
-    }, '-=1.0');
-
-    // 4. 黒背景をフェードアウト（透明に）
-    tl.to('.bg-black', {
-        duration: 4,
-        opacity: 0,
-        ease: 'power2.inOut',
-        delay: 4,
-    });
-
-    // 5. SNS出す
-    tl.to('.sns', {
-        opacity: 1,
-        ease: 'power2.inOut',
-    });
+// gsap.fromTo(
+//     ".cast .swiper", // アニメーションしたい要素
+//     {
+//         autoAlpha: 0, // アニメーション開始前（透明）
+//     },
+//     {
+//         autoAlpha: 1, // アニメーション後（表示）
+//         duration: 1, // アニメーションの時間
+//         ease: "power2.out",
+//         scrollTrigger: {
+//             trigger: ".cast", // アニメーションを発動させるトリガー要素
+//             start: "top center", // #story の上端が画面の上端に来たら発動
+//             toggleActions: "play reverse play reverse",
+//         },
+//     }
+// );
 
 
-    // 6. 劇場情報出す
-    tl.to('.theater', {
-        opacity: 1,
-        ease: 'power2.inOut',
-    });
+// gsap.fromTo(
+//     "#footer video", // アニメーションしたい要素
+//     {
+//         autoAlpha: 0, // アニメーション開始前（透明）
+//     },
+//     {
+//         autoAlpha: 1, // アニメーション後（表示）
+//         duration: 1, // アニメーションの時間
+//         ease: "power2.out",
+//         scrollTrigger: {
+//             trigger: "#footer", // アニメーションを発動させるトリガー要素
+//             start: "top center", // #story の上端が画面の上端に来たら発動
+//             toggleActions: "play reverse play reverse",
+//         },
+//     }
+// );
 
 
-});
+
+
+// window.addEventListener('load', () => {
+//     const tl = gsap.timeline();
+
+//     // 1. 文字をフェードイン
+//     tl.to('.catch', {
+//         duration: 3,
+//         opacity: 1,
+//         ease: 'power2.out',
+//         delay: 0.5,
+//     });
+
+//     // 2. 文字を右にスライド
+//     tl.to('.catch', {
+//         left: '95%',
+//         ease: 'power1.out',
+//         duration: 3,
+//         delay: 1.5,
+//     }, '-=1.0');
+
+//     // 3. littie再生
+//     tl.to('#lottie-animation', {
+//         opacity: 1,
+//         onComplete: () => {
+//             lottie.loadAnimation({
+//                 container: document.getElementById('lottie-animation'),
+//                 renderer: 'svg',
+//                 loop: false,
+//                 autoplay: true,
+//                 path: './assets/json/data.json'
+//             });
+//         }
+//     }, '-=1.0');
+
+//     // 4. 黒背景をフェードアウト（透明に）
+//     tl.to('.bg-black', {
+//         duration: 4,
+//         opacity: 0,
+//         ease: 'power2.inOut',
+//         delay: 4,
+//     });
+
+//     // 5. SNS出す
+//     tl.to('.sns', {
+//         opacity: 1,
+//         ease: 'power2.inOut',
+//     });
+
+
+//     // 6. 劇場情報出す
+//     tl.to('.theater', {
+//         opacity: 1,
+//         ease: 'power2.inOut',
+//     });
+
+
+// });
 
 
 
@@ -274,10 +277,29 @@ const castSwiper = new Swiper('.cast-swiper', {
 });
 
 const sectionSwiper = new Swiper('.section-swiper', {
+    // effect: 'fade', // フェードアニメーションを適用
+    mousewheel: true,
     direction: 'vertical', // 縦スクロールに設定
-    loop: true, // ループ設定
-    speed: 4000,
+    loop: false, // ループ設定
+    speed: 2000,
+    slidesPerView: 1,
+
 });
+
+sectionSwiper.on('slideChange', function () {
+    const activeSlide = sectionSwiper.slides[sectionSwiper.activeIndex];
+
+    if (activeSlide.id === 'story') {
+        gsap.to('#story video', {
+            autoAlpha: 1,
+            duration: 1,
+            ease: 'power2.out'
+        });
+    } else {
+        gsap.set('#story video', { autoAlpha: 0 });
+    }
+});
+
 
 
 

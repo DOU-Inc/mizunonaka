@@ -4,9 +4,10 @@ a {
 
 body,
 html {
-    height: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
+    background-color: black !important;
 }
 
 body {
@@ -28,13 +29,14 @@ body {
 
 
 .container {
+    position: relative;
     width: 100%;
 }
 
 section {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100vh !important;
 }
 
 .inner {
@@ -234,13 +236,12 @@ section {
 // ----------------------------------------------------------------- 
 */
 video {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     object-fit: cover;
-    z-index: -1;
 }
 
 .title-box {
@@ -398,7 +399,21 @@ video {
 */
 
 
+/*
+// -----------------------------------------------------------------
+// swiper
+// ----------------------------------------------------------------- 
+*/
+.swiper {
+    width: 100%;
+    height: 100vh;
+}
 
+/*
+// -----------------------------------------------------------------
+// swiper
+// ----------------------------------------------------------------- 
+*/
 
 
 /*
@@ -412,6 +427,10 @@ video {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.mv video {
+    position: fixed;
 }
 
 .mv .inner {
@@ -687,6 +706,10 @@ video {
     align-items: center;
 }
 
+.story video {
+    z-index: 1;
+}
+
 .story .subtitle {
     margin-top: 1.2em;
 }
@@ -826,7 +849,7 @@ video {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     z-index: -1 !important;
 }
 
