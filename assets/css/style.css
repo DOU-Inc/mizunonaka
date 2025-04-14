@@ -4,7 +4,6 @@ a {
 
 body,
 html {
-    /* overflow: hidden; */
     height: 100%;
     margin: 0;
     padding: 0;
@@ -17,6 +16,7 @@ body {
     height: auto;
     color: #fff;
     letter-spacing: 0.05em;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -39,7 +39,7 @@ section {
 }
 
 .inner {
-    overflow: hidden;
+    /* overflow: hidden; */
     width: 100%;
     height: 100%;
     padding: 74px 94px;
@@ -343,7 +343,7 @@ video {
 */
 
 .js-title.-active {
-    transform: translateY(calc(-1 * var(--offset) + 40px));    
+    transform: translateY(calc(-1 * var(--offset) + 40px));
     transition: right 0.8s ease-in-out 1s,
         left 0.8s ease-in-out 1s,
         top 0.8s ease-in-out 1s;
@@ -620,7 +620,7 @@ video {
     display: none;
 }
 
-.intro .all-text-box.-active{
+.intro .all-text-box.-active {
     pointer-events: all;
 }
 
@@ -723,7 +723,8 @@ video {
 
 .story .title-box.-active {
     top: 50px;
-    right: calc(100vw - 284px - 100px); /* 284pxはタイトルの幅 */
+    right: calc(100vw - 284px - 100px);
+    /* 284pxはタイトルの幅 */
 }
 
 .story .desc .text-box {
@@ -930,7 +931,6 @@ video {
 }
 
 .footer .inner {
-    overflow-x: hidden;
     padding-bottom: 0;
 }
 

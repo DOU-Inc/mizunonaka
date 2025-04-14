@@ -1,29 +1,29 @@
 function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
     const offsetFromTop = rect.top;
-  
+
     // CSS変数として書き込む
     titleElement.style.setProperty('--offset', `${offsetFromTop}px`);
-  
+
     // .-activeを付けることで transform が効く
     titleElement.classList.add('-active');
-  }
+}
 
-  function resetTitlePosition(titleElement) {
+function resetTitlePosition(titleElement) {
     titleElement.classList.remove('-active');
     titleElement.style.removeProperty('--offset');
-  }
-  
+}
+
 
 function disableScroll() {
     document.body.classList.add('-noscroll');
     lenis.stop(); // ← Lenisも止める！
-  }
-  
-  function enableScroll() {
+}
+
+function enableScroll() {
     document.body.classList.remove('-noscroll');
     lenis.start(); // ← Lenis再開！
-  }
+}
 
 
 
@@ -235,6 +235,12 @@ gsap.fromTo(
             trigger: ".cast", // アニメーションを発動させるトリガー要素
             start: "top center", // #story の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
+            onEnter: () => {
+                document.body.style.overflow = "visible"; // ここで overflow: hidden を解除
+            },
+            onLeaveBack: () => {
+                document.body.style.overflow = "hidden";
+            },
         },
     }
 );
