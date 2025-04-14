@@ -309,11 +309,8 @@ window.addEventListener('load', () => {
 
 });
 
-gsap.fromTo(
+gsap.to(
     ".sns", // アニメーションしたい要素
-    {
-        x: 0, // アニメーション開始前（透明）
-    },
     {
         x: -160, // アニメーション後（表示）
         duration: 1, // アニメーションの時間
