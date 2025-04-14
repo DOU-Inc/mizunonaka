@@ -40,10 +40,17 @@ section {
 }
 
 .inner {
-    overflow: hidden;
+    overflow: visible !important;
     width: 100%;
     height: 100%;
     padding: 74px 94px;
+}
+
+@media screen and (max-width: 768px) {
+    .inner {
+        padding: 20px 15px;
+    }
+
 }
 
 /*
@@ -135,6 +142,7 @@ section {
     background-color: transparent;
     gap: 200px 0;
     color: #fff;
+    transition: opacity 1s;
 }
 
 #movie .carousel__button {
@@ -260,6 +268,11 @@ video {
     color: #fff;
 }
 
+.all-text-box {
+    touch-action: auto;
+    /* ← これ超重要 */
+}
+
 .button {
     position: relative;
     display: inline-block;
@@ -302,11 +315,7 @@ video {
 }
 
 @media screen and (max-width: 768px) {
-    section {
-        padding: 20px 15px !important;
-    }
-
-    .title {
+    s .title {
         font-size: 66px;
     }
 
@@ -407,6 +416,14 @@ video {
 .swiper {
     width: 100%;
     height: 100vh;
+}
+
+.swiper-slide {
+    opacity: 0 !important;
+}
+
+.swiper-slide-active {
+    opacity: 1 !important;
 }
 
 /*
@@ -567,7 +584,6 @@ video {
 */
 
 .intro {
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -608,7 +624,7 @@ video {
 }
 
 .intro .all-text-box {
-    overflow: scroll;
+    overflow: auto;
     width: 690px;
     height: 500px;
     margin: 0 auto;

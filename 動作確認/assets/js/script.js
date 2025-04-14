@@ -3,6 +3,7 @@ function setupToggle(sectionSelector, buttonSelector) {
     if (!section) return;
 
     const blurLayer = section.querySelector('.blur-layer'); // 各セクションに分けた方が安全
+    const textBox = section.querySelector('.all-text-box');
     const text = section.querySelector('.js-text');
     const allText = section.querySelector('.js-all-text');
     const title = section.querySelector('.js-title');
@@ -16,6 +17,7 @@ function setupToggle(sectionSelector, buttonSelector) {
 
             blurLayer.classList.toggle('-active');
             section.classList.toggle('-active');
+            textBox.classList.toggle('-active');
             text.classList.toggle('-active');
             allText.classList.toggle('-active');
             title.classList.toggle('-active');
@@ -125,141 +127,6 @@ window.addEventListener("resize", applyTruncate);
 
 
 
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-// gsap
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-gsap.registerPlugin(ScrollTrigger);
-// gsap.fromTo(
-//     "#story video", // アニメーションしたい要素
-//     {
-//         autoAlpha: 0, // アニメーション開始前（透明）
-//     },
-//     {
-//         autoAlpha: 1, // アニメーション後（表示）
-//         duration: 1, // アニメーションの時間
-//         ease: "power2.out",
-//         scrollTrigger: {
-//             trigger: "#story", // アニメーションを発動させるトリガー要素
-//             start: "top top", // #story の上端が画面の上端に来たら発動
-//             toggleActions: "play reverse play reverse",
-//         },
-//     }
-// );
-
-// gsap.fromTo(
-//     "#trailer video", // アニメーションしたい要素
-//     {
-//         autoAlpha: 0, // アニメーション開始前（透明）
-//     },
-//     {
-//         autoAlpha: 1, // アニメーション後（表示）
-//         duration: 1, // アニメーションの時間
-//         ease: "power2.out",
-//         scrollTrigger: {
-//             trigger: "#trailer", // アニメーションを発動させるトリガー要素
-//             start: "top center", // #story の上端が画面の上端に来たら発動
-//             toggleActions: "play reverse play reverse",
-//         },
-//     }
-// );
-
-// gsap.fromTo(
-//     ".cast .swiper", // アニメーションしたい要素
-//     {
-//         autoAlpha: 0, // アニメーション開始前（透明）
-//     },
-//     {
-//         autoAlpha: 1, // アニメーション後（表示）
-//         duration: 1, // アニメーションの時間
-//         ease: "power2.out",
-//         scrollTrigger: {
-//             trigger: ".cast", // アニメーションを発動させるトリガー要素
-//             start: "top center", // #story の上端が画面の上端に来たら発動
-//             toggleActions: "play reverse play reverse",
-//         },
-//     }
-// );
-
-
-// gsap.fromTo(
-//     "#footer video", // アニメーションしたい要素
-//     {
-//         autoAlpha: 0, // アニメーション開始前（透明）
-//     },
-//     {
-//         autoAlpha: 1, // アニメーション後（表示）
-//         duration: 1, // アニメーションの時間
-//         ease: "power2.out",
-//         scrollTrigger: {
-//             trigger: "#footer", // アニメーションを発動させるトリガー要素
-//             start: "top center", // #story の上端が画面の上端に来たら発動
-//             toggleActions: "play reverse play reverse",
-//         },
-//     }
-// );
-
-
-
-
-// window.addEventListener('load', () => {
-//     const tl = gsap.timeline();
-
-//     // 1. 文字をフェードイン
-//     tl.to('.catch', {
-//         duration: 3,
-//         opacity: 1,
-//         ease: 'power2.out',
-//         delay: 0.5,
-//     });
-
-//     // 2. 文字を右にスライド
-//     tl.to('.catch', {
-//         left: '95%',
-//         ease: 'power1.out',
-//         duration: 3,
-//         delay: 1.5,
-//     }, '-=1.0');
-
-//     // 3. littie再生
-//     tl.to('#lottie-animation', {
-//         opacity: 1,
-//         onComplete: () => {
-//             lottie.loadAnimation({
-//                 container: document.getElementById('lottie-animation'),
-//                 renderer: 'svg',
-//                 loop: false,
-//                 autoplay: true,
-//                 path: './assets/json/data.json'
-//             });
-//         }
-//     }, '-=1.0');
-
-//     // 4. 黒背景をフェードアウト（透明に）
-//     tl.to('.bg-black', {
-//         duration: 4,
-//         opacity: 0,
-//         ease: 'power2.inOut',
-//         delay: 4,
-//     });
-
-//     // 5. SNS出す
-//     tl.to('.sns', {
-//         opacity: 1,
-//         ease: 'power2.inOut',
-//     });
-
-
-//     // 6. 劇場情報出す
-//     tl.to('.theater', {
-//         opacity: 1,
-//         ease: 'power2.inOut',
-//     });
-
-
-// });
-
-
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -279,28 +146,48 @@ const castSwiper = new Swiper('.cast-swiper', {
 const sectionSwiper = new Swiper('.section-swiper', {
     // effect: 'fade', // フェードアニメーションを適用
     mousewheel: true,
+    allowTouchMove: false,
     direction: 'vertical', // 縦スクロールに設定
     loop: false, // ループ設定
-    speed: 2000,
+    speed: 1000,
     slidesPerView: 1,
 
 });
 
-sectionSwiper.on('slideChange', function () {
-    const activeSlide = sectionSwiper.slides[sectionSwiper.activeIndex];
 
-    if (activeSlide.id === 'story') {
-        gsap.to('#story video', {
-            autoAlpha: 1,
-            duration: 1,
-            ease: 'power2.out'
+
+
+function watchSectionActive() {
+    const targets = ['.intro .all-text-box', '.story .all-text-box']; // 他にもあれば追加してOK
+
+    function checkActive() {
+        const isAnyActive = targets.some(selector => {
+            const el = document.querySelector(selector);
+            return el && el.classList.contains('-active');
         });
-    } else {
-        gsap.set('#story video', { autoAlpha: 0 });
+
+        sectionSwiper.allowTouchMove = !isAnyActive;
     }
-});
 
+    // MutationObserverでクラス変化を監視
+    const observer = new MutationObserver(checkActive);
 
+    targets.forEach(selector => {
+        const el = document.querySelector(selector);
+        if (el) {
+            observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+        }
+    });
 
+    // 初回チェック
+    checkActive();
+}
 
+// Swiper初期化後に実行
+watchSectionActive();
 
+if (section.classList.contains('-active')) {
+    sectionSwiper.allowTouchMove = false;
+} else {
+    sectionSwiper.allowTouchMove = true;
+}

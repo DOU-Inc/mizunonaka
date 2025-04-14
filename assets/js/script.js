@@ -260,111 +260,17 @@ window.addEventListener('load', () => {
 
 
 
-// 初期設定
-const sections = document.querySelectorAll('.section');
-let currentIndex = 0;
-let isAnimating = false;
-let isLocked = false;
-let scrollQueue = 0;
-
-// Lenis 初期化
 const lenis = new Lenis({
-    lerp: 0.1,
     smooth: true,
-    wheelMultiplier: 0.5,
-});
+    lerp: 0.06, // 数値小さいほどぬるぬる（0〜1）
+})
 
-// LenisをGSAPのtickerに同期
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-});
-gsap.ticker.lagSmoothing(0);
-lenis.on('scroll', ScrollTrigger.update);
-
-// 初期位置を最初のセクションに強制
-lenis.scrollTo(sections[0], { immediate: true });
-
-// セクション移動処理
-function goToSection(index) {
-    // 範囲外チェック
-    if (index < 0) index = 0;
-    if (index >= sections.length) index = sections.length - 1;
-
-    if (isAnimating || isLocked) {
-        // アニメ中でも目的が範囲外でなければ予約する（最後の指示）
-        scrollQueue = index - currentIndex;
-        return;
-    }
-
-    isAnimating = true;
-    currentIndex = index;
-
-    lenis.scrollTo(sections[index], {
-        duration: 1.2,
-        easing: t => 1 - Math.pow(1 - t, 4),
-        onComplete: () => {
-            isAnimating = false;
-
-            // 再度キューが残ってたら実行
-            if (scrollQueue !== 0) {
-                const nextIndex = currentIndex + scrollQueue;
-                scrollQueue = 0;
-                goToSection(nextIndex);
-            }
-        }
-    });
+function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
 }
 
-//
-// ホイール処理
-//
-// wheel
-window.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (isLocked) return;
-
-    const delta = e.deltaY > 0 ? 1 : -1;
-
-    if (isAnimating) {
-        scrollQueue += delta;
-    } else {
-        goToSection(currentIndex + delta);
-    }
-}, { passive: false });
-
-// touch
-let touchStartY = 0;
-window.addEventListener('touchstart', (e) => {
-    touchStartY = e.touches[0].clientY;
-}, { passive: true });
-
-window.addEventListener('touchend', (e) => {
-    if (isLocked) return;
-    const touchEndY = e.changedTouches[0].clientY;
-    const diff = touchStartY - touchEndY;
-    if (Math.abs(diff) < 30) return;
-
-    const delta = diff > 0 ? 1 : -1;
-
-    if (isAnimating) {
-        scrollQueue += delta;
-    } else {
-        goToSection(currentIndex + delta);
-    }
-}, { passive: true });
-
-//
-// 任意のスクロールロック制御
-//
-function lockScroll() {
-    isLocked = true;
-    document.documentElement.classList.add('lenis-scrolling');
-}
-
-function unlockScroll() {
-    isLocked = false;
-    document.documentElement.classList.remove('lenis-scrolling');
-}
+requestAnimationFrame(raf)
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
