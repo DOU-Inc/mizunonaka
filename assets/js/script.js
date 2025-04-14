@@ -1,19 +1,40 @@
 function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
-    const offsetFromTop = rect.top;
+    const currentX = rect.left;
+    const currentY = rect.top;
+  
+    // 画面幅で条件分岐（スマホは768px以下とする）
+    const isMobile = window.innerWidth <= 768;
+  
+    // 目標位置（スマホとPCで分ける）
+    const targetX = isMobile ? 20 : 60;
+    const targetY = isMobile ? 96 : 60;
+  
+    const deltaX = targetX - currentX;
+    const deltaY = targetY - currentY;
+  
+    // 初期化（今の位置にピタッと固定）
+    titleElement.style.transform = `translate(0, 0)`;
+    titleElement.style.transition = 'none';
+  
+    // 次のフレームでアニメーション発動
+    requestAnimationFrame(() => {
+      titleElement.style.transition = 'transform 1s ease';
+      titleElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    });
+  }
 
-    // CSS変数として書き込む
-    titleElement.style.setProperty('--offset', `${offsetFromTop}px`);
+  function resetTitlePosition(titleElement) {
+    titleElement.style.transition = 'transform 1s ease';
+    titleElement.style.transform = `translate(0, 0)`; // 元の位置に戻すだけ！
+  }
 
-    // .-activeを付けることで transform が効く
-    titleElement.classList.add('-active');
-}
-
-function resetTitlePosition(titleElement) {
-    titleElement.classList.remove('-active');
-    titleElement.style.removeProperty('--offset');
-}
-
+  
+  window.addEventListener('resize', () => {
+    if (section.classList.contains('-active')) {
+      moveTitleSmoothly(titleElement); // 再調整
+    }
+  });
 
 function disableScroll() {
     document.body.classList.add('-noscroll');
@@ -45,6 +66,8 @@ function setupToggle(sectionSelector, buttonSelector) {
 
     const buttons = section.querySelectorAll(buttonSelector);
 
+
+    const html = document.documentElement;
     buttons.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
@@ -61,10 +84,11 @@ function setupToggle(sectionSelector, buttonSelector) {
             if (isActive) {
                 disableScroll();
                 moveTitleSmoothly(title);
-
+                html.classList.add('noscroll'); // ← ここで追加！
             } else {
                 enableScroll();
                 resetTitlePosition(title);
+                html.classList.remove('noscroll'); // ← ここで削除！
             }
         });
     });
@@ -73,7 +97,6 @@ function setupToggle(sectionSelector, buttonSelector) {
 // 各セクションで設定
 setupToggle('#intro', '.button');
 setupToggle('#story', '.button');
-
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 //intro,storyのPCとSPの文字数制御
@@ -222,6 +245,8 @@ gsap.fromTo(
     }
 );
 
+const container = document.querySelector('.container');
+
 gsap.fromTo(
     ".cast .swiper", // アニメーションしたい要素
     {
@@ -236,10 +261,10 @@ gsap.fromTo(
             start: "top center", // #story の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
             onEnter: () => {
-                document.body.style.overflow = "visible"; // ここで overflow: hidden を解除
+                container.style.overflow = "visible"; // ← 変更
             },
             onLeaveBack: () => {
-                document.body.style.overflow = "hidden";
+            container.style.overflow = "hidden"; // ← 変更
             },
         },
     }

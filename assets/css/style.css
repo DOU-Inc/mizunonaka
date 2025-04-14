@@ -9,6 +9,10 @@ html {
     padding: 0;
 }
 
+html.noscroll {
+    overflow-x: hidden;
+}
+
 body {
     font-size: 15px;
     font-family: 'Noto Sans JP', sans-serif;
@@ -16,7 +20,6 @@ body {
     height: auto;
     color: #fff;
     letter-spacing: 0.05em;
-    overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -30,6 +33,7 @@ body {
 
 .container {
     width: 100%;
+    overflow: hidden;
 }
 
 section {
@@ -261,6 +265,7 @@ video {
 .title-box {
     width: auto;
     z-index: 10;
+    pointer-events: none;
 }
 
 .title {
@@ -343,7 +348,7 @@ video {
 */
 
 .js-title.-active {
-    transform: translateY(calc(-1 * var(--offset) + 40px));
+    transform: translateY(calc(-1 * 1px * var(--offset) + 40px));
     transition: right 0.8s ease-in-out 1s,
         left 0.8s ease-in-out 1s,
         top 0.8s ease-in-out 1s;
@@ -354,16 +359,16 @@ video {
 }
 
 .js-text.-active {
-    transition: opacity 0.5s ease-in-out 0.3s;
+    transition: opacity 0.3s ease-in-out 0.3s;
 }
 
 .js-btn.-active {
-
     transition: opacity 0.5s ease-in-out 1.5s;
 }
 
 .js-title {
-    transition: transform 0.6s ease;
+    
+    transition: transform 1s ease;
     will-change: transform;
 
     /* transition: all 0.8s ease-in-out 1s; */
@@ -381,15 +386,32 @@ video {
     transition: opacity 0.5s ease-in-out;
 }
 
-
-
 .js-all-text {
-    width: 100%;
+    width: fit-content;
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
     z-index: 50;
     opacity: 0;
-    line-height: 2.4;
+    line-height: 2;
     pointer-events: none;
+    padding-bottom: 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .js-all-text {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 50;
+        opacity: 0;
+        line-height: 2;
+        pointer-events: none;
+        padding-bottom: 80px;
+    }    
 }
 
 .js-all-text.-active {
@@ -398,7 +420,7 @@ video {
 
 .js-text.-active {
     opacity: 0;
-    /* pointer-events: none; */
+    pointer-events: none;
 }
 
 .js-btn {
@@ -586,8 +608,18 @@ video {
 }
 
 .intro .title-box.-active {
-    top: 50px;
-    left: 50px;
+    /* top: 50px;
+    left: 50px; */
+}
+
+.modal-box{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .intro .desc .text-box {
@@ -599,17 +631,30 @@ video {
     z-index: 10;
 }
 
-
+.desc .text-box .text {
+    text-align: justify;
+}
 
 .intro .desc .text-box .text {
     line-height: 2.5;
     text-align: left;
 }
 
+.all-text-box{
+    touch-action: auto;    
+}
+
 .intro .all-text-box {
+    position: absolute;
+    top: 360px;
+    /* left: 190px; */
+    left: 0;
+
     overflow: scroll;
-    width: 690px;
-    height: 500px;
+    /* width: 690px; */
+    /* height: 500px; */
+    height: calc(100vh - 360px);
+    width: 100%;;
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -626,7 +671,7 @@ video {
 
 .intro .button {
     z-index: 10;
-    margin-top: 20px;
+    margin-top: 27px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
 }
@@ -638,9 +683,13 @@ video {
 
 .intro .close-button {
     position: absolute;
-    top: 60px;
+    top: 43px;
     right: 60px;
     z-index: 100;
+}
+
+.blur-layer {
+    pointer-events: none !important;
 }
 
 /* blur layer：初期状態は丸マスク */
@@ -658,18 +707,31 @@ video {
 
 
 @media screen and (max-width: 768px) {
+    .intro .close-button {
+        top: 0px;
+        right: 20px;
+    }
+
+    .intro .all-text-box {
+        top: 310px;
+        height: calc(100vh - 310px);
+    }
+
     .intro .title-box {
         width: 100%;
-        top: 5%;
+        top: 8%;
         left: 6%;
     }
 
     .intro .blur-layer {
-        width: 800px;
-        left: -70%;
+        width: 150vw;
+        left: -30%;
+        top: 22%;
     }
 
-    .intro .desc .text-box .text {
+    .intro .desc .text-box .text,
+    .story .desc .text-box .text    
+    {
         font-size: 14px;
     }
 
@@ -716,14 +778,14 @@ video {
     display: block;
     position: absolute;
     top: 240px;
-    /* 重要 */
-    left: auto;
     right: 430px;
+    transition: transform 1.5s ease;
+    will-change: transform;
 }
 
 .story .title-box.-active {
-    top: 50px;
-    right: calc(100vw - 284px - 100px);
+    /* top: 50px;
+    right: calc(100vw - 284px - 100px); */
     /* 284pxはタイトルの幅 */
 }
 
@@ -740,26 +802,35 @@ video {
 
 .story .desc .text-box .text {
     line-height: 2.5;
-    text-align: left;
 }
 
 .story .all-text-box {
+    position: absolute;
+    top: 186px;
+    left: 0;
+
     overflow: scroll;
-    width: 690px;
-    height: 500px;
+    height: calc(100vh - 200px);
+    width: 100%;;
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    pointer-events: none;
+
 }
 
 .story .all-text-box::-webkit-scrollbar {
     display: none;
 }
 
+.story .all-text-box.-active {
+    pointer-events: all;
+}
+
 
 .story .button {
     z-index: 10;
-    margin-top: 20px;
+    margin-top: 32px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
 }
@@ -771,7 +842,7 @@ video {
 
 .story .close-button {
     position: absolute;
-    top: 60px;
+    top: 40px;
     right: 60px;
     z-index: 100;
 }
@@ -792,6 +863,35 @@ video {
 @media screen and (max-width: 768px) {
     .story .text-box {
         width: 100%;
+    }
+
+    .story .title-box {
+        top: 8%;
+        right: 5%;
+    }
+
+    .story .desc .text-box {
+        top: 19%;
+        right: 6%;
+        width: 70%;
+        text-align: left;
+    }    
+    
+    .story .button {
+        display: block;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .story .blur-layer {
+        width: 150vw;
+        right: -30%;
+        top: 10%;        
+    }
+
+    .story .close-button{
+        top: 0px;
+        right: 20px;
     }
 
 }
@@ -890,13 +990,15 @@ video {
     top: 75px;
 }
 
-.cast .cast-lists {
+.cast .cast-lists,
+.staff-lists {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.cast .cast-list {
+.cast .cast-list,
+.staff-lists {
     line-height: 3;
 }
 
@@ -941,7 +1043,7 @@ video {
     justify-content: end;
     align-items: center;
     flex-direction: column;
-    gap: 200px 0;
+    gap: 6em 0;
 }
 
 .footer .cast-list {
