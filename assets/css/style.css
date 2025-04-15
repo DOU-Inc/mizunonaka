@@ -4,6 +4,7 @@ a {
 
 body,
 html {
+    width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -201,8 +202,7 @@ section {
 .load-anime {
     overflow: hidden;
     position: relative;
-    margin: 0 calc(50% - 50vw);
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: 100;
 }
@@ -255,20 +255,22 @@ section {
     #lottie-animation {
         width: 95%;
     }
+
     #lottie-animation svg {
         transform: scale(3) !important;
 
-    }    
+    }
 }
 
 @media screen and (max-width: 768px) {
     #lottie-animation {
         width: 95%;
     }
+
     #lottie-animation svg {
         transform: scale(3) !important;
 
-    }    
+    }
 }
 
 /*
@@ -498,12 +500,13 @@ video {
     position: fixed;
     top: 50%;
     left: 5%;
-    /* transform: translateY(-50%); */
+    transform: translateY(-50%);
     display: flex;
     justify-content: center;
     flex-direction: column;
     gap: 25px 0;
-    z-index: 10;
+    z-index: 1100;
+    opacity: 0;
 }
 
 
@@ -642,7 +645,7 @@ video {
 }
 
 .modal-box {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -1009,7 +1012,6 @@ video {
 
 
 .cast .inner {
-    overflow: visible;
     height: auto;
 }
 

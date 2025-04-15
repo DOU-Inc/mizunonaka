@@ -296,6 +296,7 @@ gsap.fromTo(
 
 const container = document.querySelector('.container');
 
+
 gsap.fromTo(
     ".cast .swiper", // アニメーションしたい要素
     {
@@ -343,12 +344,15 @@ window.addEventListener('load', () => {
     const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
 
+    gsap.set(".mv-sns", {
+        autoAlpha: 0,
+    });
+
     // 1. 文字をフェードイン
     tl.to('.catch', {
         duration: 2,
         opacity: 1,
         ease: 'power2.out',
-        delay: 0.5,
     });
 
     // 2. 文字をフェードアウト
@@ -356,10 +360,11 @@ window.addEventListener('load', () => {
         opacity: 0,
         ease: 'power1.out',
         duration: 2,
-        delay: 1.5,
-    }, '-=1.0');
+    });
 
-    // 3. littie再生
+
+
+    // 4. littie再生
     tl.to('#lottie-animation', {
         opacity: 1,
         onComplete: () => {
@@ -373,13 +378,30 @@ window.addEventListener('load', () => {
         }
     }, '-=1.0');
 
-    // 4. 黒背景をフェードアウト（透明に）
+    // 5. 黒背景をフェードアウト（透明に）
     tl.to('.bg-black', {
-        duration: 5,
+        duration: 6,
         opacity: isMobile ? 0.3 : 0,
         ease: 'power2.inOut',
         delay: 3,
-    }, '-=6.0');
+    }, '-=4.0');
+
+    // 3. 文字を消えた状態で右に移動
+    tl.to('.catch', {
+        x: '47vw',
+    });
+
+    // 6. ,文字をフェードイン
+    tl.to('.catch', {
+        opacity: 1,
+        ease: 'power1.out',
+        duration: 2,
+    }, '<');
+
+    tl.to(".mv-sns", {
+        autoAlpha: 1,
+        duration: 1,
+    }, '<');
 
     // // 最後にスクロール解放！
     tl.call(() => {
@@ -388,13 +410,10 @@ window.addEventListener('load', () => {
 
 });
 
-gsap.set(".sns", {
-    yPercent: -50
-});
 gsap.to(
-    ".sns", // アニメーションしたい要素
+    ".sns-box", // アニメーションしたい要素
     {
-        x: -160, // アニメーション後（表示）
+        autoAlpha: 0,
         duration: 1, // アニメーションの時間
         ease: "power2.inout",
         scrollTrigger: {
