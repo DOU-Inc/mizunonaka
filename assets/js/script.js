@@ -2,39 +2,39 @@ function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
     const currentX = rect.left;
     const currentY = rect.top;
-  
+
     // 画面幅で条件分岐（スマホは768px以下とする）
     const isMobile = window.innerWidth <= 768;
-  
+
     // 目標位置（スマホとPCで分ける）
     const targetX = isMobile ? 20 : 60;
     const targetY = isMobile ? 96 : 60;
-  
+
     const deltaX = targetX - currentX;
     const deltaY = targetY - currentY;
-  
+
     // 初期化（今の位置にピタッと固定）
     titleElement.style.transform = `translate(0, 0)`;
     titleElement.style.transition = 'none';
-  
+
     // 次のフレームでアニメーション発動
     requestAnimationFrame(() => {
-      titleElement.style.transition = 'transform 1s ease';
-      titleElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        titleElement.style.transition = 'transform 1s ease';
+        titleElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
     });
-  }
+}
 
-  function resetTitlePosition(titleElement) {
+function resetTitlePosition(titleElement) {
     titleElement.style.transition = 'transform 1s ease';
     titleElement.style.transform = `translate(0, 0)`; // 元の位置に戻すだけ！
-  }
+}
 
-  
-  window.addEventListener('resize', () => {
+
+window.addEventListener('resize', () => {
     if (section.classList.contains('-active')) {
-      moveTitleSmoothly(titleElement); // 再調整
+        moveTitleSmoothly(titleElement); // 再調整
     }
-  });
+});
 
 function disableScroll() {
     document.body.classList.add('-noscroll');
@@ -46,6 +46,55 @@ function enableScroll() {
     lenis.start(); // ← Lenis再開！
 }
 
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//PC版とSP版の動画切り替え
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+const videoMap = {
+    "mv-video": {
+        pc: "./assets/video/01_pc.mp4",
+        sp: "./assets/video/01_sp.mp4",
+    },
+    "story-video": {
+        pc: "./assets/video/02_pc.mp4",
+        sp: "./assets/video/02_sp.mp4",
+    },
+    "trailer-video": {
+        pc: "./assets/video/03_pc.mp4",
+        sp: "./assets/video/03_sp.mp4",
+    },
+    "footer-video": {
+        pc: "./assets/video/04_pc.mp4",
+        sp: "./assets/video/04_sp.mp4",
+    },
+};
+
+function setAllVideoSources() {
+    const isMobile = window.innerWidth <= 768;
+
+    Object.entries(videoMap).forEach(([id, paths]) => {
+        const video = document.getElementById(id);
+        if (!video) return;
+
+        const currentSrc = video.currentSrc;
+        const newSrc = isMobile ? paths.sp : paths.pc;
+
+        if (currentSrc.includes(newSrc)) return;
+
+        video.pause();
+        video.src = newSrc;
+        video.load();
+        video.play().catch((e) => {
+            console.warn(`Autoplay failed for ${id}:`, e);
+        });
+    });
+}
+
+window.addEventListener("DOMContentLoaded", setAllVideoSources);
+window.addEventListener("resize", () => {
+    setTimeout(setAllVideoSources, 100);
+});
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -264,7 +313,7 @@ gsap.fromTo(
                 container.style.overflow = "visible"; // ← 変更
             },
             onLeaveBack: () => {
-            container.style.overflow = "hidden"; // ← 変更
+                container.style.overflow = "hidden"; // ← 変更
             },
         },
     }
@@ -339,6 +388,9 @@ window.addEventListener('load', () => {
 
 });
 
+gsap.set(".sns", {
+    yPercent: -50
+});
 gsap.to(
     ".sns", // アニメーションしたい要素
     {
@@ -348,7 +400,7 @@ gsap.to(
         scrollTrigger: {
             trigger: "#news", // アニメーションを発動させるトリガー要素
             start: "center center", // #newsの上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none reverse"
         },
     }
 );
