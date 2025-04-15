@@ -94,7 +94,7 @@ iframe {
 .theater {
     position: fixed;
     z-index: 200;
-    bottom: -41px;
+    bottom: -47px;
     right: 30px;
     padding: 15px 65px;
     backdrop-filter: blur(4px);

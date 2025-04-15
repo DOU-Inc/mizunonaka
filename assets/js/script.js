@@ -416,11 +416,11 @@ window.addEventListener('load', () => {
     tl.to(".mv-sns", {
         autoAlpha: 1,
         duration: 1,
-    });
+    }, '<');
 
     tl.to(".js-theater", {
         duration: 1,        
-        y: isMobile ? '-115%' : '-85%',
+        y: isMobile ? '-132%' : '-85%',
         ease: 'power1.out',
     }, '<');
 
