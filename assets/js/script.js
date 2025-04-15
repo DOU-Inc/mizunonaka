@@ -64,14 +64,16 @@ window.addEventListener('resize', () => {
 });
 
 function disableScroll() {
-    document.body.classList.add('-noscroll');
-    lenis.stop(); // ← Lenisも止める！
-}
-
-function enableScroll() {
-    document.body.classList.remove('-noscroll');
-    lenis.start(); // ← Lenis再開！
-}
+    document.documentElement.classList.add('noscroll');
+    document.body.classList.add('noscroll');
+    lenis.stop();
+  }
+  
+  function enableScroll() {
+    document.documentElement.classList.remove('noscroll');
+    document.body.classList.remove('noscroll');
+    lenis.start();
+  }
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -140,6 +142,10 @@ function setupToggle(sectionSelector, buttonSelector) {
     const title = section.querySelector('.js-title');
     const btn = section.querySelector('.js-btn');
 
+    const trailer = document.querySelector('#trailer');
+    const story = document.querySelector('#story');
+    const intro = document.querySelector('#intro'); // ← intro 追加！
+
     const buttons = section.querySelectorAll(buttonSelector);
 
 
@@ -156,16 +162,57 @@ function setupToggle(sectionSelector, buttonSelector) {
             title.classList.toggle('-active');
             btn.classList.toggle('-active');
 
-            const isActive = section.classList.contains('-active');
-            if (isActive) {
-                disableScroll();
-                moveTitleSmoothly(title);
-                html.classList.add('noscroll'); // ← ここで追加！
-            } else {
-                enableScroll();
-                resetTitlePosition(title);
-                html.classList.remove('noscroll'); // ← ここで削除！
-            }
+           
+            const trailer = document.querySelector('#trailer');
+const story = document.querySelector('#story');
+const intro = document.querySelector('#intro'); // ← intro 追加！
+
+const isActive = section.classList.contains('-active');
+if (isActive) {
+  disableScroll();
+  moveTitleSmoothly(title);
+  html.classList.add('noscroll');
+
+  if (section.id === 'story') {
+    if (trailer) {
+      trailer.style.opacity = '0';
+      trailer.style.pointerEvents = 'none';
+    }
+    if (intro) {
+      intro.style.opacity = '0';
+      intro.style.pointerEvents = 'none';
+    }
+  }
+
+  if (section.id === 'intro' && story) {
+    story.style.opacity = '0';
+    story.style.pointerEvents = 'none';
+  }
+
+} else {
+  enableScroll();
+  resetTitlePosition(title);
+  html.classList.remove('noscroll');
+
+  if (section.id === 'story') {
+    if (trailer) {
+      trailer.style.opacity = '1';
+      trailer.style.pointerEvents = 'auto';
+    }
+    if (intro) {
+      intro.style.opacity = '1';
+      intro.style.pointerEvents = 'auto';
+    }
+  }
+
+  if (section.id === 'intro' && story) {
+    story.style.opacity = '1';
+    story.style.pointerEvents = 'auto';
+  }
+}
+
+
+            
         });
     });
 }
