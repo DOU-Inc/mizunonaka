@@ -41,7 +41,7 @@
     <link rel="icon" href="https://mizunonaka-movie.jp/assets/img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v2" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-                <video id="mv-video" loop muted autoplay></video>
+                <video id="mv-video" loop muted autoplay playsinline></video>
 
             </div>
         </section>
@@ -246,7 +246,7 @@
 
         <section id="story" class="story section">
             <div class="inner js-inner">
-                <video id="story-video" loop muted autoplay></video>
+                <video id="story-video" loop muted autoplay playsinline></video>
                 <div class="desc">
                     <div class="title-box js-title">
                         <h2 class="title">STORY</h2>
@@ -315,7 +315,7 @@
 
         <section id="trailer" class="trailer section">
             <div class="inner">
-                <video id="trailer-video" loop muted autoplay></video>
+                <video id="trailer-video" loop muted autoplay playsinline></video>
 
                 <div class="title-box">
                     <h2 class="title">TRAILER</h2>
@@ -329,7 +329,7 @@
                     <div id="movie" style="display: none;">
                         <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
                             title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allow="accelerometer; autoplay playsinline; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
 
@@ -378,7 +378,7 @@
 
         <section id="footer" class="footer section">
             <div class="inner">
-                <video id="footer-video" loop muted autoplay></video>
+                <video id="footer-video" loop muted autoplay playsinline></video>
 
                 <dl class="staff-lists">
                     <div class="staff-list">
