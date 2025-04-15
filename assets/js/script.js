@@ -118,10 +118,10 @@ function setAllVideoSources() {
     });
 }
 
-window.addEventListener("DOMContentLoaded", setAllVideoSources);
-window.addEventListener("resize", () => {
-    setTimeout(setAllVideoSources, 100);
-});
+// window.addEventListener("DOMContentLoaded", setAllVideoSources);
+// window.addEventListener("resize", () => {
+//     setTimeout(setAllVideoSources, 100);
+// });
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -478,5 +478,51 @@ const swiper = new Swiper('.swiper', {
     },
 });
 
+
+
+// モバイルタッチデバイス判定関数
+function isMobileTouchDevice() {
+    return window.innerWidth <= 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }
+  
+  // 動画の読み込み関数（条件付き）
+  function setVideoSourceById(id) {
+    const video = document.getElementById(id);
+    if (!video) return;
+  
+    const isMobile = isMobileTouchDevice();
+    const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
+  
+    // モバイル時はPC版使わない
+    if (isMobile) {
+      videoMap[id].pc = '';
+    }
+  
+    if (video.src !== src) {
+      video.src = src;
+      video.load();
+      video.play().catch((e) => {
+        console.warn(`Autoplay failed for ${id}:`, e);
+      });
+    }
+  }
+  
+  // ページ読み込み時：mv-videoだけ即読み込み
+  window.addEventListener("DOMContentLoaded", () => {
+    setVideoSourceById("mv-video");
+  
+    // 他の動画はスクロール時に読み込む
+    Object.keys(videoMap).forEach(id => {
+      if (id === "mv-video") return;
+  
+      ScrollTrigger.create({
+        trigger: `#${id.replace("-video", "")}`,
+        start: "top 100%",
+        once: true,
+        onEnter: () => setVideoSourceById(id),
+      });
+    });
+  });
+  
 
 
