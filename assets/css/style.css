@@ -975,10 +975,8 @@ video {
 
 .cast {
     height: 100%;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between; */
 }
+
 
 .cast .inner {
     overflow: visible;
@@ -990,6 +988,7 @@ video {
     top: 75px;
 }
 
+
 .cast .cast-lists,
 .staff-lists {
     display: flex;
@@ -997,13 +996,86 @@ video {
     flex-direction: column;
 }
 
-.cast .cast-list,
-.staff-lists {
+.cast .cast-lists{
+    margin-top: 10em;
+}
+
+.staff-lists{
+    margin-top: 60vh;
+    gap: 3em 0;
+}
+
+
+.cast .cast-list{
     line-height: 3;
 }
 
+.staff-list {
+    line-height: 2;
+}
+
+.staff-list {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+}
+
+.staff-list.-director {
+    margin-top: 60vh;
+}
+
+
+.staff-list dt{
+    width: 20em;
+    text-align: right;
+    padding-right: .9em;
+}
+
+.staff-list dd{
+    padding-left: .9em;
+    width: 20em;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .cast .cast-list.-margin {
     margin-bottom: 4em;
+}
+
+@media screen and (max-width: 768px) {
+    .cast-list {
+        font-size: 14px;
+    }
+
+    .staff-list {
+        font-size: 14px;
+    }
+
+    .staff-list {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .staff-list.-director {
+        margin-top: 60vh;
+    }
+    
+    
+    .staff-list dt{
+        width: 100%;
+        text-align: center;
+        padding-right: 0;
+        font-size: 11px;
+        margin-bottom: .4em;
+    }
+    
+    .staff-list dd{
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
 }
 
 
