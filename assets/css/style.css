@@ -229,12 +229,19 @@ section {
     letter-spacing: 0.4em;
     line-height: 2;
     opacity: 0;
+    white-space: nowrap;
 }
 
 
 @media screen and (max-width: 1600px) {
     #lottie-animation svg {
-        transform: scale(3) !important;
+        transform: scale(4) !important;
+    }
+
+    .mv .catch {
+        font-size: 11px;
+        margin-bottom: auto;
+        margin-left: auto;
     }
 }
 
@@ -367,7 +374,7 @@ video {
 }
 
 .js-title {
-    
+
     transition: transform 1s ease;
     will-change: transform;
 
@@ -411,7 +418,7 @@ video {
         line-height: 2;
         pointer-events: none;
         padding-bottom: 80px;
-    }    
+    }
 }
 
 .js-all-text.-active {
@@ -465,7 +472,7 @@ video {
     position: fixed;
     top: 50%;
     left: 5%;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -493,8 +500,9 @@ video {
     .mv .sns {
 
         position: fixed;
+        top: auto;
         bottom: 15px;
-        left: 15px;
+        left: 20px;
         flex-direction: row;
         align-items: flex-end;
         gap: 0 25px;
@@ -509,11 +517,6 @@ video {
         width: 80%;
     }
 
-    .mv .catch {
-        font-size: 11px;
-        margin-bottom: auto;
-        margin-left: auto;
-    }
 
 
 }
@@ -612,7 +615,7 @@ video {
     left: 50px; */
 }
 
-.modal-box{
+.modal-box {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -640,8 +643,8 @@ video {
     text-align: left;
 }
 
-.all-text-box{
-    touch-action: auto;    
+.all-text-box {
+    touch-action: auto;
 }
 
 .intro .all-text-box {
@@ -654,7 +657,8 @@ video {
     /* width: 690px; */
     /* height: 500px; */
     height: calc(100vh - 360px);
-    width: 100%;;
+    width: 100%;
+    ;
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -730,8 +734,7 @@ video {
     }
 
     .intro .desc .text-box .text,
-    .story .desc .text-box .text    
-    {
+    .story .desc .text-box .text {
         font-size: 14px;
     }
 
@@ -811,7 +814,8 @@ video {
 
     overflow: scroll;
     height: calc(100vh - 200px);
-    width: 100%;;
+    width: 100%;
+    ;
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -875,8 +879,8 @@ video {
         right: 6%;
         width: 70%;
         text-align: left;
-    }    
-    
+    }
+
     .story .button {
         display: block;
         margin-left: auto;
@@ -886,10 +890,10 @@ video {
     .story .blur-layer {
         width: 150vw;
         right: -30%;
-        top: 10%;        
+        top: 10%;
     }
 
-    .story .close-button{
+    .story .close-button {
         top: 0px;
         right: 20px;
     }
@@ -996,17 +1000,17 @@ video {
     flex-direction: column;
 }
 
-.cast .cast-lists{
+.cast .cast-lists {
     margin-top: 10em;
 }
 
-.staff-lists{
+.staff-lists {
     margin-top: 60vh;
     gap: 3em 0;
 }
 
 
-.cast .cast-list{
+.cast .cast-list {
     line-height: 3;
 }
 
@@ -1025,13 +1029,13 @@ video {
 }
 
 
-.staff-list dt{
+.staff-list dt {
     width: 20em;
     text-align: right;
     padding-right: .9em;
 }
 
-.staff-list dd{
+.staff-list dd {
     padding-left: .9em;
     width: 20em;
     text-align: left;
@@ -1057,21 +1061,21 @@ video {
         display: flex;
         flex-direction: column;
     }
-    
+
     .staff-list.-director {
         margin-top: 60vh;
     }
-    
-    
-    .staff-list dt{
+
+
+    .staff-list dt {
         width: 100%;
         text-align: center;
         padding-right: 0;
         font-size: 11px;
         margin-bottom: .4em;
     }
-    
-    .staff-list dd{
+
+    .staff-list dd {
         width: 100%;
         text-align: center;
         padding-left: 0;
