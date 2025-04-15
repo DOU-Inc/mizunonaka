@@ -240,7 +240,7 @@ window.addEventListener('scroll', () => {
     const windowHeight = window.innerHeight;
 
     // 要素の下端が、画面の下端に「ほぼ」一致するタイミング
-    const isBottomTouching = Math.abs(rect.bottom - windowHeight) < 1;
+    const isBottomTouching = Math.abs(rect.bottom - windowHeight) < 5;
 
     if (isBottomTouching) {
         target.classList.add('end');
