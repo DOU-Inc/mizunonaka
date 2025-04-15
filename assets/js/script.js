@@ -2,7 +2,7 @@
 window.addEventListener('beforeunload', () => {
     window.scrollTo(0, 0);
     if (lenis) lenis.scrollTo(0, { immediate: true });
-  });
+});
 
 
 function handleBgSpFadeOnScroll() {
@@ -419,7 +419,7 @@ window.addEventListener('load', () => {
     }, '<');
 
     tl.to(".js-theater", {
-        duration: 1,        
+        duration: 1,
         y: isMobile ? '-132%' : '-85%',
         ease: 'power1.out',
     }, '<');
