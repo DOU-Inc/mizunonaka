@@ -1021,6 +1021,14 @@ video {
 // ----------------------------------------------------------------- 
 */
 
+.trailer video {
+    top: -5vh;
+    left: -5vw;
+    width: 110vw;
+    height: 110vh;
+    filter: blur(20px);
+}
+
 .trailer .movie-box {
     position: relative;
     width: 800px;
@@ -1038,6 +1046,10 @@ video {
 }
 
 @media screen and (max-width: 900px) {
+    .trailer video {
+        width: 120vw;
+    }
+
     .trailer .inner {
         padding: 20px 30px;
     }
@@ -1050,6 +1062,7 @@ video {
         width: 19%;
     }
 }
+
 
 /*
 // -----------------------------------------------------------------
