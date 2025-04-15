@@ -1,3 +1,25 @@
+function handleBgSpFadeOnScroll() {
+    const bgSp = document.querySelector('.bg-sp');
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile || !bgSp) return;
+  
+    let isHidden = false;
+  
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+  
+      if (scrollY > 10 && !isHidden) {
+        bgSp.style.opacity = '0';
+        isHidden = true;
+      } else if (scrollY <= 10 && isHidden) {
+        bgSp.style.opacity = '0.3';
+        isHidden = false;
+      }
+    });
+  }
+  
+  handleBgSpFadeOnScroll();
+
 function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
     const currentX = rect.left;
@@ -387,7 +409,7 @@ window.addEventListener('load', () => {
     // 5. 黒背景をフェードアウト（透明に）
     tl.to('.bg-black', {
         duration: 6,
-        opacity: isMobile ? 0.3 : 0,
+        opacity: 0,
         ease: 'power2.inOut',
         delay: 3,
     }, '-=4.0');
@@ -409,10 +431,18 @@ window.addEventListener('load', () => {
         duration: 1,
     }, '<');
 
+    tl.to(".js-theater", {
+        duration: 1,        
+        y: '-115%',
+        ease: 'power1.out',
+    }, '<');
+
+
     // // 最後にスクロール解放！
     tl.call(() => {
         lenis.start(); // ← ここでスクロールを解放！
     });
+
 
 });
 
