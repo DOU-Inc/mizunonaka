@@ -1,8 +1,13 @@
+
+window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+  });
+
+
 function handleBgSpFadeOnScroll() {
     const bgSp = document.querySelector('.bg-sp');
-    const isMobile = window.innerWidth <= 768;
-    if (!isMobile || !bgSp) return;
-
+    if (!bgSp) return;
     let isHidden = false;
 
     window.addEventListener('scroll', () => {
@@ -414,8 +419,8 @@ window.addEventListener('load', () => {
     });
 
     tl.to(".js-theater", {
-        duration: 1,
-        y: '-115%',
+        duration: 1,        
+        y: isMobile ? '-115%' : '-85%',
         ease: 'power1.out',
     }, '<');
 
