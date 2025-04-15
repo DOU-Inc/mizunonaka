@@ -295,26 +295,32 @@ gsap.fromTo(
 );
 
 const container = document.querySelector('.container');
-
+const inners = document.querySelectorAll('.inner'); // ← 複数
 
 gsap.fromTo(
-    ".cast .swiper", // アニメーションしたい要素
+    ".cast .swiper",
     {
-        autoAlpha: 0, // アニメーション開始前（透明）
+        autoAlpha: 0,
     },
     {
-        autoAlpha: 1, // アニメーション後（表示）
-        duration: 1, // アニメーションの時間
+        autoAlpha: 1,
+        duration: 1,
         ease: "power2.out",
         scrollTrigger: {
-            trigger: ".cast", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
+            trigger: ".cast",
+            start: "top center",
             toggleActions: "play reverse play reverse",
             onEnter: () => {
-                container.style.overflow = "visible"; // ← 変更
+                container.style.overflow = "visible";
+                inners.forEach(inner => {
+                    inner.style.overflow = "hidden"; // ← 各.innerに適用
+                });
             },
             onLeaveBack: () => {
-                container.style.overflow = "hidden"; // ← 変更
+                container.style.overflow = "hidden";
+                inners.forEach(inner => {
+                    inner.style.overflow = "visible"; // ← 各.innerに適用
+                });
             },
         },
     }
