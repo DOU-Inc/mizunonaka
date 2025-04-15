@@ -290,21 +290,23 @@ gsap.fromTo(
 
 
 window.addEventListener('load', () => {
+    lenis.stop();
+    const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
 
     // 1. 文字をフェードイン
     tl.to('.catch', {
-        duration: 3,
+        duration: 2,
         opacity: 1,
         ease: 'power2.out',
         delay: 0.5,
     });
 
-    // 2. 文字を右にスライド
+    // 2. 文字をフェードアウト
     tl.to('.catch', {
-        left: '95%',
+        opacity: 0,
         ease: 'power1.out',
-        duration: 3,
+        duration: 2,
         delay: 1.5,
     }, '-=1.0');
 
@@ -324,13 +326,16 @@ window.addEventListener('load', () => {
 
     // 4. 黒背景をフェードアウト（透明に）
     tl.to('.bg-black', {
-        duration: 4,
-        opacity: 0,
+        duration: 5,
+        opacity: isMobile ? 0.3 : 0,
         ease: 'power2.inOut',
-        delay: 4,
+        delay: 3,
+    }, '-=6.0');
+
+    // // 最後にスクロール解放！
+    tl.call(() => {
+        lenis.start(); // ← ここでスクロールを解放！
     });
-
-
 
 });
 
