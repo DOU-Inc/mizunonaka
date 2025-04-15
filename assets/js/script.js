@@ -2,23 +2,23 @@ function handleBgSpFadeOnScroll() {
     const bgSp = document.querySelector('.bg-sp');
     const isMobile = window.innerWidth <= 768;
     if (!isMobile || !bgSp) return;
-  
+
     let isHidden = false;
-  
+
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-  
-      if (scrollY > 10 && !isHidden) {
-        bgSp.style.opacity = '0';
-        isHidden = true;
-      } else if (scrollY <= 10 && isHidden) {
-        bgSp.style.opacity = '0.3';
-        isHidden = false;
-      }
+        const scrollY = window.scrollY;
+
+        if (scrollY > 10 && !isHidden) {
+            bgSp.style.opacity = '0';
+            isHidden = true;
+        } else if (scrollY <= 10 && isHidden) {
+            bgSp.style.opacity = '0.3';
+            isHidden = false;
+        }
     });
-  }
-  
-  handleBgSpFadeOnScroll();
+}
+
+handleBgSpFadeOnScroll();
 
 function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
@@ -249,32 +249,6 @@ window.addEventListener("resize", applyTruncate);
 
 
 
-
-
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-//footerのタイトルのアニメーション
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-const target = document.querySelector('.footer');
-
-window.addEventListener('scroll', () => {
-    const rect = target.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // 要素の下端が、画面の下端に「ほぼ」一致するタイミング
-    const isBottomTouching = Math.abs(rect.bottom - windowHeight) < 5;
-
-    if (isBottomTouching) {
-        target.classList.add('end');
-    } else {
-        target.classList.remove('end'); // 必要なら消す処理も
-    }
-});
-
-
-
-
-
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 // gsap
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -366,6 +340,24 @@ gsap.fromTo(
     }
 );
 
+gsap.fromTo(
+    "#footer .img-box", // アニメーションしたい要素
+    {
+        autoAlpha: 0, // アニメーション開始前（透明）
+    },
+    {
+        autoAlpha: 1, // アニメーション後（表示）
+        duration: 1, // アニメーションの時間
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: "#footer", // アニメーションを発動させるトリガー要素
+            start: "60% top", // #footer の上端が画面の上端に来たら発動
+            toggleActions: "play reverse play reverse",
+        },
+    }
+);
+
+
 
 window.addEventListener('load', () => {
     lenis.stop();
@@ -376,23 +368,19 @@ window.addEventListener('load', () => {
         autoAlpha: 0,
     });
 
-    // 1. 文字をフェードイン
     tl.to('.catch', {
         duration: 2,
         opacity: 1,
         ease: 'power2.out',
     });
 
-    // 2. 文字をフェードアウト
+
     tl.to('.catch', {
         opacity: 0,
         ease: 'power1.out',
         duration: 2,
     });
 
-
-
-    // 4. littie再生
     tl.to('#lottie-animation', {
         opacity: 1,
         onComplete: () => {
@@ -406,7 +394,6 @@ window.addEventListener('load', () => {
         }
     }, '-=1.0');
 
-    // 5. 黒背景をフェードアウト（透明に）
     tl.to('.bg-black', {
         duration: 6,
         opacity: 0,
@@ -414,25 +401,20 @@ window.addEventListener('load', () => {
         delay: 3,
     }, '-=4.0');
 
-    // 3. 文字を消えた状態で右に移動
-    tl.to('.catch', {
-        x: '47vw',
-    });
-
-    // 6. ,文字をフェードイン
-    tl.to('.catch', {
+    tl.to('.catch2', {
         opacity: 1,
         ease: 'power1.out',
         duration: 2,
-    }, '<');
+    });
+
 
     tl.to(".mv-sns", {
         autoAlpha: 1,
         duration: 1,
-    }, '<');
+    });
 
     tl.to(".js-theater", {
-        duration: 1,        
+        duration: 1,
         y: '-115%',
         ease: 'power1.out',
     }, '<');

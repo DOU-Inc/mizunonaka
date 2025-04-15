@@ -235,6 +235,7 @@ iframe {
 
 .bg-sp {
     background: black;
+    backdrop-filter: blur(20px);
     width: 100%;
     height: 500%;
     position: absolute;
@@ -242,12 +243,13 @@ iframe {
     left: 0;
     opacity: .2;
     z-index: 0;
-    transition: opacity 0.8s ease; /* ← ここでふわっと */    
+    transition: opacity 0.8s ease;
+    /* ← ここでふわっと */
 }
 
 @media (min-width: 769px) {
     .bg-sp {
-      display: none;
+        display: none;
     }
 }
 
@@ -276,10 +278,26 @@ iframe {
 
 
 .mv .catch {
+    font-weight: 300;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 16px;
+    writing-mode: vertical-rl;
+    letter-spacing: 0.4em;
+    line-height: 2;
+    opacity: 0;
+    white-space: nowrap;
+    font-feature-settings: "palt";
+}
+
+.mv .catch2 {
+    font-weight: 300;
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    transform: translateY(-50%);
     font-size: 16px;
     writing-mode: vertical-rl;
     letter-spacing: 0.4em;
@@ -295,35 +313,32 @@ iframe {
         /* transform: scale(3) !important; */
     }
 
+}
+
+@media screen and (max-width: 768px) {
+    #lottie-animation {
+        width: 95%;
+    }
+
+    #lottie-animation svg {
+        transform: scale(3) !important;
+
+    }
+
     .mv .catch {
         font-size: 11px;
         margin-bottom: auto;
         margin-left: auto;
-        /* transform: scale(3) !important; */
+    }
+
+    .mv .catch2 {
+        font-size: 11px;
+        top: 3%;
+        right: 6%;
+        transform: translateY(0);
     }
 }
 
-@media screen and (max-width: 768px) {
-    #lottie-animation {
-        width: 95%;
-    }
-
-    #lottie-animation svg {
-        transform: scale(3) !important;
-
-    }
-}
-
-@media screen and (max-width: 768px) {
-    #lottie-animation {
-        width: 95%;
-    }
-
-    #lottie-animation svg {
-        transform: scale(3) !important;
-
-    }
-}
 
 /*
 // -----------------------------------------------------------------
@@ -1244,7 +1259,6 @@ video {
     width: 100%;
     opacity: 0;
     margin-top: 400px;
-    transition: opacity 0.8s;
 }
 
 .footer .sns {
@@ -1259,10 +1273,6 @@ video {
 
 
 
-
-.footer.end .img-box {
-    opacity: 1;
-}
 
 @media screen and (max-width: 768px) {
     .footer .copy {
