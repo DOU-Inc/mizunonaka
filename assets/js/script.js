@@ -57,11 +57,11 @@ function resetTitlePosition(titleElement) {
 }
 
 
-window.addEventListener('resize', () => {
-    if (section.classList.contains('-active')) {
-        moveTitleSmoothly(titleElement); // 再調整
-    }
-});
+// window.addEventListener('resize', () => {
+//     if (section.classList.contains('-active')) {
+//         moveTitleSmoothly(titleElement); // 再調整
+//     }
+// });
 
 function disableScroll() {
     document.documentElement.classList.add('noscroll');
@@ -83,42 +83,46 @@ function disableScroll() {
 const videoMap = {
     "mv-video": {
         pc: "./assets/video/01_pc.mp4",
-        sp: "./assets/video/01_sp.mp4",
+        sp: "./assets/video/01_sp_v5.mp4",
     },
     "story-video": {
         pc: "./assets/video/02_pc.mp4",
-        sp: "./assets/video/02_sp.mp4",
+        sp: "./assets/video/02_sp_v5.mp4",
     },
     "trailer-video": {
         pc: "./assets/video/03_pc.mp4",
-        sp: "./assets/video/03_sp.mp4",
+        sp: "./assets/video/03_sp_v5.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc.mp4",
-        sp: "./assets/video/04_sp.mp4",
+        sp: "./assets/video/04_sp_v5.mp4",
     },
 };
 
-function setAllVideoSources() {
-    const isMobile = window.innerWidth <= 768;
-
-    Object.entries(videoMap).forEach(([id, paths]) => {
-        const video = document.getElementById(id);
-        if (!video) return;
-
-        const currentSrc = video.currentSrc;
-        const newSrc = isMobile ? paths.sp : paths.pc;
-
-        if (currentSrc.includes(newSrc)) return;
-
-        video.pause();
-        video.src = newSrc;
-        video.load();
-        video.play().catch((e) => {
-            console.warn(`Autoplay failed for ${id}:`, e);
-        });
+function setVideoSourceById(id) {
+    const video = document.getElementById(id);
+    if (!video) return;
+  
+    const isMobile = isMobileTouchDevice();
+    const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
+  
+    // src がすでに同じなら何もしない
+    if (video.getAttribute("src") === src) return;
+  
+    // 属性を明示的にセット（iOS Instagram内ではこれが超重要）
+    video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("loop", "");
+    video.setAttribute("src", src);
+  
+    // 動画を再読み込み・再生
+    video.load();
+    video.play().catch((e) => {
+      console.warn(`Autoplay failed for ${id}:`, e);
     });
-}
+  }
+  
 
 // window.addEventListener("DOMContentLoaded", setAllVideoSources);
 // window.addEventListener("resize", () => {
@@ -461,16 +465,14 @@ window.addEventListener('load', () => {
 
 
     tl.to(".mv-sns", {
-        autoAlpha: 1,
+        autoAlpha: .9,
         duration: 1,
     }, '<');
 
-    tl.to(".js-theater", {
-        duration: 1,
-        y: isMobile ? '-132%' : '-85%',
-        ease: 'power1.out',
-    }, '<');
-
+    // TODO: 劇場情報はGW後に公開！
+    tl.add(() => {
+        document.querySelector(".js-theater")?.classList.add("-disp");
+    }, "<");
 
     // // 最後にスクロール解放！
     tl.call(() => {
@@ -540,36 +542,61 @@ function isMobileTouchDevice() {
     const isMobile = isMobileTouchDevice();
     const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
   
-    // モバイル時はPC版使わない
-    if (isMobile) {
-      videoMap[id].pc = '';
-    }
+    if (video.getAttribute("src") === src) return;
   
-    if (video.src !== src) {
-      video.src = src;
-      video.load();
-      video.play().catch((e) => {
-        console.warn(`Autoplay failed for ${id}:`, e);
-      });
-    }
+    // ★ 属性を明示的にセット（Instagram対策！）
+    video.setAttribute("muted", "");
+    video.setAttribute("autoplay", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("loop", "");
+    video.setAttribute("src", src);
+  
+    video.load();
+    video.play().catch((e) => {
+      console.warn(`Autoplay failed for ${id}:`, e);
+    });
   }
   
-  // ページ読み込み時：mv-videoだけ即読み込み
+  function isInstagramBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return ua.includes("Instagram");
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
-    setVideoSourceById("mv-video");
+    const isInsta = isInstagramBrowser();
   
-    // 他の動画はスクロール時に読み込む
+    const normalVideo = document.getElementById("mv-video");
+    const instaVideo = document.getElementById("mv-video-insta");
+  
+    if (isInsta) {
+      normalVideo.style.display = "none";
+      instaVideo.style.display = "block";
+  
+      requestAnimationFrame(() => {
+        instaVideo.play().catch((e) => {
+          console.warn("Instagram mv-video autoplay failed", e);
+        });
+      });
+  
+      // ← ここが追加ポイント！
+      setTimeout(() => {
+        setVideoSourceById("footer-video");
+      }, 800);
+  
+    } else {
+      setVideoSourceById("mv-video");
+    }
+  
+    // ScrollTriggerで他の動画を順次読み込み
     Object.keys(videoMap).forEach(id => {
-      if (id === "mv-video") return;
+      if (id === "mv-video" || id === "mv-video-insta") return;
   
+      const triggerSelector = `#${id.replace("-video", "")}`;
       ScrollTrigger.create({
-        trigger: `#${id.replace("-video", "")}`,
+        trigger: triggerSelector,
         start: "top 100%",
         once: true,
         onEnter: () => setVideoSourceById(id),
       });
     });
   });
-  
-
-
