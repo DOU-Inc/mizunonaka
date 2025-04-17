@@ -696,6 +696,10 @@ video {
 }
 
 @media screen and (max-width: 900px) {
+    .news .news-list .link {
+        font-size: 14px;
+    }
+
     .news .inner {
         gap: 80px;
     }
@@ -1102,6 +1106,16 @@ video {
 
     .trailer .movie-box .link {
         width: 19%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .trailer .title {
+        font-size: 42px;
+    }
+
+    .trailer .subtitle {
+        font-size: 10px;
     }
 }
 

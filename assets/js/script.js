@@ -380,6 +380,8 @@ gsap.fromTo(
 );
 
 
+
+
 gsap.fromTo(
     "#footer video", // アニメーションしたい要素
     {
@@ -391,11 +393,35 @@ gsap.fromTo(
         ease: "power2.out",
         scrollTrigger: {
             trigger: "#footer", // アニメーションを発動させるトリガー要素
-            start: "top center", // #story の上端が画面の上端に来たら発動
+            start: "10% center", // #story の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
+            onEnter: () => {    // 潜る映像は頭から再生
+                const video = document.querySelector("#footer video");
+                if (video) {
+                  video.currentTime = 0; // ← ここで先頭に戻す！
+                  video.play().catch((e) => {
+                    console.warn("footer動画の再生失敗", e);
+                  });
+                }
+            },
         },
     }
 );
+
+
+ScrollTrigger.create({
+    trigger: ".cast",
+    start: "top center", // castが画面中央に来たとき
+    onEnter: () => {
+      const video = document.querySelector("#footer video");
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+        console.log("castに来たのでfooter動画をリセット");
+      }
+    }
+});
+
 
 gsap.fromTo(
     "#footer .img-box", // アニメーションしたい要素
@@ -409,7 +435,6 @@ gsap.fromTo(
         scrollTrigger: {
             trigger: "#footer", // アニメーションを発動させるトリガー要素
             start: "60% top", // #footer の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
         },
     }
 );
@@ -475,11 +500,12 @@ window.addEventListener('load', () => {
         document.querySelector(".js-theater")?.classList.add("-disp");
     }, "<");
 
-    // // 最後にスクロール解放！
-    tl.call(() => {
-        lenis.start(); // ← ここでスクロールを解放！
-    });
 
+    tl.call(() => {
+        document.body.classList.remove("noscroll-preload");
+        document.documentElement.classList.remove("noscroll-preload");
+        lenis.start(); // ← ここでlenisも解放！
+    });
 
 });
 
