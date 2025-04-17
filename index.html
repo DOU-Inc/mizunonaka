@@ -2,6 +2,14 @@
 <html lang="ja">
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5XTZSMLN');</script>
+    <!-- End Google Tag Manager -->
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -18,11 +26,13 @@
     <meta property="og:image" content="https://mizunonaka-movie.jp/assets/img/ogp.png" />
     <meta property="og:site_name" content="映画『水の中で深呼吸』公式サイト" />
     <meta property="og:description" content="“普通”とは何か、“自分らしさ”とは何か。ひと夏のまぶしさの中で、自分だけの答えを探す物語。" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mizunonaka2025">    
     <link rel="icon" href="https://mizunonaka-movie.jp/assets/img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">    
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v11.0.3" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v11.0.4" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -51,10 +61,15 @@
             },
                 h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
         })(document);
-    </script>
+    </script>  
 </head>
 
 <body id="body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5XTZSMLN"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div class="container" id="container">
         <div class="bg-sp"></div>
 
@@ -298,7 +313,9 @@
 
         <section id="trailer" class="trailer section">
             <div class="inner">
+                <div class="video-wrapper">        
                 <video id="trailer-video" loop muted autoplay playsinline></video>
+                </div>
 
                 <div class="title-box">
                     <h2 class="title">TRAILER</h2>
@@ -419,7 +436,7 @@
             </div>
         </section>
     </div>
-    <script src="./assets/js/script.js?v10.0.11"></script>
+    <script src="./assets/js/script.js?v10.0.16"></script>
 
 </body>
 

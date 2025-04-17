@@ -1062,6 +1062,7 @@ video {
     width: 110vw;
     height: 110vh;
     filter: blur(20px);
+    transform: scale(1.1); /* ブラーによるはみ出し防止のため拡大 */
 }
 
 #intro,
@@ -1456,3 +1457,11 @@ video {
     z-index: 100;
     pointer-events: none;
 }
+
+.video-wrapper {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 12px; /* 角をしっかりつけるなら */
+}
+  
