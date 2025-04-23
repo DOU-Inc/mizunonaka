@@ -445,6 +445,9 @@ video {
 .sp-br {
     display: none;
 }
+.pc-br {
+    display: inline;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -457,8 +460,12 @@ video {
     }
 
     .sp-br {
-        display: block;
+        display: inline;
     }
+
+    .pc-br {
+        display: none;
+    }    
 }
 
 /*
