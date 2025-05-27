@@ -32,7 +32,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">    
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v11.0.5" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v11.0.7" media="all" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const linkElement = document.querySelector('link[href^="./assets/css/style.css"]');
+            if (linkElement) {
+                fetch('./assets/css/style.css', { method: 'HEAD' })
+                    .then(response => {
+                        const lastModified = response.headers.get('Last-Modified');
+                        if (lastModified) {
+                            const timestamp = new Date(lastModified).getTime();
+                            linkElement.href = `./assets/css/style.css?v=${timestamp}`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('CSSファイルの更新日時取得に失敗しました:', error);
+                        // エラー時はデフォルトのhrefをそのまま使用
+                    });
+            }
+        });
+    </script>    
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -98,10 +117,10 @@
                 </ul>
                 <ul class="news-lists">
                     <li class="news-list">
-                        <a href="#" class="link">
-                            <p class="prefecture" ></p>
-                            <p class="address"><span style="font-weight: 400;">coming soon</span></p>
-                            <p class="date"></p>
+                        <a href="https://qualite.musashino-k.jp/movies/26156/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="prefecture" >東京都</p>
+                            <p class="address">新宿シネマカリテ</p>
+                            <p class="date">7/25(金)〜</p>
                         </a>
                     </li>
                 </ul>
@@ -150,6 +169,18 @@
             <div class="inner">
                 <h2 class="title">NEWS</h2>
                 <ul class="news-lists">
+                    <li class="news-list">
+                        <a target="_blank" rel="noopener" href="https://qualite.musashino-k.jp/movies/26156/" class="link">
+                            <p class="date">2025.5.23</p>
+                            <p class="text">7/25(金)〜 新宿シネマカリテ ほか 全国順次公開決定！</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a target="_blank" rel="noopener" href="https://festivaldesfilmsdujapon.com/" class="link">
+                            <p class="date">2025.5.5</p>
+                            <p class="text">モントリオール日本映画祭にて、安井祥二監督が「最優秀初長編映画賞」を、<br>主演の石川瑠華 さんが「最優秀新進俳優賞」を授賞しました。</p>
+                        </a>
+                    </li>
                     <li class="news-list">
                         <a target="_blank" rel="noopener" href="https://festivaldesfilmsdujapon.com/" class="link">
                             <p class="date">2025.4.16</p>
@@ -423,15 +454,24 @@
                     </div>
                     <div class="credit-box">
                         <dl class="credit-lists">
-                            <a target="_blank" rel="noopener" href="https://hidetosato.com/" class="credit-list">
+                            <div class="credit-list">
                                 <dt>Web Direction:&nbsp;</dt>
-                                <dd>Hideto Sato | HIDETO SATO DESIGN</dd>
-                            </a>
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list">
+
+                                <div class="credit-list-data">
+                                    <dd><a target="_blank" rel="noopener" href="https://hidetosato.com/"
+                                            class="credit-list">Hideto Sato | HIDETO SATO DESIGN</a></dd>
+                                    <dd>
+                                        <a target="_blank" rel="noopener" href="https://d-o-u.jp/"
+                                            class="credit-list">Ryuichi Umeno | DOU</a>
+                                    </dd>
+                                </div>
+                            </div>
+
+                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
                                 <dt>Web Design:&nbsp;</dt>
                                 <dd>Ryuichi Umeno | DOU</dd>
                             </a>
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list">
+                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
                                 <dt>Web Coding:&nbsp;</dt>
                                 <div class="credit-list-data">
                                     <dd>Ryuichi Umeno | DOU</dd>
@@ -439,13 +479,34 @@
                                 </div>
                             </a>
                         </dl>
-                        <small class="copy">&copy;2025 <a target="_blank" rel="noopener" href="https://biyori.jpn.com/">biyori inc.</a>, <a target="_blank" rel="noopener" href="https://basil4u.com/">basil inc.</a></small>
+                        <small class="copy">&copy;2025 <a target="_blank" rel="noopener"
+                                href="https://biyori.jpn.com/">biyori inc.</a>, <a target="_blank" rel="noopener"
+                                href="https://basil4u.com/">basil inc.</a></small>
                     </div>                    
                 </div>
             </div>
         </section>
     </div>
-    <script src="./assets/js/script.js?v10.0.20"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const scriptElement = document.querySelector('script[src^="./assets/js/script.js"]');
+            if (scriptElement) {
+                fetch('./assets/js/script.js', { method: 'HEAD' })
+                    .then(response => {
+                        const lastModified = response.headers.get('Last-Modified');
+                        if (lastModified) {
+                            const timestamp = new Date(lastModified).getTime();
+                            scriptElement.src = `./assets/js/script.js?v=${timestamp}`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('JavaScriptファイルの更新日時取得に失敗しました:', error);
+                        // エラー時はデフォルトのsrcをそのまま使用
+                    });
+            }
+        });
+    </script>
+    <script src="./assets/js/script.js?v10.0.21"></script>
 
 </body>
 

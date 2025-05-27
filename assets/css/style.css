@@ -47,7 +47,8 @@ body.-noscroll {
 section {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     transition: opacity 0.6s ease;
 }
 
@@ -55,6 +56,7 @@ section {
     overflow: visible;
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     padding: 74px 94px;
     transition: top 0.4s ease, left 0.4s ease;
 }
@@ -96,6 +98,7 @@ iframe {
 // ----------------------------------------------------------------- 
 */
 
+
 /* ------------------------------ theater ------------------------------ */
 #theater-content {
     width: 100%;
@@ -131,7 +134,7 @@ iframe {
 
 
 .theater-news {
-    width: 1120px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 50px;
 }
@@ -142,7 +145,7 @@ iframe {
     grid-template-columns: 20% 40% 40%;
     padding: 1.2em 0;
     border-bottom: 1px solid #fff;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 #theater-content .carousel__button {
@@ -162,6 +165,10 @@ iframe {
 #theater-content .carousel__button svg {
     display: none;
 }
+
+.fancybox__content a:focus {
+    outline: none !important;
+  }
 
 .fancybox__backdrop {
     content: "close";
@@ -709,6 +716,7 @@ video {
 
     .news .inner {
         gap: 80px;
+        padding-bottom: 120px;       
     }
 
     .news .news-list {
@@ -1404,6 +1412,25 @@ video {
     max-height: 80%;    
 }
 
+.footer .credit-list {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: start;
+    flex-direction: row;
+}
+
+.footer .credit-list.m-left {
+    margin-left: 17px;
+}
+
+.footer .credit-list-data {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
 @media screen and (max-width: 1000px) {
     .footer .credit-box {
         font-size: 10px;
@@ -1414,9 +1441,14 @@ video {
         left: 4vw;
         bottom: 20px;  
     }
+
     .footer .credit-lists{
         position: relative;
         left: 0;
+    }
+
+    .footer .credit-list.m-left {
+        margin-left: 13.5px;
     }
 
     .footer .img-box{
@@ -1431,10 +1463,10 @@ video {
     .footer .sns img{
         width: 50px;
         height: auto;
-    };
+    }
 }
 
-.footer .credit-list {
+/*.footer .credit-list {
     display: flex;
     flex-wrap: nowrap;
     justify-content: left;
@@ -1447,7 +1479,7 @@ video {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
+}*/
 
 
 

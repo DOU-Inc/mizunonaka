@@ -435,6 +435,7 @@ gsap.fromTo(
         scrollTrigger: {
             trigger: "#footer", // アニメーションを発動させるトリガー要素
             start: "60% top", // #footer の上端が画面の上端に来たら発動
+            toggleActions: "play reverse play reverse",
         },
     }
 );
@@ -626,7 +627,7 @@ function isMobileTouchDevice() {
 //   }
   
 
-  function isInstagramBrowser() {
+function isInstagramBrowser() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     return ua.includes("Instagram");
   }
@@ -669,14 +670,22 @@ function isMobileTouchDevice() {
   
     // 他の動画をScrollTriggerでロード
     Object.keys(videoMap).forEach(id => {
-      if (id === "mv-video") return;
-  
-      const triggerSelector = `#${id.replace("-video", "")}`;
-      ScrollTrigger.create({
-        trigger: triggerSelector,
-        start: "top 100%",
-        once: true,
-        onEnter: () => setVideoSourceById(id),
-      });
+        const triggerSelector = `#${id.replace("-video", "")}`;
+        ScrollTrigger.create({
+            trigger: triggerSelector,
+            start: "top 100%", // 動画が画面に近づいたら読み込み
+            once: true,
+            onEnter: () => {
+                const video = document.getElementById(id);
+                if (video) {
+                    video.setAttribute("preload", "none"); // プリロードを無効化
+                    setVideoWithPoster(
+                        id,
+                        videoMap[id].sp.replace(".mp4", "_poster.jpg"),
+                        videoMap[id].pc.replace(".mp4", "_poster.jpg")
+                    );
+                }
+            },
+        });
     });
   });
