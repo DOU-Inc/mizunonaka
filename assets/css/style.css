@@ -23,10 +23,11 @@ body {
     letter-spacing: 0.05em;
 }
 
-body.-noscroll {
+body.noscroll {
     overflow: hidden;
     height: 100%;
-    touch-action: none; /* ← モバイルでも止める */
+    touch-action: none;
+    /* ← モバイルでも止める */
 }
 
 
@@ -75,7 +76,7 @@ iframe {
 @media screen and (max-width: 1440px) {
     .inner {
         padding: 74px 6.5vw;
-    }    
+    }
 }
 
 @media screen and (max-width:900px) {
@@ -114,7 +115,7 @@ iframe {
     backdrop-filter: blur(5px);
     border-radius: 40px 40px 0 0;
     border: 1px solid #fff;
-    background-color: rgba(255, 255, 255, .15);    
+    background-color: rgba(255, 255, 255, .15);
 }
 
 .theater.-disp {
@@ -125,7 +126,7 @@ iframe {
 @media screen and (max-width: 768px) {
     .theater.-disp {
         transform: translateY(-132%);
-    }    
+    }
 }
 
 
@@ -143,6 +144,7 @@ iframe {
     padding: 1.2em 0;
     border-bottom: 1px solid #fff;
     font-weight: bold;
+    outline: none !important;
 }
 
 #theater-content .carousel__button {
@@ -445,6 +447,7 @@ video {
 .sp-br {
     display: none;
 }
+
 .pc-br {
     display: inline;
 }
@@ -465,7 +468,7 @@ video {
 
     .pc-br {
         display: none;
-    }    
+    }
 }
 
 /*
@@ -699,7 +702,7 @@ video {
 
 .news .news-list .link .date {
     margin-right: 30px;
-    color: rgba(250, 250, 250, .85);    
+    color: rgba(250, 250, 250, .85);
 }
 
 @media screen and (max-width: 900px) {
@@ -744,7 +747,7 @@ video {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: initial;    
+    overflow: initial;
 }
 
 .intro .subtitle {
@@ -817,7 +820,7 @@ video {
     display: none;
 }
 
-.intro .all-text-box.-active {
+.intro .all-text.-active {
     pointer-events: all;
 }
 
@@ -976,7 +979,7 @@ video {
     display: none;
 }
 
-.story .all-text-box.-active {
+.story .all-text.-active {
     pointer-events: all;
 }
 
@@ -1073,13 +1076,14 @@ video {
     width: 110vw;
     height: 110vh;
     filter: blur(20px);
-    transform: scale(1.1); /* ブラーによるはみ出し防止のため拡大 */
+    transform: scale(1.1);
+    /* ブラーによるはみ出し防止のため拡大 */
 }
 
 #intro,
 #story,
 #trailer {
-  transition: opacity 0.6s ease;
+    transition: opacity 0.6s ease;
 }
 
 .trailer .movie-box {
@@ -1286,9 +1290,9 @@ video {
     }
 
     .cast .title-box {
-      
+
         top: 30px;
-    }    
+    }
 }
 
 
@@ -1351,13 +1355,13 @@ video {
     gap: 35px;
 }
 
-.footer .sns a img{
+.footer .sns a img {
     opacity: .7;
-    transition: opacity .5s ease-out;    
+    transition: opacity .5s ease-out;
 }
 
 
-.footer .sns a:hover img{
+.footer .sns a:hover img {
     opacity: 1;
 }
 
@@ -1371,18 +1375,18 @@ video {
     }
 }
 
-.footer .credit-box{
+.footer .credit-box {
     font-size: 12px;
     margin-top: 10em;
     color: rgba(255, 255, 255, 0.75);
 }
 
-.footer .credit-box a{
+.footer .credit-box a {
     color: rgba(255, 255, 255, 0.75);
     transition: color .5s ease-out;
 }
 
-.footer .credit-box a:hover{
+.footer .credit-box a:hover {
     color: #fff;
 }
 
@@ -1397,41 +1401,11 @@ video {
     left: 30px;
 }
 
-.footer-img{
+.footer-img {
     width: auto;
     opacity: .8;
     height: fit-content;
-    max-height: 80%;    
-}
-
-@media screen and (max-width: 1000px) {
-    .footer .credit-box {
-        font-size: 10px;
-        flex-direction: column;
-        justify-content: start;
-        align-items: start;
-        position: absolute;
-        left: 4vw;
-        bottom: 20px;  
-    }
-    .footer .credit-lists{
-        position: relative;
-        left: 0;
-    }
-
-    .footer .img-box{
-        margin-bottom: 25vh;
-        gap: 0 0;
-    }
-
-    .footer .sns{
-        margin-top: 5vh;
-    }
-
-    .footer .sns img{
-        width: 50px;
-        height: auto;
-    };
+    max-height: 80%;
 }
 
 .footer .credit-list {
@@ -1442,12 +1416,55 @@ video {
     flex-direction: row;
 }
 
+.footer .credit-list.m-left {
+    margin-left: 17px;
+}
+
 .footer .credit-list-data {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
 }
+
+@media screen and (max-width: 1000px) {
+    .footer .credit-box {
+        font-size: 10px;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        position: absolute;
+        left: 4vw;
+        bottom: 20px;
+    }
+
+    .footer .credit-lists {
+        position: relative;
+        left: 0;
+    }
+
+    .footer .credit-list.m-left {
+        margin-left: 13.5px;
+    }
+
+    .footer .img-box {
+        margin-bottom: 25vh;
+        gap: 0 0;
+    }
+
+    .footer .sns {
+        margin-top: 5vh;
+    }
+
+    .footer .sns img {
+        width: 50px;
+        height: auto;
+    }
+
+    ;
+}
+
+
 
 
 
@@ -1483,6 +1500,6 @@ video {
     width: 100%;
     height: auto;
     overflow: hidden;
-    border-radius: 12px; /* 角をしっかりつけるなら */
+    border-radius: 12px;
+    /* 角をしっかりつけるなら */
 }
-  

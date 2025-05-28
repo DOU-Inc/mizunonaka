@@ -67,13 +67,13 @@ function disableScroll() {
     document.documentElement.classList.add('noscroll');
     document.body.classList.add('noscroll');
     lenis.stop();
-  }
-  
-  function enableScroll() {
+}
+
+function enableScroll() {
     document.documentElement.classList.remove('noscroll');
     document.body.classList.remove('noscroll');
     lenis.start();
-  }
+}
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -102,28 +102,28 @@ const videoMap = {
 function setVideoSourceById(id) {
     const video = document.getElementById(id);
     if (!video) return;
-  
+
     const isMobile = isMobileTouchDevice();
     const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
-  
+
     // src がすでに同じなら何もしない
     if (video.getAttribute("src") === src) return;
-  
+
     // 属性を明示的にセット（iOS Instagram内ではこれが超重要）
     video.setAttribute("muted", "");
     video.setAttribute("autoplay", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("loop", "");
     video.setAttribute("src", src);
-  
+
     // 動画を再読み込み・再生
     video.poster = ""; // ← 追加
     video.load();
     video.play().catch((e) => {
-      console.warn(`Autoplay failed for ${id}:`, e);
+        console.warn(`Autoplay failed for ${id}:`, e);
     });
-  }
-  
+}
+
 
 // window.addEventListener("DOMContentLoaded", setAllVideoSources);
 // window.addEventListener("resize", () => {
@@ -167,57 +167,57 @@ function setupToggle(sectionSelector, buttonSelector) {
             title.classList.toggle('-active');
             btn.classList.toggle('-active');
 
-           
+
             const trailer = document.querySelector('#trailer');
-const story = document.querySelector('#story');
-const intro = document.querySelector('#intro'); // ← intro 追加！
+            const story = document.querySelector('#story');
+            const intro = document.querySelector('#intro'); // ← intro 追加！
 
-const isActive = section.classList.contains('-active');
-if (isActive) {
-  disableScroll();
-  moveTitleSmoothly(title);
-  html.classList.add('noscroll');
+            const isActive = section.classList.contains('-active');
+            if (isActive) {
+                disableScroll();
+                moveTitleSmoothly(title);
+                html.classList.add('noscroll');
 
-  if (section.id === 'story') {
-    if (trailer) {
-      trailer.style.opacity = '0';
-      trailer.style.pointerEvents = 'none';
-    }
-    if (intro) {
-      intro.style.opacity = '0';
-      intro.style.pointerEvents = 'none';
-    }
-  }
+                if (section.id === 'story') {
+                    if (trailer) {
+                        trailer.style.opacity = '0';
+                        trailer.style.pointerEvents = 'none';
+                    }
+                    if (intro) {
+                        intro.style.opacity = '0';
+                        intro.style.pointerEvents = 'none';
+                    }
+                }
 
-  if (section.id === 'intro' && story) {
-    story.style.opacity = '0';
-    story.style.pointerEvents = 'none';
-  }
+                if (section.id === 'intro' && story) {
+                    story.style.opacity = '0';
+                    story.style.pointerEvents = 'none';
+                }
 
-} else {
-  enableScroll();
-  resetTitlePosition(title);
-  html.classList.remove('noscroll');
+            } else {
+                enableScroll();
+                resetTitlePosition(title);
+                html.classList.remove('noscroll');
 
-  if (section.id === 'story') {
-    if (trailer) {
-      trailer.style.opacity = '1';
-      trailer.style.pointerEvents = 'auto';
-    }
-    if (intro) {
-      intro.style.opacity = '1';
-      intro.style.pointerEvents = 'auto';
-    }
-  }
+                if (section.id === 'story') {
+                    if (trailer) {
+                        trailer.style.opacity = '1';
+                        trailer.style.pointerEvents = 'auto';
+                    }
+                    if (intro) {
+                        intro.style.opacity = '1';
+                        intro.style.pointerEvents = 'auto';
+                    }
+                }
 
-  if (section.id === 'intro' && story) {
-    story.style.opacity = '1';
-    story.style.pointerEvents = 'auto';
-  }
-}
+                if (section.id === 'intro' && story) {
+                    story.style.opacity = '1';
+                    story.style.pointerEvents = 'auto';
+                }
+            }
 
 
-            
+
         });
     });
 }
@@ -398,10 +398,10 @@ gsap.fromTo(
             onEnter: () => {    // 潜る映像は頭から再生
                 const video = document.querySelector("#footer video");
                 if (video) {
-                  video.currentTime = 0; // ← ここで先頭に戻す！
-                  video.play().catch((e) => {
-                    console.warn("footer動画の再生失敗", e);
-                  });
+                    video.currentTime = 0; // ← ここで先頭に戻す！
+                    video.play().catch((e) => {
+                        console.warn("footer動画の再生失敗", e);
+                    });
                 }
             },
         },
@@ -413,12 +413,12 @@ ScrollTrigger.create({
     trigger: ".cast",
     start: "top center", // castが画面中央に来たとき
     onEnter: () => {
-      const video = document.querySelector("#footer video");
-      if (video) {
-        video.pause();
-        video.currentTime = 0;
-        console.log("castに来たのでfooter動画をリセット");
-      }
+        const video = document.querySelector("#footer video");
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+            console.log("castに来たのでfooter動画をリセット");
+        }
     }
 });
 
@@ -435,6 +435,7 @@ gsap.fromTo(
         scrollTrigger: {
             trigger: "#footer", // アニメーションを発動させるトリガー要素
             start: "60% top", // #footer の上端が画面の上端に来たら発動
+            toggleActions: "play reverse play reverse",
         },
     }
 );
@@ -559,45 +560,45 @@ const swiper = new Swiper('.swiper', {
 // モバイルタッチデバイス判定関数
 function isMobileTouchDevice() {
     return window.innerWidth <= 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }
-  
+}
 
 
-  function setVideoWithPoster(id, spPoster, pcPoster) {
+
+function setVideoWithPoster(id, spPoster, pcPoster) {
     const video = document.getElementById(id);
     if (!video) return;
-  
+
     const isMobile = isMobileTouchDevice();
     const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
     const poster = isMobile ? spPoster : pcPoster;
-  
+
     // 1. まずposterをセット（ここ超重要！）
     video.setAttribute("poster", poster);
-  
+
     // 2. すでに同じsrcならスキップ
     if (video.getAttribute("src") === src) return;
-  
+
     // 3. 属性を明示的にセット
     video.setAttribute("muted", "");
     video.setAttribute("autoplay", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("loop", "");
     video.setAttribute("src", src);
-  
+
     // 4. 再読み込み＆再生
     video.load();
     video.play().catch((e) => {
-      console.warn(`Autoplay failed for ${id}:`, e);
+        console.warn(`Autoplay failed for ${id}:`, e);
     });
-  }
-  
+}
+
 //   function setResponsivePoster(videoId, spPath, pcPath) {
 //     const video = document.getElementById(videoId);
 //     if (!video) return;
-  
+
 //     const isMobile = isMobileTouchDevice();
 //     const posterPath = isMobile ? spPath : pcPath;
-  
+
 //     video.setAttribute("poster", posterPath);
 //   }
 
@@ -605,35 +606,35 @@ function isMobileTouchDevice() {
 //   function setVideoSourceById(id) {
 //     const video = document.getElementById(id);
 //     if (!video) return;
-  
+
 //     const isMobile = isMobileTouchDevice();
 //     const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
-  
+
 //     if (video.getAttribute("src") === src) return;
-  
+
 //     video.setAttribute("muted", "");
 //     video.setAttribute("autoplay", "");
 //     video.setAttribute("playsinline", "");
 //     video.setAttribute("loop", "");
-  
+
 //     video.poster = ""; // ← これ追加！
 //     video.setAttribute("src", src);
-  
+
 //     video.load();
 //     video.play().catch((e) => {
 //       console.warn(`Autoplay failed for ${id}:`, e);
 //     });
 //   }
-  
 
-  function isInstagramBrowser() {
+
+function isInstagramBrowser() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     return ua.includes("Instagram");
-  }
+}
 
-  window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
     const isInsta = isInstagramBrowser();
-  
+
     // poster切り替え
     setVideoWithPoster(
         "mv-video",
@@ -644,39 +645,39 @@ function isMobileTouchDevice() {
         "story-video",
         "./assets/img/02_sp_poster_v2.jpg",
         "./assets/img/02_pc_poster.jpg"
-    );    
+    );
     setVideoWithPoster(
         "trailer-video",
         "./assets/img/03_sp_poster.jpg",
         "./assets/img/03_pc_poster.jpg"
-    );    
+    );
     setVideoWithPoster(
         "footer-video",
         "./assets/img/04_sp_poster_v2.jpg",
         "./assets/img/04_pc_poster.jpg"
-    );    
-  
+    );
+
     if (isInsta) {
-      // instaでは1本だけでも明示的にロード
-      setVideoSourceById("mv-video");
-  
-      setTimeout(() => {
-        setVideoSourceById("footer-video");
-      }, 800);
+        // instaでは1本だけでも明示的にロード
+        setVideoSourceById("mv-video");
+
+        setTimeout(() => {
+            setVideoSourceById("footer-video");
+        }, 800);
     } else {
-      setVideoSourceById("mv-video");
+        setVideoSourceById("mv-video");
     }
-  
+
     // 他の動画をScrollTriggerでロード
     Object.keys(videoMap).forEach(id => {
-      if (id === "mv-video") return;
-  
-      const triggerSelector = `#${id.replace("-video", "")}`;
-      ScrollTrigger.create({
-        trigger: triggerSelector,
-        start: "top 100%",
-        once: true,
-        onEnter: () => setVideoSourceById(id),
-      });
+        if (id === "mv-video") return;
+
+        const triggerSelector = `#${id.replace("-video", "")}`;
+        ScrollTrigger.create({
+            trigger: triggerSelector,
+            start: "top 100%",
+            once: true,
+            onEnter: () => setVideoSourceById(id),
+        });
     });
-  });
+});
