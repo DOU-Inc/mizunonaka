@@ -82,7 +82,7 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc.mp4",
+        pc: "./assets/video/01_pc_v2.mp4",
         sp: "./assets/video/01_sp.mp4",
     },
     "story-video": {
