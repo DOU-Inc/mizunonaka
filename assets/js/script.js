@@ -82,7 +82,7 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc_v2.mp4",
+        pc: "./assets/video/01_pc.mp4",
         sp: "./assets/video/01_sp.mp4",
     },
     "story-video": {
@@ -161,6 +161,7 @@ function setupToggle(sectionSelector, buttonSelector) {
 
             blurLayer.classList.toggle('-active');
             section.classList.toggle('-active');
+            inner.classList.toggle('-active');
             text.classList.toggle('-active');
             allText.classList.toggle('-active');
             textBox.classList.toggle('-active');
@@ -442,6 +443,7 @@ gsap.fromTo(
 
 
 
+// MVのアニメーション
 window.addEventListener('load', () => {
     lenis.stop();
     const isMobile = window.innerWidth <= 768;
@@ -527,7 +529,7 @@ gsap.to(
 
 
 
-
+// スクロールヌルヌル
 const lenis = new Lenis({
     smooth: true,
     lerp: 0.06, // 数値小さいほどぬるぬる（0〜1）
@@ -637,7 +639,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // poster切り替え
     setVideoWithPoster(
         "mv-video",
-        "./assets/img/01_sp_poster_v2.jpg",
+        "./assets/img/01_sp_poster.jpg",
         "./assets/img/01_pc_poster.jpg"
     );
     setVideoWithPoster(
