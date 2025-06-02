@@ -1,3 +1,43 @@
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//ローディング画面切り替え
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+window.__loadingStart = performance.now();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById("loading");
+    const progressEl = document.getElementById("progress-bar");
+
+    let progress = 0;
+    let loadingComplete = false;
+
+    // ページ全体が読み込み完了したらフラグを立てる
+    window.addEventListener("load", () => {
+        loadingComplete = true;
+    });
+
+    const interval = setInterval(() => {
+        if (progress < 99 || loadingComplete) {
+            progress++;
+            progressEl.value = progress;
+        }
+
+        if (progress >= 100 && loadingComplete) {
+            clearInterval(interval);
+
+            const minDisplayTime = 2000;
+            const elapsed = performance.now() - window.__loadingStart;
+            const delay = Math.max(minDisplayTime - elapsed, 0);
+
+            setTimeout(() => {
+                loader.classList.add("loaded");
+            }, delay);
+        }
+    }, 20); // バーの進行速度
+});
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//ローディング画面切り替え
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
 
 window.addEventListener('beforeunload', () => {
     window.scrollTo(0, 0);
@@ -82,20 +122,20 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc.mp4",
-        sp: "./assets/video/01_sp.mp4",
+        pc: "./assets/video/01_pc_v3.mp4",
+        sp: "./assets/video/01_sp_v3.mp4",
     },
     "story-video": {
-        pc: "./assets/video/02_pc.mp4",
-        sp: "./assets/video/02_sp.mp4",
+        pc: "./assets/video/02_pc_v3.mp4",
+        sp: "./assets/video/02_sp_v3.mp4",
     },
     "trailer-video": {
-        pc: "./assets/video/03_pc.mp4",
-        sp: "./assets/video/03_sp.mp4",
+        pc: "./assets/video/03_pc_v3.mp4",
+        sp: "./assets/video/03_sp_v3.mp4",
     },
     "footer-video": {
-        pc: "./assets/video/04_pc.mp4",
-        sp: "./assets/video/04_sp.mp4",
+        pc: "./assets/video/04_pc_v3.mp4",
+        sp: "./assets/video/04_sp_v3.mp4",
     },
 };
 
@@ -453,21 +493,9 @@ window.addEventListener('load', () => {
         autoAlpha: 0,
     });
 
-    tl.to('.catch', {
-        duration: 2,
-        opacity: 1,
-        ease: 'power2.out',
-    });
-
-
-    tl.to('.catch', {
-        opacity: 0,
-        ease: 'power1.out',
-        duration: 2,
-    });
-
     tl.to('#lottie-animation', {
         opacity: 1,
+        delay: 1,
         onComplete: () => {
             lottie.loadAnimation({
                 container: document.getElementById('lottie-animation'),
@@ -477,7 +505,7 @@ window.addEventListener('load', () => {
                 path: './assets/json/data.json'
             });
         }
-    }, '-=1.0');
+    });
 
     tl.to('.bg-black', {
         duration: 6,

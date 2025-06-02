@@ -11,7 +11,7 @@ html {
 }
 
 html.noscroll {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 body {
@@ -74,7 +74,6 @@ iframe {
     aspect-ratio: 16/9;
 }
 
-
 @media screen and (max-width: 1440px) {
     .inner {
         padding: 74px 6.5vw;
@@ -92,6 +91,102 @@ iframe {
         height: auto;
     }
 }
+
+
+
+/*
+// -----------------------------------------------------------------
+// ロード画面 start
+// ----------------------------------------------------------------- 
+*/
+#loading {
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+#loading.loaded {
+    animation: fadeOut 0.6s ease forwards;
+}
+
+.spinner {
+    writing-mode: vertical-rl;
+    color: white;
+    letter-spacing: 0.4em;
+    line-height: 2;
+    margin-bottom: 40px;
+}
+
+#progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s;
+    /* ここで伸びる */
+}
+
+/* Firefox */
+progress::-moz-progress-bar {
+    background-color: #fff;
+}
+
+/* WebKit系（Chrome, Safari） */
+progress::-webkit-progress-value {
+    background-color: #fff;
+}
+
+/* 未完了部分（オプション） */
+progress::-webkit-progress-bar {
+    background-color: #000;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+/*
+// -----------------------------------------------------------------
+// ロード画面 end
+// ----------------------------------------------------------------- 
+*/
+
+
 
 /*
 // -----------------------------------------------------------------
@@ -118,11 +213,11 @@ iframe {
     backdrop-filter: blur(5px);
     border-radius: 40px 40px 0 0;
     border: 1px solid #fff;
-    background-color: rgba(255, 255, 255, .15);
+    background: rgba(255, 255, 255, .15);
 }
 
 .theater.-disp {
-    transition: transform .7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: background 0.3s, transform .7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: translateY(-85%);
 }
 
@@ -149,13 +244,17 @@ iframe {
     font-weight: 400;
 }
 
+#theater-content .link {
+    transition: background 0.3s;
+}
+
 #theater-content .carousel__button {
     top: 40px;
     right: 40px;
     border: 1px solid #fff;
     border-radius: 100px;
     padding: 1.5em 4.4em;
-
+    transition: background 0.3s;
 }
 
 #theater-content .carousel__button::before {
@@ -424,6 +523,8 @@ video {
     color: white;
     cursor: pointer;
     font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s;
 }
 
 /* blur layer：初期状態は丸マスク */
@@ -483,6 +584,34 @@ video {
 // ----------------------------------------------------------------- 
 */
 
+/* hover--------------------------------- */
+.news .news-list .link:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.theater:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+#theater-content .link:hover,
+#theater-content .carousel__button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.movie-button:hover {
+    opacity: 1;
+}
+
+.trailer .movie-box .link:hover::before {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* hover--------------------------------- */
+
 /*
 // -----------------------------------------------------------------
 // ボタン押した時の動き
@@ -505,7 +634,7 @@ video {
 }
 
 .js-btn.-active {
-    transition: opacity 0.5s ease-in-out 1.5s;
+    transition: opacity 0.5s ease-in-out, background 0.3s;
 }
 
 .js-title {
@@ -704,6 +833,7 @@ video {
     display: flex;
     padding: .95em 0;
     background-color: rgba(255, 255, 255, 0.1);
+    transition: background 0.5s;
 }
 
 .news .news-list .link .date {
@@ -827,14 +957,13 @@ video {
     display: none;
 }
 
-.intro .all-text.-active {
+.intro .all-text-box.-active {
     pointer-events: all;
 }
 
 .intro .button {
     z-index: 10;
     margin-top: 27px;
-    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
 }
 
@@ -986,7 +1115,7 @@ video {
     display: none;
 }
 
-.story .all-text.-active {
+.story .all-text-box.-active {
     pointer-events: all;
 }
 
@@ -994,7 +1123,6 @@ video {
 .story .button {
     z-index: 10;
     margin-top: 24px;
-    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
 }
 
@@ -1103,10 +1231,23 @@ video {
 }
 
 .trailer .movie-box .link {
+    position: relative;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.trailer .movie-box .link::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.1);
+    filter: blur(2px);
+    z-index: -1;
+    transition: background 0.3s;
 }
 
 @media screen and (max-width: 900px) {
@@ -1166,6 +1307,7 @@ video {
     top: 0;
     left: 0;
     backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .swiper .swiper-slide img {
