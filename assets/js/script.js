@@ -34,37 +34,56 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 20); // バーの進行速度
 });
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-//ローディング画面切り替え
-//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-
-window.addEventListener('beforeunload', () => {
-    window.scrollTo(0, 0);
-    if (lenis) lenis.scrollTo(0, { immediate: true });
-});
 
 
 function handleBgSpFadeOnScroll() {
-    const bgSp = document.querySelector('.bg-sp');
-    if (!bgSp) return;
-    let isHidden = false;
+    const mvVideo = document.querySelector('.mv-video'); // MVの動画
+    const mvSection = document.querySelector('#mv'); // MVセクション（基準位置）
+    const header = document.querySelector('#header'); // ヘッダー
+
+    if (!mvVideo || !mvSection || !header) return;
+
+    let isBlurRemoved = false;
+    let isHeaderShown = false;
+
+    // ヘッダー初期状態は非表示
+    header.style.opacity = '0';
+    header.style.pointerEvents = 'none';
+    header.style.transition = 'opacity 0.5s ease';
 
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
+        const mvBottom = mvSection.offsetTop + mvSection.offsetHeight;
 
-        if (scrollY > 10 && !isHidden) {
-            bgSp.style.opacity = '0';
-            isHidden = true;
-        } else if (scrollY <= 10 && isHidden) {
-            bgSp.style.opacity = '0.3';
-            isHidden = false;
+        // ① blur 処理（10px → none）
+        if (scrollY > 10 && !isBlurRemoved) {
+            mvVideo.style.filter = 'none';
+            isBlurRemoved = true;
+        } else if (scrollY <= 10 && isBlurRemoved) {
+            mvVideo.style.filter = 'blur(10px)';
+            isBlurRemoved = false;
+        }
+
+        // ② MVを過ぎたらヘッダー表示
+        if (scrollY > mvBottom && !isHeaderShown) {
+            header.style.opacity = '1';
+            header.style.pointerEvents = 'auto';
+            isHeaderShown = true;
+        } else if (scrollY <= mvBottom && isHeaderShown) {
+            header.style.opacity = '0';
+            header.style.pointerEvents = 'none';
+            isHeaderShown = false;
         }
     });
 }
 
 handleBgSpFadeOnScroll();
 
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//各タイトルがモーダル開閉時の動き
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 function moveTitleSmoothly(titleElement) {
     const rect = titleElement.getBoundingClientRect();
     const currentX = rect.left;
@@ -92,16 +111,10 @@ function moveTitleSmoothly(titleElement) {
 }
 
 function resetTitlePosition(titleElement) {
-    titleElement.style.transition = 'transform 1s ease';
+    titleElement.style.transition = 'transform 2s ease';
     titleElement.style.transform = `translate(0, 0)`; // 元の位置に戻すだけ！
 }
 
-
-// window.addEventListener('resize', () => {
-//     if (section.classList.contains('-active')) {
-//         moveTitleSmoothly(titleElement); // 再調整
-//     }
-// });
 
 function disableScroll() {
     document.documentElement.classList.add('noscroll');
@@ -114,6 +127,12 @@ function enableScroll() {
     document.body.classList.remove('noscroll');
     lenis.start();
 }
+
+// window.addEventListener('resize', () => {
+//     if (section.classList.contains('-active')) {
+//         moveTitleSmoothly(titleElement); // 再調整
+//     }
+// });
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -129,9 +148,13 @@ const videoMap = {
         pc: "./assets/video/02_pc_v3.mp4",
         sp: "./assets/video/02_sp_v3.mp4",
     },
-    "trailer-video": {
+    "normal": {
         pc: "./assets/video/03_pc_v3.mp4",
         sp: "./assets/video/03_sp_v3.mp4",
+    },
+    "teaser": {
+        pc: "./assets/video/teaser_pc.mp4",
+        sp: "./assets/video/teaser_sp.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
@@ -178,95 +201,309 @@ function setupToggle(sectionSelector, buttonSelector) {
     const section = document.querySelector(sectionSelector);
     if (!section) return;
 
-    const blurLayer = section.querySelector('.blur-layer'); // 各セクションに分けた方が安全
+    const blurLayer = section.querySelector('.blur-layer');
+    const navList = section.querySelector('.js-nav-logo');
     const text = section.querySelector('.js-text');
     const inner = section.querySelector('.js-inner');
-
     const allText = section.querySelector('.js-all-text');
     const textBox = section.querySelector('.js-text-box');
     const title = section.querySelector('.js-title');
     const btn = section.querySelector('.js-btn');
+    const ModalBox = section.querySelector('.js-modal-box');
 
+    // 他のセクションをまとめて取得
     const trailer = document.querySelector('#trailer');
     const story = document.querySelector('#story');
-    const intro = document.querySelector('#intro'); // ← intro 追加！
+    const intro = document.querySelector('#intro');
+    const header = document.querySelector('#header');
+
+    // セクション配列
+    const sections = [trailer, story, intro, header];
+    const html = document.documentElement;
 
     const buttons = section.querySelectorAll(buttonSelector);
 
-
-    const html = document.documentElement;
     buttons.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
 
-            blurLayer.classList.toggle('-active');
+            // 対象要素を一括トグル
+            blurLayer?.classList.toggle('-active');
+            navList?.classList.toggle('-active');
+            text?.classList.toggle('-active');
+            inner?.classList.toggle('-active');
+            allText?.classList.toggle('-active');
+            textBox?.classList.toggle('-active');
+            title?.classList.toggle('-active');
+            btn?.classList.toggle('-active');
+            ModalBox?.classList.toggle('-active');
             section.classList.toggle('-active');
-            inner.classList.toggle('-active');
-            text.classList.toggle('-active');
-            allText.classList.toggle('-active');
-            textBox.classList.toggle('-active');
-            title.classList.toggle('-active');
-            btn.classList.toggle('-active');
-
-
-            const trailer = document.querySelector('#trailer');
-            const story = document.querySelector('#story');
-            const intro = document.querySelector('#intro'); // ← intro 追加！
 
             const isActive = section.classList.contains('-active');
+
             if (isActive) {
                 disableScroll();
-                moveTitleSmoothly(title);
+                moveTitleSmoothly?.(title);
                 html.classList.add('noscroll');
 
-                if (section.id === 'story') {
-                    if (trailer) {
-                        trailer.style.opacity = '0';
-                        trailer.style.pointerEvents = 'none';
+                // 他のセクションだけ opacity:0 に
+                sections.forEach(s => {
+                    if (s && s !== section) {
+                        s.style.setProperty('opacity', '0');
+                        s.style.setProperty('pointer-events', 'none');
                     }
-                    if (intro) {
-                        intro.style.opacity = '0';
-                        intro.style.pointerEvents = 'none';
-                    }
-                }
-
-                if (section.id === 'intro' && story) {
-                    story.style.opacity = '0';
-                    story.style.pointerEvents = 'none';
-                }
+                });
 
             } else {
                 enableScroll();
-                resetTitlePosition(title);
+                resetTitlePosition?.(title);
                 html.classList.remove('noscroll');
 
-                if (section.id === 'story') {
-                    if (trailer) {
-                        trailer.style.opacity = '1';
-                        trailer.style.pointerEvents = 'auto';
+                // 全セクションを戻す
+                sections.forEach(s => {
+                    if (s) {
+                        s.style.setProperty('opacity', '1');
+                        s.style.setProperty('pointer-events', 'auto');
                     }
-                    if (intro) {
-                        intro.style.opacity = '1';
-                        intro.style.pointerEvents = 'auto';
-                    }
-                }
-
-                if (section.id === 'intro' && story) {
-                    story.style.opacity = '1';
-                    story.style.pointerEvents = 'auto';
-                }
+                });
             }
-
-
-
         });
     });
 }
 
-// 各セクションで設定
-setupToggle('#intro', '.button');
-setupToggle('#story', '.button');
+// 各セクションに適用
+setupToggle('#header', '#header .button');
+setupToggle('#intro', '#intro .button');
+setupToggle('#story', '#story .button');
 
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// ハンバーガーメニュー内リンククリック時の処理
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーZ
+
+document.querySelectorAll('#header .nav-list a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // メニューを閉じる（-activeクラスを削除）
+        const header = document.getElementById('header');
+        const html = document.documentElement;
+
+        header.classList.remove('-active');
+        html.classList.remove('noscroll');
+
+        // ブラーやモーダル関連のクラスも解除
+        header.querySelector('.js-blur-layer')?.classList.remove('-active');
+        header.querySelector('.js-nav-logo')?.classList.remove('-active');
+        header.querySelector('.js-all-text')?.classList.remove('-active');
+        header.querySelector('.js-btn')?.classList.remove('-active');
+
+        // スクロール先ID取得
+        const targetId = link.getAttribute('href').replace('#', '');
+        const targetEl = document.getElementById(targetId);
+        const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+
+        // スクロール
+        if (targetEl) {
+            const pos = targetEl.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            window.scrollTo({
+                top: pos,
+                behavior: 'smooth'
+            });
+        }
+
+        // スクロールを再有効化（lenis使用時）
+        enableScroll();
+    });
+});
+
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//cast,staff,commentのモーダルのアニメーション
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+document.addEventListener('DOMContentLoaded', () => {
+    const html = document.documentElement;
+
+    // ===== 共通ヘッダー =====
+    const header = document.getElementById('header');
+
+    // ===== CAST =====
+    const castButtons = document.querySelectorAll('#cast .cast-list button');
+    const castModalBoxes = document.querySelectorAll('#cast .modal-box.js-modal-box');
+    const castLists = document.querySelector('#cast .cast-lists');
+    const castTitle = document.querySelector('#cast .js-title');
+    const castCloseButtons = document.querySelectorAll('#cast .modal-box .close-button');
+
+    // ===== STAFF =====
+    const staffButtons = document.querySelectorAll('#staff .staff-list button');
+    const staffModalBoxes = document.querySelectorAll('#staff .modal-box.js-modal-box');
+    const staffLists = document.querySelector('#staff .staff-lists');
+    const staffTitle = document.querySelector('#staff .js-title');
+    const staffCloseButtons = document.querySelectorAll('#staff .modal-box .close-button');
+
+    // ===== COMMENT =====
+    const commentButtons = document.querySelectorAll('#comment .comment-button button');
+    const commentModalBoxes = document.querySelectorAll('#comment .modal-box.js-modal-box');
+    const commentLists = document.querySelector('#comment .comment-lists');
+    const commentTitle = document.querySelector('#comment .js-title');
+    const commentCloseButtons = document.querySelectorAll('#comment .modal-box .close-button');
+
+    // ===== CAST ボタン =====
+    castButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (castLists) {
+                castLists.style.transition = 'opacity 0.5s ease';
+                castLists.style.opacity = '0';
+                castLists.style.pointerEvents = 'none';
+            }
+
+            if (header) {
+                disableScroll();
+                html.classList.add('noscroll');
+                header.style.opacity = '0';
+                header.style.pointerEvents = 'none';
+            }
+
+            moveTitleSmoothly?.(castTitle);
+
+            const targetModal = castModalBoxes[index];
+            if (targetModal) {
+                targetModal.classList.add('-active');
+            }
+        });
+    });
+
+    // ===== CAST 閉じるボタン =====
+    castCloseButtons.forEach(closeButton => {
+        closeButton.addEventListener('click', () => {
+            const targetModal = closeButton.closest('.modal-box');
+            if (targetModal) {
+                targetModal.classList.remove('-active');
+            }
+
+            if (castLists) {
+                castLists.style.transition = 'opacity 0.5s ease 1.2s';
+                castLists.style.opacity = '1';
+                castLists.style.pointerEvents = 'auto';
+            }
+
+            resetTitlePosition?.(castTitle);
+
+            enableScroll();
+            html.classList.remove('noscroll');
+
+            if (header) {
+                header.style.opacity = '1';
+                header.style.pointerEvents = 'auto';
+            }
+        });
+    });
+
+    // ===== STAFF ボタン =====
+    staffButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (staffLists) {
+                staffLists.style.transition = 'opacity 0.5s ease';
+                staffLists.style.opacity = '0';
+                staffLists.style.pointerEvents = 'none';
+            }
+
+            if (header) {
+                disableScroll();
+                html.classList.add('noscroll');
+                header.style.opacity = '0';
+                header.style.pointerEvents = 'none';
+            }
+
+            moveTitleSmoothly?.(staffTitle);
+
+            const targetModal = staffModalBoxes[index];
+            if (targetModal) {
+                targetModal.classList.add('-active');
+            }
+        });
+    });
+
+    // ===== STAFF 閉じるボタン =====
+    staffCloseButtons.forEach(closeButton => {
+        closeButton.addEventListener('click', () => {
+            const targetModal = closeButton.closest('.modal-box');
+            if (targetModal) {
+                targetModal.classList.remove('-active');
+            }
+
+            if (staffLists) {
+                staffLists.style.transition = 'opacity 0.5s ease 1.2s';
+                staffLists.style.opacity = '1';
+                staffLists.style.pointerEvents = 'auto';
+            }
+
+            resetTitlePosition?.(staffTitle);
+
+            enableScroll();
+            html.classList.remove('noscroll');
+
+            if (header) {
+                header.style.opacity = '1';
+                header.style.pointerEvents = 'auto';
+            }
+        });
+    });
+
+    // ===== COMMENT ボタン =====
+    commentButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (commentLists) {
+                commentLists.style.transition = 'opacity 0.5s ease';
+                commentLists.style.opacity = '0';
+                commentLists.style.pointerEvents = 'none';
+            }
+
+            if (header) {
+                disableScroll();
+                html.classList.add('noscroll');
+                header.style.opacity = '0';
+                header.style.pointerEvents = 'none';
+            }
+
+            moveTitleSmoothly?.(commentTitle);
+
+            const targetModal = commentModalBoxes[index];
+            if (targetModal) {
+                targetModal.classList.add('-active');
+            }
+        });
+    });
+
+    // ===== COMMENT 閉じるボタン =====
+    commentCloseButtons.forEach(closeButton => {
+        closeButton.addEventListener('click', () => {
+            const targetModal = closeButton.closest('.modal-box');
+            if (targetModal) {
+                targetModal.classList.remove('-active');
+            }
+
+            if (commentLists) {
+                commentLists.style.transition = 'opacity 0.5s ease 1.2s';
+                commentLists.style.opacity = '1';
+                commentLists.style.pointerEvents = 'auto';
+            }
+
+            resetTitlePosition?.(commentTitle);
+
+            enableScroll();
+            html.classList.remove('noscroll');
+
+            if (header) {
+                header.style.opacity = '1';
+                header.style.pointerEvents = 'auto';
+            }
+        });
+    });
+
+});
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 //intro,storyのPCとSPの文字数制御
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -367,12 +604,13 @@ gsap.fromTo(
             trigger: "#story", // アニメーションを発動させるトリガー要素
             start: "top center", // #story の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
+
         },
     }
 );
 
 gsap.fromTo(
-    "#trailer video", // アニメーションしたい要素
+    "#trailer .video-wrapper", // アニメーションしたい要素
     {
         autoAlpha: 0, // アニメーション開始前（透明）
     },
@@ -420,11 +658,56 @@ gsap.fromTo(
     }
 );
 
+gsap.fromTo(
+    ".staff .staff-bg-box",
+    {
+        autoAlpha: 0,
+    },
+    {
+        autoAlpha: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".staff",
+            start: "top 40%",
+            toggleActions: "play reverse play reverse",
+            onEnter: () => {
+                container.style.overflow = "visible";
+                inners.forEach(inner => {
+                    inner.style.overflow = "hidden"; // ← 各.innerに適用
+                });
+            },
+            onLeaveBack: () => {
+                container.style.overflow = "hidden";
+                inners.forEach(inner => {
+                    inner.style.overflow = "visible"; // ← 各.innerに適用
+                });
+            },
+        },
+    }
+);
+
+gsap.fromTo(
+    ".staff .staff-bg.-two",
+    {
+        autoAlpha: 0,
+    },
+    {
+        autoAlpha: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: ".gsap-trigger",
+            start: "top 40%",
+            toggleActions: "play reverse play reverse",
+        },
+    }
+);
 
 
 
 gsap.fromTo(
-    "#footer video", // アニメーションしたい要素
+    "#comment video", // アニメーションしたい要素
     {
         autoAlpha: 0, // アニメーション開始前（透明）
     },
@@ -433,11 +716,11 @@ gsap.fromTo(
         duration: 1, // アニメーションの時間
         ease: "power2.out",
         scrollTrigger: {
-            trigger: "#footer", // アニメーションを発動させるトリガー要素
-            start: "10% center", // #story の上端が画面の上端に来たら発動
+            trigger: "#comment", // アニメーションを発動させるトリガー要素
+            start: "top center", // #footer の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
             onEnter: () => {    // 潜る映像は頭から再生
-                const video = document.querySelector("#footer video");
+                const video = document.querySelector("#comment video");
                 if (video) {
                     video.currentTime = 0; // ← ここで先頭に戻す！
                     video.play().catch((e) => {
@@ -449,19 +732,6 @@ gsap.fromTo(
     }
 );
 
-
-ScrollTrigger.create({
-    trigger: ".cast",
-    start: "top center", // castが画面中央に来たとき
-    onEnter: () => {
-        const video = document.querySelector("#footer video");
-        if (video) {
-            video.pause();
-            video.currentTime = 0;
-            console.log("castに来たのでfooter動画をリセット");
-        }
-    }
-});
 
 
 gsap.fromTo(
@@ -475,7 +745,7 @@ gsap.fromTo(
         ease: "power2.out",
         scrollTrigger: {
             trigger: "#footer", // アニメーションを発動させるトリガー要素
-            start: "60% top", // #footer の上端が画面の上端に来たら発動
+            start: "center center", // #footer の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
         },
     }
@@ -716,5 +986,84 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             },
         });
+    });
+});
+
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// Trailerとcommentのタブの切り替え
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+document.addEventListener('DOMContentLoaded', function () {
+    // -------------------
+    // 🎥 MOVIE TABS
+    // -------------------
+    const movieButtons = document.querySelectorAll('.js-tab-movie');
+    const movieBoxes = document.querySelectorAll('.js-movie');
+
+    const trailerVideo = document.getElementById('normal');
+    const teaserVideo = document.getElementById('teaser');
+
+    movieButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const type = button.classList.contains('-teaser') ? '-teaser' : '-normal';
+
+            movieButtons.forEach(btn => btn.classList.remove('-active'));
+            button.classList.add('-active');
+
+            movieBoxes.forEach(box => {
+                box.style.opacity = box.classList.contains(type) ? '1' : '0';
+            });
+
+            if (type === '-teaser') {
+                teaserVideo.style.opacity = '1';
+                trailerVideo.style.opacity = '0';
+            } else {
+                trailerVideo.style.opacity = '1';
+                teaserVideo.style.opacity = '0';
+            }
+        });
+    });
+
+    // -------------------
+    // 💬 COMMENT TABS
+    // -------------------
+    const commentButtons = document.querySelectorAll('.js-tab-comment');
+    const commentLists = document.querySelectorAll('.comment-lists.-modal');
+
+    commentButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const type = button.classList.contains('-famous') ? '-famous' : '-audience';
+
+            commentButtons.forEach(btn => btn.classList.remove('-active'));
+            button.classList.add('-active');
+
+            commentLists.forEach(list => {
+                list.style.opacity = list.classList.contains(type) ? '1' : '0';
+                list.style.pointerEvents = list.classList.contains(type) ? 'auto' : 'none';
+            });
+        });
+    });
+
+    // -------------------
+    // ✅ 初期化
+    // -------------------
+    const defaultMovie = document.querySelector('.js-tab-movie.-normal');
+    const defaultComment = document.querySelector('.js-tab-comment.-famous');
+
+    if (defaultMovie) defaultMovie.click();
+    if (defaultComment) defaultComment.click();
+});
+
+
+
+
+window.addEventListener('load', function () {
+    var lists = document.querySelector('.comment-lists');
+
+    new Masonry(lists, {
+        itemSelector: '.comment-list',
+        columnWidth: 300,
+        fitWidth: true
     });
 });

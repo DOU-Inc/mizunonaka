@@ -69,6 +69,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
+    <!-- maonry -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
     <style>
         @font-face {
             font-family: 'ogg';
@@ -109,8 +112,65 @@
         <progress id="progress-bar" max="100" value="0"></progress>
     </div>
 
+    <header id="header" class="header">
+        <button class="hamburger button" aria-label="メニュー" aria-controls="nav-menu" aria-expanded="false">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <!-- ブラーエフェクトのレイヤー -->
+            <div class="blur-layer js-blur-layer" id="blur-layer">
+                <!-- SVGマスク定義 -->
+                <svg width="0" height="0">
+                    <defs>
+                        <!-- 丸マスク -->
+                        <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5">
+                            <stop offset="60%" stop-color="white" stop-opacity="1" />
+                            <stop offset="100%" stop-color="white" stop-opacity="0" />
+                        </radialGradient>
+                        <mask id="radial-mask" maskContentUnits="objectBoundingBox">
+                            <rect x="0" y="0" width="1" height="1" fill="url(#radial-gradient)" />
+                        </mask>
+                    </defs>
+                </svg>
+            </div>
+        </button>
+        <div class="modal-box js-modal-box">
+            <button class="close-button button js-btn" id="close-intro">close</button>
+            <div class="nav js-text-box" data-lenis-prevent>
+                <picture>
+                    <!-- スマホ用 -->
+                    <source srcset="./assets/img/mv_sp.png" media="(max-width: 768px)">
+                    <!-- PC用（デフォルト） -->
+                    <img class="nav-logo js-nav-logo" src="./assets/img/mv.png" alt="水の中で深呼吸">
+                </picture>
+                <ul class="nav-lists js-all-text">
+                    <li class="nav-list">
+                        <a href="#news">NEWS<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#intro">INTRODUCTION<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#story">STORY<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#trailer">TRAILER<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#cast">CAST<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#staff">STAFF<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#">COMMENT<br><span>お知らせ</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
     <div class="container" id="container">
-        <div class="bg-sp"></div>
 
         <a data-fancybox data-src="#theater-content" href="#" class="theater js-theater">劇場情報</a>
         <div id="theater-content" style="display: none;">
@@ -165,7 +225,7 @@
                     </div>
                 </div>
 
-                <video id="mv-video" muted autoplay playsinline loop></video>
+                <video class="mv-video" id="mv-video" muted autoplay playsinline loop></video>
 
 
             </div>
@@ -368,31 +428,50 @@
         <section id="trailer" class="trailer section">
             <div class="inner">
                 <div class="video-wrapper">
-                    <video id="trailer-video" loop muted autoplay playsinline></video>
+                    <video id="normal" loop muted autoplay playsinline></video>
+                    <video id="teaser" loop muted autoplay playsinline></video>
                 </div>
 
                 <div class="title-box">
                     <h2 class="title">TRAILER</h2>
                     <p class="subtitle">予告編</p>
                 </div>
-                <div class="movie-box">
-                    <img class="movie-img" src="./assets/img/trailer.jpg" alt="">
-                    <a data-fancybox data-src="#movie" href="#" class="link">
-                        <img src="./assets/img/button.svg" alt="" class="movie-button">
+
+                <div class="js-tabs">
+                    <button class="js-tab-movie -normal">予告編映像</button>
+                    <button class="js-tab-movie -teaser">ティザー予告</button>
+                </div>
+
+                <div class="js-movie -teaser">
+                    <img class="movie-img" src="./assets/img/dummy.png" alt="">
+                    <a data-fancybox data-src="#movie-teaser" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
                     </a>
-                    <div id="movie" style="display: none;">
-                        <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
+                    <div id="movie-teaser" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/SeTCdBqwOgc?si=tMxl_dLiDQCjDTFV"
                             title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay playsinline; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
+                </div>
 
+                <div class="js-movie -normal">
+                    <img class="movie-img" src="./assets/img/trailer.jpg" alt="">
+                    <a data-fancybox data-src="#movie-normal" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>
+                    <div id="movie-normal" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="cast" class="cast section">
-            <div class="inner">
+            <div class="inner js-inner">
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
@@ -406,99 +485,991 @@
                         </div>
                     </div>
                 </div>
-                <div class="title-box">
+                <div class="title-box js-title">
                     <h2 class="title">CAST</h2>
                     <p class="subtitle">キャスト</p>
                 </div>
                 <ul class="cast-lists">
-                    <li class="cast-list -margin">石川瑠華</li>
-                    <li class="cast-list">中島瑠菜</li>
-                    <li class="cast-list">倉田萌衣</li>
-                    <li class="cast-list">佐々木悠華</li>
-                    <li class="cast-list">松宮倫</li>
-                    <li class="cast-list -margin">八条院蔵人</li>
-                    <li class="cast-list">伊藤亜里子</li>
-                    <li class="cast-list">川瀬知佐子</li>
-                    <li class="cast-list">山本杏</li>
-                    <li class="cast-list">森川千滉</li>
-                    <li class="cast-list">倉林希和里</li>
-                    <li class="cast-list">小西有也</li>
-                    <li class="cast-list">野島透也</li>
-                    <li class="cast-list -margin2">池上秀治</li>
-                    <li class="cast-list">しゅはまはるみ</li>
+                    <li class="cast-list">
+                        <img src="./assets/img/ishikawa.jpg" alt="石川瑠華">
+                        <p class="cast-role">朝比奈葵役</p>
+                        <h2 class="cast-name">石川瑠華</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/nakajima.jpg" alt="中島瑠菜">
+                        <p class="cast-role">小坂日菜役</p>
+                        <h2 class="cast-name">中島瑠菜</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/kurata.jpg" alt="倉田萌衣">
+                        <p class="cast-role">山下胡桃役</p>
+                        <h2 class="cast-name">倉田萌衣</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/sasaki.jpg" alt="佐々木悠華">
+                        <p class="cast-role">佐久本梨花役</p>
+                        <h2 class="cast-name">佐々木悠華</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/matsumiya.jpg" alt="松宮倫">
+                        <p class="cast-role">都築玲那役</p>
+                        <h2 class="cast-name">松宮倫</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/hachijoin.jpg" alt="八条院蔵人">
+                        <p class="cast-role">安藤昌樹役</p>
+                        <h2 class="cast-name">八条院蔵人</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/ito.jpg" alt="伊藤亜里子">
+                        <p class="cast-role">〇〇理奈子役</p>
+                        <h2 class="cast-name">伊藤亜里子</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/kawase.jpg" alt="川瀬知佐子">
+                        <p class="cast-role">佐々木麻美役</p>
+                        <h2 class="cast-name">川瀬知佐子</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/yamamoto.jpg" alt="山本杏">
+                        <p class="cast-role">遠藤由夏役</p>
+                        <h2 class="cast-name">山本杏</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/morikawa.jpg" alt="森川千滉">
+                        <p class="cast-role">唐島萌役</p>
+                        <h2 class="cast-name">森川千滉</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/kurabayashi.jpg" alt="倉林希和里">
+                        <p class="cast-role">矢野さえ役</p>
+                        <h2 class="cast-name">倉林希和里</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/konishi.jpg" alt="小西有也">
+                        <p class="cast-role">〇〇和樹役</p>
+                        <h2 class="cast-name">小西有也</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/nojima.jpg" alt="野島透也">
+                        <p class="cast-role">神楽宗介役</p>
+                        <h2 class="cast-name">野島透也</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/ikegami.jpg" alt="池上秀治">
+                        <p class="cast-role">●●役</p>
+                        <h2 class="cast-name">池上秀治</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list">
+                        <img src="./assets/img/syuhama.jpg" alt="しゅはまはるみ">
+                        <p class="cast-role">朝比奈●●役</p>
+                        <h2 class="cast-name">しゅはまはるみ</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
                 </ul>
-            </div>
-        </section>
+                <div class="cast-modal-box modal-box js-modal-box -ishikawa">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/ishikawa_open.jpg" alt="石川瑠華">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/ishikawa_open.jpg" alt="石川瑠華">
+                            <p class="cast-role">朝比奈葵役</p>
+                            <h2 class="cast-name -modal">石川瑠華</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
 
-        <section id="footer" class="footer section">
-            <div class="inner">
-                <video id="footer-video" loop muted autoplay playsinline></video>
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -nakajima">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/nakajima_open.jpg" alt="中島瑠菜">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/nakajima_open.jpg" alt="中島瑠菜">
+                            <p class="cast-role">小坂日菜役</p>
+                            <h2 class="cast-name -modal">中島瑠菜</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
 
-                <dl class="staff-lists">
-                    <div class="staff-list">
-                        <dt>エグゼクティブ プロデューサー</dt>
-                        <dd>King Guu</dd>
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
                     </div>
-                    <div class="staff-list">
-                        <dt>プロデューサー</dt>
-                        <dd><span>亀山暢央</span><span>上原三由樹</span></dd>
-                    </div>
-                    <div class="staff-list">
-                        <dt>脚本</dt>
-                        <dd><span>上原三由樹</span><span>岳谷麻日子</span></dd>
-                    </div>
-                    <div class="staff-list -director">
-                        <dt>監督</dt>
-                        <dd>安井祥二</dd>
-                    </div>
-                </dl>
-                <div class="img-box">
-                    <img class="footer-img" src="./assets/img/mv.svg" alt="水の中で深呼吸">
-                    <div class="sns">
-                        <a target="_blank" rel="noopener" href="https://www.instagram.com/mizunonaka_movie"
-                            class="link">
-                            <img src="./assets/img/insta_footer.svg" alt="insta">
-                        </a>
-                        <a target="_blank" rel="noopener" href="https://x.com/mizunonaka2025" class="link">
-                            <img src="./assets/img/x_footer.svg" alt="x">
-                        </a>
-                        <a target="_blank" rel="noopener" href="https://note.com/mizunonaka_movie" class="link">
-                            <img src="./assets/img/note_footer.svg" alt="note">
-                        </a>
-                    </div>
-                    <div class="credit-box">
-                        <dl class="credit-lists">
-                            <div class="credit-list">
-                                <dt>Web Direction:&nbsp;</dt>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -kurata">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/kurata_open.jpg" alt="倉田萌衣">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/kurata_open.jpg" alt="倉田萌衣">
+                            <p class="cast-role">山下胡桃役</p>
+                            <h2 class="cast-name -modal">倉田萌衣</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
 
-                                <div class="credit-list-data">
-                                    <dd><a target="_blank" rel="noopener" href="https://hidetosato.com/"
-                                            class="credit-list">Hideto Sato | HIDETO SATO DESIGN</a></dd>
-                                    <dd>
-                                        <a target="_blank" rel="noopener" href="https://d-o-u.jp/"
-                                            class="credit-list">Ryuichi Umeno | DOU</a>
-                                    </dd>
-                                </div>
-                            </div>
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -sasaki">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/sasaki_open.jpg" alt="佐々木悠華">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/sasaki_open.jpg" alt="佐々木悠華">
+                            <p class="cast-role">佐久本梨花役</p>
+                            <h2 class="cast-name -modal">佐々木悠華</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
 
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
-                                <dt>Web Design:&nbsp;</dt>
-                                <dd>Ryuichi Umeno | DOU</dd>
-                            </a>
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
-                                <dt>Web Coding:&nbsp;</dt>
-                                <div class="credit-list-data">
-                                    <dd>Ryuichi Umeno | DOU</dd>
-                                    <dd>Daichi Oshima | DOU</dd>
-                                </div>
-                            </a>
-                        </dl>
-                        <small class="copy">&copy;2025 <a target="_blank" rel="noopener"
-                                href="https://biyori.jpn.com/">biyori inc.</a>, <a target="_blank" rel="noopener"
-                                href="https://basil4u.com/">basil inc.</a></small>
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -matsumiya">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/matsumiya_open.jpg" alt="松宮倫">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/matsumiya_open.jpg" alt="松宮倫">
+                            <p class="cast-role">都築玲那役</p>
+                            <h2 class="cast-name -modal">松宮倫</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -hachijoin">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/hachijoin_open.jpg" alt="八条院蔵人">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/hachijoin_open.jpg" alt="八条院蔵人">
+                            <p class="cast-role">安藤昌樹役</p>
+                            <h2 class="cast-name -modal">八条院蔵人</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -ito">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/ito_open.jpg" alt="伊藤亜里子">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/ito_open.jpg" alt="伊藤亜里子">
+                            <p class="cast-role">〇〇理奈子役</p>
+                            <h2 class="cast-name -modal">伊藤亜里子</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -kawase">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/kawase_open.jpg" alt="川瀬知佐子">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/kawase_open.jpg" alt="川瀬知佐子">
+                            <p class="cast-role">佐々木麻美役</p>
+                            <h2 class="cast-name -modal">川瀬知佐子</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -yamamoto">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/yamamoto_open.jpg" alt="山本杏">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/yamamoto_open.jpg" alt="山本杏">
+                            <p class="cast-role">遠藤由夏役</p>
+                            <h2 class="cast-name -modal">山本杏</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -morikawa">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/morikawa_open.jpg" alt="森川千滉">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/morikawa_open.jpg" alt="森川千滉">
+                            <p class="cast-role">唐島萌役</p>
+                            <h2 class="cast-name -modal">森川千滉</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -kurabayashi">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/kurabayashi_open.jpg" alt="倉林希和里">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/kurabayashi_open.jpg" alt="倉林希和里">
+                            <p class="cast-role">矢野さえ役</p>
+                            <h2 class="cast-name -modal">倉林希和里</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -konishi">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/konishi_open.jpg" alt="小西有也">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/konishi_open.jpg" alt="小西有也">
+                            <p class="cast-role">〇〇和樹役</p>
+                            <h2 class="cast-name -modal">小西有也</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -nojima">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/nojima_open.jpg" alt="野島透也">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/nojima_open.jpg" alt="野島透也">
+                            <p class="cast-role">神楽宗介役</p>
+                            <h2 class="cast-name -modal">野島透也</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -ikegami">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/ikegami_open.jpg" alt="池上秀治">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/ikegami_open.jpg" alt="池上秀治">
+                            <p class="cast-role">●●役</p>
+                            <h2 class="cast-name -modal">池上秀治</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cast-modal-box modal-box js-modal-box -syuhama">
+                    <button class="close-button button" id="close">close</button>
+                    <img class="cast-bg-img" src="./assets/img/syuhama_open.jpg" alt="しゅはまはるみ">
+                    <div class="cast-bg"></div>
+                    <div class="cast-modal">
+                        <div class="cast-profile">
+                            <img src="./assets/img/syuhama_open.jpg" alt="しゅはまはるみ">
+                            <p class="cast-role">朝比奈●●役</p>
+                            <h2 class="cast-name -modal">しゅはまはるみ</h2>
+                        </div>
+                        <div class="cast-det" data-lenis-prevent>
+                            <h3 class="cast-profile-title">PROFILE</h3>
+                            <p class="cast-profile-text">
+                                2017年8月の舞台「SUGAR WORKS」でデビュー。<br>
+                                『猿楽町で会いましょう』（21）の主演・ユカ役を好演。<br>
+                                主な出演作に映画『うみべの女の子』（21）、『市子』（23）、
+                                ドラマ「君のことだけ見ていたい」「犬と屑」などがある。
+                            </p>
+                            <h3 class="cast-comment-title">COMMENT</h3>
+                            <p class="cast-comment-text">
+                                朝比奈葵役を演じました石川瑠華です。<br>
+                                わたし自身、学生時代に映画の中で描かれているような悩みを抱えていました。<br>
+                                そのことを誰にも相談できなかった記憶があります。<br>
+                                当時の自分をしっかり肯定できるようになった今、この映画を今悩んでいる誰かに届けたいと思い、オーディションに参加しました。<br>
+                                役をいただいた時、オーディションを受けた時に考えていたよりも〝わからない〟と感じました。現場でも、安井監督と葵という人物について日々話し合いました。<br>
+                                安井監督はこういう人だと決めつけることはせず、時には少し距離をとって見守ろうとしてくださりました。娘思いだけど不器用なお父さんのようでした。<br>
+                                そんな安井監督の映画だったからこそ、わたしは葵に真っ正面からぶつかるようにして役作りをしていったような気がします。<br>
+                                また、現場では自分よりも若い世代の役者さんが多かったので、いい意味でみんなに染まりたいなと思っていましたし、たくさん支えられていました。<br><br>
+
+                                泳ぎの撮影と同じくらい実は水中に身を置いている状態の撮影があり、回数を重ねるごとに息はできないはずなのに、「息をしやすい場所だ」と感じることがありました。<br>
+                                その感覚は、葵を演じる上でとても大切なものだったと思います。<br>
+                                この映画をたくさんの方に観ていただきたいですが、何よりも、今悩みの渦の中にいて息がしにくいと感じている誰かに、この映画がそっと届いてくれたらいいなと思います。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section id="staff" class="staff section">
+            <div class="inner js-inner">
+                <div class="title-box js-title">
+                    <h2 class="title">STAFF</h2>
+                    <p class="subtitle">スタッフ</p>
+                </div>
+                <div class="staff-bg-box">
+                    <img src="./assets/img/staff_bg1.jpg" alt="" class="staff-bg -one">
+                    <img src="./assets/img/staff_bg2.jpg" alt="" class="staff-bg -two">
+                </div>
+                <dl class="staff-lists">
+                    <div class="staff-list">
+                        <dt>監督</dt>
+                        <dd>安井祥二<button class="open-button button staff-button">＋</button></dd>
+                    </div>
+                    <div class="staff-list">
+                        <dt>脚本</dt>
+                        <div class="staff-list-two">
+                            <dd>上原三由樹<button class="open-button button staff-button">＋</button></dd>
+                            <dd>岳谷 麻日子</dd>
+                        </div>
+                    </div>
+                    <div class="gsap-trigger">
+                        <div class="staff-list">
+                            <dt>エグゼクティブプロデューサー</dt>
+                            <dd>King Guu</dd>
+                        </div>
+                        <div class="staff-list -m1">
+                            <dt>プロデューサー</dt>
+                            <div class="staff-list-two">
+                                <dd>亀山暢央</dd>
+                                <dd>上原三由樹</dd>
+                            </div>
+                        </div>
+                        <div class="staff-list -m1">
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>助監督</dt>
+                                        <dd>福田良夫</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>撮影</dt>
+                                        <dd>平野晋吾</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>照明</dt>
+                                        <dd>笠井拓児</dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>録音</dt>
+                                        <dd>安光雪江</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>ヘアメイク</dt>
+                                        <dd>須見有樹子</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>衣装</dt>
+                                        <dd>村上久美子</dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>制作</dt>
+                                <div class="staff-list-two">
+                                    <dd>塩野谷 明</dd>
+                                    <dd>濱本敏治</dd>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>制作助手</dt>
+                                <div class="staff-list-two">
+                                    <dd>浅井美智恵</dd>
+                                    <dd>高石かれん</dd>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>水中カメラ ドローン撮影 ポスタースチール</dt>
+                                <dd>星野耕作</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>スチール</dt>
+                                <dd>福田ジン</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>カラリスト</dt>
+                                        <dd>斎藤一徳</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>編集</dt>
+                                        <div class="staff-list-two">
+                                            <dd>宮脇結花</dd>
+                                            <dd>進巧一</dd>
+                                        </div>
+                                    </dl>
+                                    <dl>
+                                        <dt>整音 MA</dt>
+                                        <dd>吉方淳二</dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>音楽</dt>
+                                <dd>宮脇結花</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>題字デザイン 宣伝アートディレクション</dt>
+                                <dd>木下芳夫</dd>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </dl>
+
+                <div class="staff-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="staff-bg"></div>
+                    <div class="staff-modal">
+                        <div class="staff-profile">
+                            <p class="staff-role">監督</p>
+                            <h2 class="staff-name -modal">安井祥二</h2>
+                        </div>
+                        <div class="staff-det" data-lenis-prevent>
+                            <h3 class="staff-profile-title">PROFILE</h3>
+                            <p class="staff-profile-text">
+                                岡山市生まれ
+                                『スイート』で第 30 回キネコ国際映画祭の国際審査員特別賞、PTA 賞のほか、<br>
+                                モントリオール日本映画祭の短編映画最優秀賞を受賞。<br>
+                                木村文乃主演の『紋の光』も現在公開中。<br>
+                                『つれづれ』『からっぽのシュークリーム』など、自身の経験をもとに紡いだ作品では、常に登場人物の内面に寄り添い、観る者の心を静かに揺さぶってきた。<br><br>
+                                本作は、初の商業長編作品となる。
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="staff-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="staff-bg"></div>
+                    <div class="staff-modal">
+                        <div class="staff-profile">
+                            <p class="staff-role">脚本</p>
+                            <h2 class="staff-name -modal">上原三由樹</h2>
+                        </div>
+                        <div class="staff-det" data-lenis-prevent>
+                            <h3 class="staff-profile-title">PROFILE</h3>
+                            <p class="staff-profile-text">
+                                2008年、伊参スタジオ映画祭にてシナリオ大賞を受賞したことを契機に映画制作を開始。以降、監督作として劇場公開作品『心のありか』（2023）、脚本を手がけた『TODOKU
+                                YO-NA』（2024）、『水の中で深呼吸』（2025）、プロデュースを担当した『Yokosuka1953』など、多岐にわたる映画制作に携わる。最新作『水の中で深呼吸』では、企画段階から作品に深く関与し、青春映画という枠にとらわれることなく、多面的に恋心を描き出すことに挑戦した。自身にとっても、新たな表現領域を切り拓く意欲的な作品となっている。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="comment" class="comment section">
+            <div class="inner js-inner">
+                <video id="footer-video" loop muted autoplay playsinline></video>
+                <div class="title-box js-title">
+                    <h2 class="title">COMMENT</h2>
+                    <p class="subtitle">著名人・観客コメント</p>
+                </div>
+                <ul class="comment-lists">
+                    <li class="comment-list">
+                        <p class="comment-text">
+                            <span>懐かしく、ほろ苦く、瑞々しい、ド直球の青春映画を真正面から見た感覚！</span><br>
+                            泥臭い人間関係でありながらも、時々現れる水の上の静寂にほっとしたり、水中の活劇にワクワクしたり。<br>
+                            ひとりの男子に群がる女子の人間関係の描き分けが秀逸で、枠に収まらない石川瑠華を見守りたくなる。<br>
+                            <span>その映画的な息遣いが安井監督の真骨頂なんだ</span>と思って感心した。
+                        </p>
+                        <p class="comment-role">映画監督</p>
+                        <h3 class="comment-name">篠原 哲雄<span>さん</span></h3>
+                    </li>
+
+                    <li class="comment-list">
+                        <p class="comment-text">
+                            「自分と似たような人が身の周りにいないな」と、心細さを感じるノンバイナリーやクィアの人たちにこそ、この映画が届いてほしい。<br>
+                            どちらでもない／ある時間を生きたことは、とてもとてもかけがえのない事だから。<br>
+                            君はひとりじゃないし、皆と同じように、青春を楽しむ権利を持っている。
+                        </p>
+                        <p class="comment-role">映画監督</p>
+                        <h3 class="comment-name">亀山睦木<span>さん</span></h3>
+                    </li>
+                </ul>
+
+                <div class="comment-button">
+                    <button class="open-button button" id="view-more-intro">view more</button>
+                </div>
+
+
+                <div class="comment-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="comment-bg"></div>
+                    <div class="comment-tabs js-tabs">
+                        <button class="js-tab-comment -famous">著名人コメント</button>
+                        <button class="js-tab-comment -audience">観客コメント</button>
+                    </div>
+
+                    <div class="comment-lists-box">
+                        <ul class="comment-lists -modal -famous">
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    <span>懐かしく、ほろ苦く、瑞々しい、ド直球の青春映画を真正面から見た感覚！</span><br>
+                                    泥臭い人間関係でありながらも、時々現れる水の上の静寂にほっとしたり、水中の活劇にワクワクしたり。<br>
+                                    ひとりの男子に群がる女子の人間関係の描き分けが秀逸で、枠に収まらない石川瑠華を見守りたくなる。<br>
+                                    <span>その映画的な息遣いが安井監督の真骨頂なんだ</span>と思って感心した。
+                                </p>
+                                <p class="comment-role">映画監督</p>
+                                <h3 class="comment-name">篠原 哲雄<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    「自分と似たような人が身の周りにいないな」と、心細さを感じるノンバイナリーやクィアの人たちにこそ、この映画が届いてほしい。<br>
+                                    どちらでもない／ある時間を生きたことは、とてもとてもかけがえのない事だから。<br>
+                                    君はひとりじゃないし、皆と同じように、青春を楽しむ権利を持っている。
+                                </p>
+                                <p class="comment-role">映画監督</p>
+                                <h3 class="comment-name">亀山睦木<span>さん</span></h3>
+                            </li>
+                        </ul>
+
+                        <ul class="comment-lists -modal -audience">
+                            <li class="comment-list -modal">
+                                <p class="comment-text">
+                                    自分のことがわからず葛藤しながらも、周りがいわゆる”当たり前の道”をどんどん進む姿を見て「自分も何か答えを出さないといけない」と焦っていた学生時代を思い出しました。でも、この映画のように、「まだわからない」という状態を受け入れられていれば、もっと気持ちが楽になっていたのかもしれません。主人公が少しずつ歩みを進めるこの映画、そして無理に答えを出そうとしないこの映画がとても心地よかったです。
+                                </p>
+                                <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    曖昧なものを曖昧なままで終わらせてくれてありがたかったです
+                                    他のドラマで描かれるような綺麗にも、逆に汚い？悲しい？終わり方も意外と現実ではしないものだと感じています
+                                    ほとんどの現実のケースは、曖昧さと同居しながら長くそれを抱え、やっと小さな答えが出てくる？なんか、それの最初の方を描いてくださっていたように感じました
+                                    無理に答えを出さない映画の方が当事者の気持ちに寄り添っている気がしています。そういう人たちにとっての、ロールモデルのような映画になってくださったら嬉しいなって感じました。。
+                                </p>
+                                <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    どこか懐かしさを感じさせる雰囲気で、あおいがこれから10年どんな人と出会ってどう変わっていくかを見てみたい気持ちになりました
+                                </p>
+                                <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    小説を小説のまま映画にしたような2時間でした。日常をとにかく丁寧に描くこの物語は、エンドロールと共にぷつっとは切れたりしません。山添くんと藤沢さんが、物語のあとも、ずっと幸せでいて欲しいと願ってしまうような、そんな作品です。
+                                </p>
+                                <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    幾つかの人生が「よく変わる」その様を劇的でなく次第次第に、光や
+                                    動きの具体として見たのはいつぶりか。もしかしたら初めてかも知れない。『夜明けのすべて』を見て、まるでこれまで映画を見てきたことのご褒美をもらったような気分になった。ただ普段は映画を見ない人もきっと、これを見たら「これまでの一日一日」を肯定できるような気持ちになれるはず。21世紀の日本にもたらされた宝石のような映画。
+                                </p>
+                                <h3 class="comment-name">D<span>さん</span></h3>
+                            </li>
+
+                            <li class="comment-list">
+                                <p class="comment-text">
+                                    なんて美しく愛おしい映画！
+                                    僕にとってもとても大切な二人──北斗くんと萌音さんが主演とのことで、心待ちにしていた作品です。
+                                    二人の声と姿、息の吸い方や歩き方、蜜柑のむき方や目の閉じ方がすべて、作品の優しさとぴたりと重なっていました。
+                                </p>
+                                <h3 class="comment-name">N<span>さん</span></h3>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <section id="footer" class="footer section">
+                <div class="inner">
+                    <div class="img-box">
+                        <img class="footer-img" src="./assets/img/mv.svg" alt="水の中で深呼吸">
+                        <div class="sns">
+                            <a target="_blank" rel="noopener" href="https://www.instagram.com/mizunonaka_movie"
+                                class="link">
+                                <img src="./assets/img/insta_footer.svg" alt="insta">
+                            </a>
+                            <a target="_blank" rel="noopener" href="https://x.com/mizunonaka2025" class="link">
+                                <img src="./assets/img/x_footer.svg" alt="x">
+                            </a>
+                            <a target="_blank" rel="noopener" href="https://note.com/mizunonaka_movie" class="link">
+                                <img src="./assets/img/note_footer.svg" alt="note">
+                            </a>
+                        </div>
+                        <div class="credit-box">
+                            <dl class="credit-lists">
+                                <div class="credit-list">
+                                    <dt>Web Direction:&nbsp;</dt>
+
+                                    <div class="credit-list-data">
+                                        <dd><a target="_blank" rel="noopener" href="https://hidetosato.com/"
+                                                class="credit-list">Hideto Sato | HIDETO SATO DESIGN</a></dd>
+                                        <dd>
+                                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/"
+                                                class="credit-list">Ryuichi
+                                                Umeno | DOU</a>
+                                        </dd>
+                                    </div>
+                                </div>
+
+                                <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
+                                    <dt>Web Design:&nbsp;</dt>
+                                    <dd>Ryuichi Umeno | DOU</dd>
+                                </a>
+                                <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
+                                    <dt>Web Coding:&nbsp;</dt>
+                                    <div class="credit-list-data">
+                                        <dd>Ryuichi Umeno | DOU</dd>
+                                        <dd>Daichi Oshima | DOU</dd>
+                                    </div>
+                                </a>
+                            </dl>
+                            <small class="copy">&copy;2025 <a target="_blank" rel="noopener"
+                                    href="https://biyori.jpn.com/">biyori
+                                    inc.</a>, <a target="_blank" rel="noopener" href="https://basil4u.com/">basil
+                                    inc.</a></small>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </div>
     <script>
