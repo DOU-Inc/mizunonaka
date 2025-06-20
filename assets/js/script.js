@@ -326,8 +326,10 @@ document.querySelectorAll('#header .nav-list a[href^="#"]').forEach(link => {
 document.addEventListener('DOMContentLoaded', () => {
     const html = document.documentElement;
 
-    // ===== 共通ヘッダー =====
+    // ===== 共通 =====
     const header = document.getElementById('header');
+    const staff = document.getElementById('staff');
+    const cast = document.getElementById('cast');
 
     // ===== CAST =====
     const castButtons = document.querySelectorAll('#cast .cast-list button');
@@ -366,6 +368,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.style.pointerEvents = 'none';
             }
 
+            if (staff) {
+                staff.style.opacity = '0';
+                staff.style.pointerEvents = 'none';
+            }
+
             moveTitleSmoothly?.(castTitle);
 
             const targetModal = castModalBoxes[index];
@@ -398,6 +405,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.style.opacity = '1';
                 header.style.pointerEvents = 'auto';
             }
+
+            if (staff) {
+                staff.style.opacity = '1';
+                staff.style.pointerEvents = 'auto';
+            }
         });
     });
 
@@ -415,6 +427,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 html.classList.add('noscroll');
                 header.style.opacity = '0';
                 header.style.pointerEvents = 'none';
+            }
+
+            if (cast) {
+                cast.style.opacity = '0';
+                cast.style.pointerEvents = 'none';
             }
 
             moveTitleSmoothly?.(staffTitle);
@@ -449,6 +466,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.style.opacity = '1';
                 header.style.pointerEvents = 'auto';
             }
+
+            if (cast) {
+                cast.style.opacity = '1';
+                cast.style.pointerEvents = 'auto';
+            }
+
         });
     });
 
@@ -470,9 +493,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             moveTitleSmoothly?.(commentTitle);
 
+            if (staff) {
+                staff.style.opacity = '0';
+                staff.style.pointerEvents = 'none';
+            }
+
             const targetModal = commentModalBoxes[index];
             if (targetModal) {
                 targetModal.classList.add('-active');
+                window.addEventListener('load', function () {
+                    var lists = document.querySelector('.comment-lists');
+
+                    new Masonry(lists, {
+                        itemSelector: '.comment-list',
+                        columnWidth: 100,
+                        fitWidth: true
+                    });
+                });
             }
         });
     });
@@ -492,6 +529,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             resetTitlePosition?.(commentTitle);
+
+            if (staff) {
+                staff.style.opacity = '1';
+                staff.style.pointerEvents = 'auto';
+            }
 
             enableScroll();
             html.classList.remove('noscroll');
@@ -658,6 +700,7 @@ gsap.fromTo(
     }
 );
 
+
 gsap.fromTo(
     ".staff .staff-bg-box",
     {
@@ -677,15 +720,10 @@ gsap.fromTo(
                     inner.style.overflow = "hidden"; // ← 各.innerに適用
                 });
             },
-            onLeaveBack: () => {
-                container.style.overflow = "hidden";
-                inners.forEach(inner => {
-                    inner.style.overflow = "visible"; // ← 各.innerに適用
-                });
-            },
         },
     }
 );
+
 
 gsap.fromTo(
     ".staff .staff-bg.-two",
@@ -1035,13 +1073,31 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', () => {
             const type = button.classList.contains('-famous') ? '-famous' : '-audience';
 
+            // 1) ボタンのアクティブ切り替え
             commentButtons.forEach(btn => btn.classList.remove('-active'));
             button.classList.add('-active');
 
-            commentLists.forEach(list => {
-                list.style.opacity = list.classList.contains(type) ? '1' : '0';
-                list.style.pointerEvents = list.classList.contains(type) ? 'auto' : 'none';
-            });
+            // 2) 親モーダルボックス取得
+            const modalBox = button.closest('.comment-modal-box');
+
+            if (modalBox && modalBox.classList.contains('-active')) {
+                // ✅ 親が -active なら type に合わせて表示切り替え
+                commentLists.forEach(list => {
+                    if (list.classList.contains(type)) {
+                        list.style.opacity = '1';
+                        list.style.pointerEvents = 'auto';
+                    } else {
+                        list.style.opacity = '0';
+                        list.style.pointerEvents = 'none';
+                    }
+                });
+            } else {
+                // ✅ 親が -active じゃない場合は全て無効化
+                commentLists.forEach(list => {
+                    list.style.opacity = '0';
+                    list.style.pointerEvents = 'none';
+                });
+            }
         });
     });
 
@@ -1058,12 +1114,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-window.addEventListener('load', function () {
-    var lists = document.querySelector('.comment-lists');
 
-    new Masonry(lists, {
-        itemSelector: '.comment-list',
-        columnWidth: 300,
-        fitWidth: true
-    });
-});
