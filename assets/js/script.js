@@ -294,6 +294,7 @@ document.querySelectorAll('#header .nav-list a[href^="#"]').forEach(link => {
         html.classList.remove('noscroll');
 
         // ブラーやモーダル関連のクラスも解除
+        header.querySelector('.js-modal-box')?.classList.remove('-active');
         header.querySelector('.js-blur-layer')?.classList.remove('-active');
         header.querySelector('.js-nav-logo')?.classList.remove('-active');
         header.querySelector('.js-all-text')?.classList.remove('-active');
@@ -493,9 +494,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             moveTitleSmoothly?.(commentTitle);
 
-            if (staff) {
-                staff.style.opacity = '0';
-                staff.style.pointerEvents = 'none';
+            if (staffTitle) {
+                staffTitle.style.opacity = '0';
+                staffTitle.style.pointerEvents = 'none';
             }
 
             const targetModal = commentModalBoxes[index];
@@ -530,9 +531,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resetTitlePosition?.(commentTitle);
 
-            if (staff) {
-                staff.style.opacity = '1';
-                staff.style.pointerEvents = 'auto';
+            if (staffTitle) {
+                staffTitle.style.opacity = '1';
+                staffTitle.style.pointerEvents = 'auto';
             }
 
             enableScroll();
@@ -663,7 +664,7 @@ gsap.fromTo(
         scrollTrigger: {
             trigger: "#trailer", // アニメーションを発動させるトリガー要素
             start: "top center", // #story の上端が画面の上端に来たら発動
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none play reverse",
         },
     }
 );
@@ -681,7 +682,7 @@ gsap.fromTo(
         duration: 1,
         ease: "power2.out",
         scrollTrigger: {
-            trigger: ".cast",
+            trigger: "#cast",
             start: "top center",
             toggleActions: "play reverse play reverse",
             onEnter: () => {
@@ -793,7 +794,7 @@ gsap.fromTo(
 
 // MVのアニメーション
 window.addEventListener('load', () => {
-    lenis.stop();
+    // lenis.stop();
     const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
 
@@ -1039,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const movieButtons = document.querySelectorAll('.js-tab-movie');
     const movieBoxes = document.querySelectorAll('.js-movie');
 
-    const trailerVideo = document.getElementById('normal');
+    const normalVideo = document.getElementById('normal');
     const teaserVideo = document.getElementById('teaser');
 
     movieButtons.forEach(button => {
@@ -1053,12 +1054,50 @@ document.addEventListener('DOMContentLoaded', function () {
                 box.style.opacity = box.classList.contains(type) ? '1' : '0';
             });
 
-            if (type === '-teaser') {
-                teaserVideo.style.opacity = '1';
-                trailerVideo.style.opacity = '0';
+            if (type === '-normal') {
+                const tl = gsap.timeline();
+
+                // teaser を fade out
+                tl.to(teaserVideo, {
+                    opacity: 0,
+                    duration: 0.3
+                })
+                    // 完全に消えたら zIndex を下げる
+                    .set(teaserVideo, {
+                        delay: 0.5,
+                        zIndex: -2
+                    })
+                    // normal を上に出す
+                    .set(normalVideo, {
+                        zIndex: -1
+                    })
+                    .to(teaserVideo, {
+                        opacity: 1,
+                        duration: 0
+                    });
+
             } else {
-                trailerVideo.style.opacity = '1';
-                teaserVideo.style.opacity = '0';
+                const tl = gsap.timeline();
+
+                // normal を fade out
+                tl.to(normalVideo, {
+                    opacity: 0,
+                    duration: 0.3
+                })
+                    // 完全に消えたら zIndex を下げる
+                    .set(normalVideo, {
+                        delay: 0.5,
+                        zIndex: -2
+                    })
+                    // teaser を上に出す
+                    .set(teaserVideo, {
+                        zIndex: -1
+                    })
+                    // teaser を fade in
+                    .to(normalVideo, {
+                        opacity: 1,
+                        duration: 0
+                    });
             }
         });
     });
