@@ -479,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== COMMENT ボタン =====
     commentButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
+
             if (commentLists) {
                 commentLists.style.transition = 'opacity 0.5s ease';
                 commentLists.style.opacity = '0';
@@ -502,16 +503,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetModal = commentModalBoxes[index];
             if (targetModal) {
                 targetModal.classList.add('-active');
-                window.addEventListener('load', function () {
-                    var lists = document.querySelector('.comment-lists');
+                // window.addEventListener('load', function () {
+                //     var lists = document.querySelector('.comment-lists');
 
-                    new Masonry(lists, {
-                        itemSelector: '.comment-list',
-                        columnWidth: 100,
-                        fitWidth: true
-                    });
-                });
+                //     new Masonry(lists, {
+                //         itemSelector: '.comment-list',
+                //         columnWidth: 100,
+                //         fitWidth: true
+                //     });
+                // });
             }
+
+            // モーダルが開いたら、著名人のコメントを有効化
+            const famousList = document.querySelector('.comment-lists.-modal.-famous');
+            if (famousList) {
+                famousList.style.opacity = '1';
+                famousList.style.pointerEvents = 'auto';
+            }
+
+
         });
     });
 
@@ -522,6 +532,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetModal) {
                 targetModal.classList.remove('-active');
             }
+
+            // モーダルを閉じたら、コメントは無効化
+            const commentlists = document.querySelectorAll('.comment-lists.-modal');
+            commentlists.forEach(commentlist => {
+                commentlist.style.opacity = '0';
+                commentlist.style.pointerEvents = 'none';
+            });
 
             if (commentLists) {
                 commentLists.style.transition = 'opacity 0.5s ease 1.2s';
@@ -794,6 +811,7 @@ gsap.fromTo(
 
 // MVのアニメーション
 window.addEventListener('load', () => {
+    // ★★★
     // lenis.stop();
     const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
