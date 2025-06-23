@@ -1051,7 +1051,13 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add('-active');
 
             movieBoxes.forEach(box => {
-                box.style.opacity = box.classList.contains(type) ? '1' : '0';
+                if (box.classList.contains(type)) {
+                    box.style.opacity = '1';
+                    box.style.pointerEvents = 'auto';
+                } else {
+                    box.style.opacity = '0';
+                    box.style.pointerEvents = 'none';
+                }
             });
 
             if (type === '-normal') {

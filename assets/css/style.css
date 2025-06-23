@@ -1555,15 +1555,10 @@ video {
         width: 19%;
     }
 
-    .trailer .js-tabs {
-        width: 80%;
-        transform: translate(-50%, 620%);
-    }
-
     .trailer .js-tabs .js-tab-movie {
         font-size: 14px;
         width: 50%;
-        height: 16%;
+        height: 48px;
     }
 }
 
@@ -1576,6 +1571,37 @@ video {
 
     .trailer .subtitle {
         font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .trailer .js-tabs {
+        width: 80%;
+        transform: translate(-50%, 420%);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .trailer .js-tabs {
+        transform: translate(-50%, 380%);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .trailer .js-tabs {
+        transform: translate(-50%, 320%);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .trailer .js-tabs {
+        transform: translate(-50%, 260%);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .trailer .js-tabs {
+        transform: translate(-50%, 200%);
     }
 }
 
