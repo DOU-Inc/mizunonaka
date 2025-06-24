@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function handleBgSpFadeOnScroll() {
     const mvVideo = document.querySelector('.mv-video'); // MVの動画
+    const mvCatch = document.querySelector('.catch2'); // MVのキャッチコピー
+    const mvAward = document.querySelector('.mv-award'); // MVの受賞歴
     const mvSection = document.querySelector('#mv'); // MVセクション（基準位置）
     const header = document.querySelector('#header'); // ヘッダー
 
@@ -49,7 +51,7 @@ function handleBgSpFadeOnScroll() {
     // ヘッダー初期状態は非表示
     header.style.opacity = '0';
     header.style.pointerEvents = 'none';
-    header.style.transition = 'opacity 0.5s ease';
+
 
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
@@ -58,9 +60,13 @@ function handleBgSpFadeOnScroll() {
         // ① blur 処理（10px → none）
         if (scrollY > 10 && !isBlurRemoved) {
             mvVideo.style.filter = 'none';
+            mvCatch.style.opacity = '0';
+            mvAward.style.opacity = '0';
             isBlurRemoved = true;
         } else if (scrollY <= 10 && isBlurRemoved) {
             mvVideo.style.filter = 'blur(5px)';
+            mvCatch.style.opacity = '1';
+            mvAward.style.opacity = '0.8';
             isBlurRemoved = false;
         }
 
@@ -369,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cast = document.getElementById('cast');
 
     // ===== CAST =====
-    const castButtons = document.querySelectorAll('#cast .cast-list button');
+    const castButtons = document.querySelectorAll('#cast .cast-list button, #cast .cast-list img');
     const castModalBoxes = document.querySelectorAll('#cast .modal-box.js-modal-box');
     const castLists = document.querySelector('#cast .cast-lists');
     const castTitle = document.querySelector('#cast .js-title');
@@ -754,6 +760,24 @@ gsap.fromTo(
     }
 );
 
+gsap.utils.toArray('.cast-list').forEach((el) => {
+    gsap.fromTo(
+        el,
+        {
+            autoAlpha: 0, // 最初は透明
+        },
+        {
+            autoAlpha: 1, // 出てくると透明解除
+            duration: 2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: el,
+                start: 'bottom bottom',
+                toggleActions: 'play none none none' // 一度だけ
+            }
+        }
+    );
+});
 
 gsap.fromTo(
     ".staff .staff-bg-box",
@@ -880,9 +904,14 @@ window.addEventListener('load', () => {
     tl.to('.catch2', {
         opacity: 1,
         ease: 'power1.out',
-        duration: 2,
+        duration: 1,
     });
 
+    tl.to('.mv-award', {
+        opacity: 0.8,
+        ease: 'power1.out',
+        duration: 1,
+    }, '<');
 
     tl.to(".mv-sns", {
         autoAlpha: .9,

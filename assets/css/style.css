@@ -346,7 +346,9 @@ progress::-webkit-progress-bar {
 .header.-active~.container .img-box,
 .header.-active~.container .movie-box,
 .header.-active~.container .staff-lists,
-.header.-active~.container .comment-lists-container {
+.header.-active~.container .comment-lists-container,
+.header.-active~.container .js-tabs,
+.header.-active~.container .js-movie {
     opacity: 0 !important;
     pointer-events: none;
 }
@@ -358,6 +360,33 @@ progress::-webkit-progress-bar {
         left: 55px;
         bottom: 55px;
         transform: translateY(0);
+    }
+}
+
+@media screen and (max-height: 1300px) {
+    .header .nav-lists {
+        overflow: scroll;
+        scrollbar-width: none;
+        /* Firefox用 */
+    }
+
+    .header .nav-lists::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari用 */
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .header .nav {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        gap: 5%;
+    }
+
+    .nav picture {
+        width: 400px;
     }
 }
 
@@ -409,26 +438,38 @@ progress::-webkit-progress-bar {
     }
 
     .header .nav {
-        flex-direction: column;
-        align-items: flex-start;
         justify-content: flex-start;
-        padding: 30px;
-        gap: 5%;
+        align-items: flex-start;
     }
 
-    .nav-logo {
-        width: 101px;
+    .nav-sns {
+        left: 30px;
+        bottom: 15px;
+        gap: 7vw;
+    }
+
+    .nav-sns a {
+        width: 5.3vw;
+    }
+
+
+    .nav picture {
+        width: 27vw;
+    }
+
+    .header .nav-lists {
+        height: auto;
     }
 
     .header .nav-list {
-        font-size: 33px;
-        height: 50px;
+        font-size: 8.8vw;
+        height: 16vw;
         margin-bottom: .2em;
     }
 
 
     .header .nav-list span {
-        font-size: 10px;
+        font-size: 2.7vw;
     }
 }
 
@@ -675,6 +716,7 @@ progress::-webkit-progress-bar {
     opacity: 0;
     white-space: nowrap;
     font-feature-settings: "palt";
+    transition: opacity 0.5s;
 }
 
 #mv-video {
@@ -1011,8 +1053,10 @@ video {
     position: absolute;
     left: 30px;
     bottom: 30px;
-    opacity: 0.8;
+    opacity: 0;
+    transition: opacity 0.5s;
 }
+
 
 .mv .inner {
     padding: 0;
@@ -1077,6 +1121,13 @@ video {
 
 
 
+}
+
+/* 高さが700px以下のとき適用 */
+@media (max-height: 700px) {
+    .mv .mv-award {
+        width: 110px;
+    }
 }
 
 /*
@@ -1736,6 +1787,11 @@ video {
 .cast .cast-list {
     position: relative;
     width: 32%;
+    opacity: 0;
+}
+
+.cast .cast-list img {
+    cursor: pointer;
 }
 
 .cast-role {
@@ -2037,7 +2093,7 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(27, 36, 46, 0.5);
+    background: rgba(27, 36, 46, 0.9);
     z-index: 1;
 }
 
@@ -2639,6 +2695,10 @@ video {
 // footer
 // ----------------------------------------------------------------- 
 */
+
+#footer .inner {
+    padding-bottom: 0;
+}
 
 #footer-video {
     z-index: -1;
