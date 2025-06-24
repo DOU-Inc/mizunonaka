@@ -2186,6 +2186,8 @@ video {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+    overflow-y: scroll;
+    height: 590px;
 }
 
 .comment-lists.-modal {
@@ -2212,6 +2214,7 @@ video {
     transition: opacity 0.5s ease;
     /* display: flex;
     flex-wrap: wrap; */
+    height: auto;
 }
 
 .comment-lists.-modal.-audience .comment-list {
