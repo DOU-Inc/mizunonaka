@@ -756,7 +756,7 @@ video {
 
 .subtitle {
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .button {
@@ -814,6 +814,7 @@ video {
 
     .subtitle {
         font-size: 14px;
+        margin-top: .4em;
     }
 
     .sp-br {
@@ -1750,12 +1751,17 @@ video {
     font-weight: 400;
 }
 
-
-
 .cast .cast-list .cast-button {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 47px;
+    right: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .cast .cast-list .cast-button {
+        bottom: 28px;
+        right: 5px;
+    }    
 }
 
 .cast-button {
@@ -2037,7 +2043,7 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(27, 36, 46, 0.5);
+    background: rgba(27, 36, 46, 0.9);
     z-index: 1;
 }
 
@@ -2325,7 +2331,6 @@ video {
 
 .comment-lists.-famous {
     column-count: 2;
-    max-width: 730px;
 }
 
 .comment-list {
@@ -2387,7 +2392,7 @@ video {
 
 .comment-lists-box {
     position: relative;
-    max-width: 1100px;
+    max-width: 100%;
     width: 100%;
     margin: 0 auto;
 }
@@ -2399,7 +2404,7 @@ video {
     left: 50%;
     transform: translateX(-50%);
     overflow-y: scroll;
-    height: 590px;
+    height: calc(100vh - 362px);
 }
 
 .comment-lists.-modal {
@@ -2427,6 +2432,8 @@ video {
     /* display: flex;
     flex-wrap: wrap; */
     height: auto;
+    max-width: 1100px;
+    padding-bottom: 40px;
 }
 
 .comment-lists.-modal.-audience .comment-list {
@@ -2448,15 +2455,13 @@ video {
 
 
 .comment-lists.-modal.-audience {
-    max-width: 100%;
 }
 
 .comment-lists.-modal.-famous {
     opacity: 1;
-    /* ← これがポイント！ */
     pointer-events: auto;
+    max-width: 730px;
 }
-
 
 .comment-bg {
     position: absolute;
@@ -2537,6 +2542,7 @@ video {
 
 .comment .js-tabs .js-tab-comment {
     font-size: 15px;
+    font-weight: 600;;
     line-height: 2;
     width: 166px;
     height: 62px;
@@ -2547,6 +2553,13 @@ video {
     transition: background .5s;
 }
 
+@media screen and (max-width: 768px) {
+    .comment .js-tabs .js-tab-comment {
+        height: 48px;
+        width: 146px;
+        font-size: 13px;
+    }
+}
 
 .comment .js-tabs .js-tab-comment.-famous {
     border-radius: 100px 0 0 100px;
@@ -2577,7 +2590,7 @@ video {
         font-size: 44px;
     }
 
-    .commnet .subtitle {
+    .comment .subtitle {
         font-size: 12px;
     }
 
@@ -2622,7 +2635,7 @@ video {
     }
 
     .comment .close-button {
-        top: 20px;
+        top: 30px;
         right: 20px;
     }
 }
