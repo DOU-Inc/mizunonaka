@@ -254,6 +254,8 @@ progress::-webkit-progress-bar {
 }
 
 .header .nav {
+    max-width: 1000px;
+    margin: 0 auto;
     height: 100%;
     width: 100%;
     display: flex;
@@ -262,9 +264,29 @@ progress::-webkit-progress-bar {
     gap: 10%;
 }
 
-.nav-logo {
-    width: 460px;
+.nav-sns {
+    position: absolute;
+    top: 50%;
+    left: 55px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
 }
+
+.nav-sns a {
+    display: inline-block;
+    width: 25px;
+}
+
+.nav picture {
+    width: 46%;
+}
+
+
+/* .nav-logo {
+    width: 460px;
+} */
 
 .header .nav-list {
     width: fit-content;
@@ -327,6 +349,16 @@ progress::-webkit-progress-bar {
 .header.-active~.container .comment-lists-container {
     opacity: 0 !important;
     pointer-events: none;
+}
+
+@media screen and (max-width: 1250px) {
+    .nav-sns {
+        flex-direction: row;
+        top: auto;
+        left: 55px;
+        bottom: 55px;
+        transform: translateY(0);
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -863,6 +895,15 @@ video {
     opacity: 1;
 }
 
+.js-sns.-active {
+    opacity: 1;
+}
+
+.js-sns {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out 1.5s;
+}
+
 
 .js-title {
 
@@ -965,7 +1006,13 @@ video {
     align-items: center;
 }
 
-.mv .mv-award {}
+.mv .mv-award {
+    width: 360px;
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    opacity: 0.8;
+}
 
 .mv .inner {
     padding: 0;
@@ -1001,6 +1048,13 @@ video {
 }
 
 @media screen and (max-width: 768px) {
+    .mv .mv-award {
+        width: 132px;
+        left: 20px;
+        bottom: auto;
+        top: 20px;
+    }
+
     .mv .sns {
 
         position: fixed;

@@ -243,6 +243,7 @@ function setupToggle(sectionSelector, buttonSelector) {
     const textBox = section.querySelector('.js-text-box');
     const title = section.querySelector('.js-title');
     const btn = section.querySelector('.js-btn');
+    const sns = section.querySelector('.js-sns');
     const ModalBox = section.querySelector('.js-modal-box');
 
     // 他のセクションをまとめて取得
@@ -271,6 +272,7 @@ function setupToggle(sectionSelector, buttonSelector) {
             title?.classList.toggle('-active');
             btn?.classList.toggle('-active');
             ModalBox?.classList.toggle('-active');
+            sns?.classList.toggle('-active');
             section.classList.toggle('-active');
 
             const isActive = section.classList.contains('-active');
