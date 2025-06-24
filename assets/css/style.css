@@ -83,7 +83,7 @@ iframe {
 @media screen and (max-width:900px) {
 
     .inner {
-        padding: 20px 4vw;
+        padding: 20px;
     }
 
     iframe {
@@ -194,8 +194,8 @@ progress::-webkit-progress-bar {
 
 .header {
     position: fixed;
-    top: 80px;
-    right: 80px;
+    top: 20px;
+    right: 20px;
     width: 86px;
     height: 48px;
     z-index: 1000;
@@ -220,7 +220,6 @@ progress::-webkit-progress-bar {
     transform: translate(0);
     border: 1px solid;
     background: rgba(255, 255, 255, 0.1);
-    transition: background 0.3s;
 }
 
 
@@ -232,6 +231,7 @@ progress::-webkit-progress-bar {
     width: 63px;
     height: 1px;
     background-color: #fff;
+    transition: opacity .5s ease 1s;
 }
 
 .hamburger__line:nth-of-type(1) {
@@ -294,9 +294,9 @@ progress::-webkit-progress-bar {
 }
 
 .header.-active .blur-layer {
-    width: 800px;
+    width: 1200px;
     top: 150px;
-    left: -1300px;
+    left: -1000px;
 }
 
 .header.-active .modal-box {
@@ -323,15 +323,14 @@ progress::-webkit-progress-bar {
 .header.-active~.container .cast-lists,
 .header.-active~.container .img-box,
 .header.-active~.container .movie-box,
-.header.-active~.container .staff-lists {
+.header.-active~.container .staff-lists,
+.header.-active~.container .comment-lists-container {
     opacity: 0 !important;
     pointer-events: none;
 }
 
 @media screen and (max-width: 768px) {
     .header {
-        top: 30px;
-        right: 30px;
         width: 40px;
         height: 14px;
     }
@@ -366,9 +365,15 @@ progress::-webkit-progress-bar {
     }
 
     .header .blur-layer {
-        width: 90px;
-        top: -40px;
-        left: -25px;
+        width: 150px;
+        top: -70px;
+        left: -55px;
+    }
+
+    .header.-active .blur-layer {
+        width: 800px;
+        top: 150px;
+        left: -300px;
     }
 
     .header .nav {
@@ -641,7 +646,7 @@ progress::-webkit-progress-bar {
 }
 
 #mv-video {
-    filter: blur(10px);
+    filter: blur(5px);
     transition: filter 0.8s ease;
 }
 
@@ -849,7 +854,9 @@ video {
 }
 
 .js-btn.-active {
-    transition: opacity 0.5s ease-in-out, background 0.3s;
+    transition:
+        opacity 0.5s ease-in-out 1s,
+        background 0.3s ease 0s;
 }
 
 .js-profile.-active {
@@ -875,7 +882,7 @@ video {
 
 .js-all-text,
 .js-btn {
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out 1.5s;
 }
 
 .js-all-text {
@@ -957,6 +964,8 @@ video {
     justify-content: space-between;
     align-items: center;
 }
+
+.mv .mv-award {}
 
 .mv .inner {
     padding: 0;
@@ -1082,7 +1091,7 @@ video {
     }
 
     .news .news-list {
-        width: 90%;
+        width: 100%;
     }
 
     .news .news-list .link {
@@ -1543,12 +1552,9 @@ video {
         width: 120vw;
     }
 
-    .trailer .inner {
-        padding: 20px 8vw;
-    }
 
     .trailer .js-movie {
-        width: 85%;
+        width: 92%;
     }
 
     .trailer .js-movie .link {
@@ -1815,28 +1821,107 @@ video {
     z-index: 100;
 }
 
+@media screen and (max-width: 1000px) {
 
-@media screen and (max-width: 768px) {
     .cast .inner {
-        padding: 20px 30px;
+        padding: 20px;
     }
 
-    .cast .title {
-        font-size: 42px;
+    .cast .cast-lists {
+        margin-top: 4em;
+        gap: 2em 4%;
     }
 
-    .cast .subtitle {
+    .cast .cast-list {
+        width: 48%;
+    }
+
+    .cast-role {
         font-size: 10px;
     }
 
-    .cast-list {
+    .cast-name {
+        font-size: 17px;
+    }
+
+    .cast-button {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+
+    /* モダール */
+    .cast-modal {
+        max-width: 500px;
+        flex-direction: column;
+    }
+
+    .cast-profile {
+        width: 100%;
+    }
+
+    .cast-profile.-square {
+        margin: 0 auto;
+        width: 70%;
+    }
+
+    .cast-role.-modal {
+        font-size: 13px;
+    }
+
+    .cast-name.-modal {
+        font-size: 22px;
+    }
+
+    .cast-det {
+        width: 100%;
+        height: 100%;
+        padding-top: 0;
+        margin-top: 3em;
+    }
+
+    .cast-profile-text,
+    .cast-comment-text {
         font-size: 14px;
+    }
+
+    .cast-comment-text {
+        padding-bottom: 2em;
+    }
+
+
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .cast .title {
+        font-size: 44px;
+    }
+
+    .cast .subtitle {
+        font-size: 12px;
     }
 
 
     .cast .title-box {
 
         top: 30px;
+    }
+
+    /* モダール */
+    .cast-modal {
+        max-width: 100%;
+        width: 90%;
+    }
+
+    .cast-profile {
+        padding-top: 9em;
+    }
+
+    .cast .close-button {
+        top: 20px;
+        right: 20px;
     }
 }
 
@@ -1912,6 +1997,9 @@ video {
 }
 
 .staff-lists {
+    max-width: 540px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -1919,13 +2007,20 @@ video {
 }
 
 .staff-list {
+    width: 100%;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 2;
     margin-top: 25em;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     flex-wrap: nowrap;
     text-align: center;
+}
+
+.gsap-trigger {
+    width: 100%;
 }
 
 .staff-list.-m1 {
@@ -1933,6 +2028,10 @@ video {
 }
 
 .staff-list .m-b {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     margin-bottom: 4em;
 }
 
@@ -1947,11 +2046,12 @@ video {
 
 .staff-list-two {
     display: flex;
+    width: 100%;
     justify-content: center;
 }
 
 .staff-list-two dd:nth-child(2) {
-    margin-left: 1em;
+    margin-left: 2em;
 }
 
 .staff-list dt {
@@ -2047,6 +2147,9 @@ video {
 }
 
 @media screen and (max-width: 1000px) {
+    .staff-column dl:nth-child(2) {
+        margin: 0 3em;
+    }
 
     .staff-list {
         font-size: 14px;
@@ -2063,19 +2166,75 @@ video {
 
 
     .staff-list dt {
-        width: 100%;
-        text-align: center;
-        padding-right: 0;
-        font-size: 11px;
+        font-size: 10px;
         margin-bottom: .4em;
     }
 
     .staff-list dd {
-        width: 100%;
-        text-align: center;
-        padding-left: 0;
+        font-size: 14px;
     }
 
+    /* モーダル */
+    .staff-modal {
+        max-width: 500px;
+        width: 100%;
+        max-height: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-top: 25em;
+    }
+
+    .staff-profile {
+        margin-bottom: 4em;
+    }
+
+    .staff-det {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .staff-modal {
+        max-width: 500px;
+        width: 90%;
+        margin-top: 25em;
+    }
+
+    .staff .title-box {
+        top: 30px;
+    }
+
+    .staff .title {
+        font-size: 44px;
+    }
+
+    .staff .subtitle {
+        font-size: 12px;
+    }
+
+    .staff-list {
+        margin-top: 15em;
+    }
+
+    /* モーダル */
+    .staff-role {
+        font-size: 13px;
+    }
+
+
+    .staff-name.-modal {
+        font-size: 22px;
+    }
+
+    .staff-profile-text {
+        font-size: 14px;
+    }
+
+    .staff .close-button {
+        top: 20px;
+        right: 20px;
+    }
 }
 
 
@@ -2116,13 +2275,13 @@ video {
 }
 
 .comment-list {
-  display: block;
-  width: 100%;
-  break-inside: avoid;
-  margin-bottom: 72px;
-  white-space: normal;       
-  word-break: break-word;    
-  line-height: 1.6;  
+    display: block;
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 72px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.6;
 
 }
 
@@ -2140,7 +2299,6 @@ video {
     text-align: center;
     font-size: 16px;
     font-weight: 100;
-    margin-bottom: .8em;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -2180,7 +2338,7 @@ video {
     margin: 0 auto;
 }
 
-.comment-lists-wrap{
+.comment-lists-wrap {
     width: 100%;
     position: absolute;
     top: 0;
@@ -2257,7 +2415,6 @@ video {
 .comment-role {
     font-size: 16px;
     font-weight: 100;
-    margin-bottom: .5em;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -2348,6 +2505,69 @@ video {
 
 .comment .js-tabs .js-tab-comment.-active {
     background: rgba(255, 255, 255, 0.45);
+}
+
+@media screen and (max-width: 1000px) {
+    .comment-lists-container {
+        max-width: 540px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .comment .title {
+        font-size: 44px;
+    }
+
+    .commnet .subtitle {
+        font-size: 12px;
+    }
+
+    .comment-text {
+        font-size: 14px;
+    }
+
+
+    .comment-role {
+        font-size: 13px;
+    }
+
+
+    .comment-name {
+        font-size: 22px;
+    }
+
+    .comment-name span {
+        font-size: 14px;
+    }
+
+    .comment-lists {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comment-lists.-modal {
+        column-count: auto;
+        height: 300px;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .comment-lists-wrap {
+        padding: 20px;
+    }
+
+    .comment .js-tabs {
+        margin-top: 120px;
+    }
+
+    .comment .close-button {
+        top: 20px;
+        right: 20px;
+    }
 }
 
 /*

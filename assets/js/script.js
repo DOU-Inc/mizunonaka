@@ -60,7 +60,7 @@ function handleBgSpFadeOnScroll() {
             mvVideo.style.filter = 'none';
             isBlurRemoved = true;
         } else if (scrollY <= 10 && isBlurRemoved) {
-            mvVideo.style.filter = 'blur(10px)';
+            mvVideo.style.filter = 'blur(5px)';
             isBlurRemoved = false;
         }
 
@@ -95,9 +95,11 @@ function moveTitleSmoothly(titleElement) {
     // 目標位置（スマホとPCで分ける）
     const targetX = isMobile ? 20 : 60;
     const targetY = isMobile ? 96 : 60;
+    const targetCSC = isMobile ? 20 : 60;
 
     const deltaX = targetX - currentX;
     const deltaY = targetY - currentY;
+    const deltaCSC = targetCSC - currentY;
 
     // 初期化（今の位置にピタッと固定）
     titleElement.style.transform = `translate(0, 0)`;
@@ -105,14 +107,46 @@ function moveTitleSmoothly(titleElement) {
 
     // 次のフレームでアニメーション発動
     requestAnimationFrame(() => {
-        titleElement.style.transition = 'transform 1s ease';
-        titleElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        if (
+            titleElement.matches('#cast .js-title') ||
+            titleElement.matches('#staff .js-title') ||
+            titleElement.matches('#comment .js-title')
+        ) {
+            // transform と font-size 両方の transition をまとめる
+            titleElement.style.transition = 'transform 1s ease';
+
+            // 子要素 .title にも font-size の transition を適用
+            const childTitle = titleElement.querySelector('.title');
+            if (childTitle) {
+                childTitle.style.transition = 'font-size 1s ease';
+            }
+
+            titleElement.style.transform = `translate(${deltaX}px, ${deltaCSC}px)`;
+
+            // #comment .js-title のときだけ子要素 .title の font-size を変更
+            if (titleElement.matches('#comment .js-title') && childTitle) {
+                childTitle.style.fontSize = '36px'; // お好みで
+            }
+
+        } else {
+            titleElement.style.transition = 'transform 1s ease';
+            titleElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        }
     });
 }
 
 function resetTitlePosition(titleElement) {
     titleElement.style.transition = 'transform 2s ease';
     titleElement.style.transform = `translate(0, 0)`; // 元の位置に戻すだけ！
+
+    // #comment .js-title の場合、子要素 .title の font-size も戻す
+    if (titleElement.matches('#comment .js-title')) {
+        const childTitle = titleElement.querySelector('.title');
+        if (childTitle) {
+            childTitle.style.transition = 'font-size 2s ease';
+            childTitle.style.fontSize = '44px'; // お好みで
+        }
+    }
 }
 
 
@@ -349,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== COMMENT =====
     const commentButtons = document.querySelectorAll('#comment .comment-button button');
     const commentModalBoxes = document.querySelectorAll('#comment .modal-box.js-modal-box');
-    const commentLists = document.querySelector('#comment .comment-lists');
+    const commentLists = document.querySelector('#comment .comment-lists-container');
     const commentTitle = document.querySelector('#comment .js-title');
     const commentCloseButtons = document.querySelectorAll('#comment .modal-box .close-button');
 
