@@ -193,8 +193,8 @@ const videoMap = {
         sp: "./assets/video/03_sp_v3.mp4",
     },
     "teaser": {
-        pc: "./assets/video/teaser_pc.mp4",
-        sp: "./assets/video/teaser_sp.mp4",
+        pc: "./assets/video/05_pc.mp4",
+        sp: "./assets/video/05_sp.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
@@ -893,6 +893,22 @@ gsap.fromTo(
     }
 );
 
+gsap.fromTo(
+    "#comment .comment-lists-container",
+    {
+        autoAlpha: 0,
+    },
+    {
+        autoAlpha: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: "#comment",
+            start: "top 20%",
+        },
+    }
+);
+
 
 
 gsap.fromTo(
@@ -916,7 +932,6 @@ gsap.fromTo(
 
 // MVのアニメーション
 window.addEventListener('load', () => {
-    // ★★★
     // lenis.stop();
     const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
@@ -1104,23 +1119,23 @@ window.addEventListener("DOMContentLoaded", () => {
     // poster切り替え
     setVideoWithPoster(
         "mv-video",
-        "./assets/img/01_sp_poster.jpg",
-        "./assets/img/01_pc_poster.jpg"
+        "./assets/img/01_sp_poster.webp",
+        "./assets/img/01_pc_poster.webp"
     );
     setVideoWithPoster(
         "story-video",
-        "./assets/img/02_sp_poster_v2.jpg",
-        "./assets/img/02_pc_poster.jpg"
+        "./assets/img/02_sp_poster_v2.webp",
+        "./assets/img/02_pc_poster.webp"
     );
     setVideoWithPoster(
         "trailer-video",
-        "./assets/img/03_sp_poster.jpg",
-        "./assets/img/03_pc_poster.jpg"
+        "./assets/img/03_sp_poster.webp",
+        "./assets/img/03_pc_poster.webp"
     );
     setVideoWithPoster(
         "footer-video",
-        "./assets/img/04_sp_poster_v2.jpg",
-        "./assets/img/04_pc_poster.jpg"
+        "./assets/img/04_sp_poster_v2.webp",
+        "./assets/img/04_pc_poster.webp"
     );
 
     if (isInsta) {
@@ -1147,8 +1162,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     video.setAttribute("preload", "none"); // プリロードを無効化
                     setVideoWithPoster(
                         id,
-                        videoMap[id].sp.replace(".mp4", "_poster.jpg"),
-                        videoMap[id].pc.replace(".mp4", "_poster.jpg")
+                        videoMap[id].sp.replace(".mp4", "_poster.webp"),
+                        videoMap[id].pc.replace(".mp4", "_poster.webp")
                     );
                 }
             },
