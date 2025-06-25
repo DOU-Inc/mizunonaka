@@ -150,7 +150,7 @@ function resetTitlePosition(titleElement) {
         const childTitle = titleElement.querySelector('.title');
         if (childTitle) {
             childTitle.style.transition = 'font-size 2s ease';
-            childTitle.classList.add('-open'); // ← 追加
+            childTitle.classList.remove('-open'); // ← 追加
         }
     }
 }
