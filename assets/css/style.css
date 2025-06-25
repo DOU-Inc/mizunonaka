@@ -2011,6 +2011,10 @@ video {
 
 @media screen and (max-width: 768px) {
 
+    .cast{
+        margin-bottom: 32px;
+    }
+
     .cast .title {
         font-size: 44px;
     }
@@ -2055,6 +2059,7 @@ video {
 */
 .staff {
     height: 100%;
+    margin-bottom: 40vh;
 }
 
 .staff-button {
@@ -2099,7 +2104,7 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(27, 36, 46, 0.9);
+    background: rgba(27, 36, 46, 0.95);
     z-index: 1;
 }
 
@@ -2311,6 +2316,10 @@ video {
 }
 
 @media screen and (max-width: 768px) {
+    .staff {
+        margin-bottom: 120px;
+    }
+
     .staff-modal {
         max-width: 500px;
         width: 90%;
@@ -2330,7 +2339,7 @@ video {
     }
 
     .staff-list {
-        margin-top: 15em;
+        margin-top: 40em;
     }
 
     /* モーダル */
@@ -2381,8 +2390,11 @@ video {
 }
 
 .comment-lists.-inline {
+    margin-top: 25vh;
     column-count: 2;
     max-width: 730px;
+    padding-left: 2em;
+    padding-right: 2em;    
 }
 
 .comment-lists.-famous {
@@ -2432,7 +2444,13 @@ video {
 
 .comment-button {
     text-align: center;
-    margin-top: 6em;
+    margin-top: 0;
+}
+
+@media screen and (max-width: 768px){
+    .comment-button {
+        margin-top: 16px;
+    }
 }
 
 
@@ -2614,6 +2632,7 @@ video {
         height: 48px;
         width: 146px;
         font-size: 13px;
+
     }
 }
 
@@ -2652,6 +2671,7 @@ video {
 
     .comment-text {
         font-size: 14px;
+        margin-bottom: .8em;
     }
 
 
@@ -2673,9 +2693,16 @@ video {
         flex-direction: column;
     }
 
+    .comment-lists.-inline{
+        margin-top: 120px;
+    }
+
+    .comment-list{
+        margin-bottom: 40px;
+    }
+
     .comment-lists.-modal {
         column-count: auto;
-        height: 300px;
         overflow-y: scroll;
         display: flex;
         flex-direction: column;
@@ -2683,11 +2710,13 @@ video {
 
 
     .comment-lists-wrap {
-        padding: 20px;
+        padding: 32px 20px;
+        height: calc(100vh - 182px);
     }
 
     .comment .js-tabs {
         margin-top: 120px;
+        margin-bottom: 12px;
     }
 
     .comment .close-button {
@@ -2876,6 +2905,7 @@ video {
     }
 
     .footer .img-box {
+        margin-top: 200px;
         margin-bottom: 25vh;
         gap: 0 0;
     }
