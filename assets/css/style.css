@@ -1790,8 +1790,17 @@ video {
     opacity: 0;
 }
 
+.cast .cast-img-box {
+    overflow: hidden;
+}
+
 .cast .cast-list img {
     cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.cast .cast-list img:hover {
+    transform: scale(1.2);
 }
 
 .cast-role {
@@ -1810,9 +1819,10 @@ video {
 
 .cast .cast-list .cast-button {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 50px;
+    right: 10px;
 }
+
 
 .cast-button {
     color: #fff;
@@ -1954,11 +1964,14 @@ video {
         font-size: 17px;
     }
 
-    .cast-button {
+    .cast .cast-list .cast-button {
         width: 24px;
         height: 24px;
         font-size: 11px;
+        bottom: 30px;
     }
+
+
 
     /* モダール */
     .cast-modal {

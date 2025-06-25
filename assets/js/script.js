@@ -396,8 +396,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentCloseButtons = document.querySelectorAll('#comment .modal-box .close-button');
 
     // ===== CAST ボタン =====
-    castButtons.forEach((button, index) => {
+    castButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // 対象となる親の cast-list を取得
+            const castList = button.closest('.cast-list');
+            if (!castList) return;
+
+            const targetKey = castList.getAttribute('data-target');
+            if (!targetKey) return;
+
+            // 該当のモーダルを取得
+            const targetModal = document.querySelector(`#cast .modal-box.-${targetKey}`);
+            if (!targetModal) return;
+
+            // 表示切り替えなどの共通処理
             if (castLists) {
                 castLists.style.transition = 'opacity 0.5s ease';
                 castLists.style.opacity = '0';
@@ -418,10 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             moveTitleSmoothly?.(castTitle);
 
-            const targetModal = castModalBoxes[index];
-            if (targetModal) {
-                targetModal.classList.add('-active');
-            }
+            targetModal.classList.add('-active');
         });
     });
 
@@ -606,6 +615,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//castのホバー
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+document.querySelectorAll('.cast-list').forEach(list => {
+    const img = list.querySelector('img');
+    const button = list.querySelector('.cast-button');
+
+    if (img && button) {
+        // ボタンにホバー：1.2倍
+        button.addEventListener('mouseenter', () => {
+            img.style.transform = 'scale(1.2)';
+            button.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+        });
+        button.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1)';
+            button.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+        });
+
+        // 画像にホバー：1.2倍
+        img.addEventListener('mouseenter', () => {
+            img.style.transform = 'scale(1.2)';
+            button.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+        });
+        img.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1)';
+            button.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+        });
+    }
+});
+
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 //intro,storyのPCとSPの文字数制御
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
