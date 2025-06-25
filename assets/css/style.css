@@ -2495,6 +2495,7 @@ video {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    transition: opacity 0.5s ease 0.5s !important;
 }
 
 .comment-lists-box {
@@ -2701,7 +2702,7 @@ video {
         column-gap: 40px;
     }
 
-    .comment-list{
+    .comment-list {
         margin-bottom: 48px;
     }
 }
@@ -3003,14 +3004,16 @@ video {
 
 
 .scroll-hidden {
-  overflow-y: scroll;
+    overflow-y: scroll;
 
-  /* Firefox */
-  scrollbar-width: none;
+    /* Firefox */
+    scrollbar-width: none;
 
-  /* Chrome, Safari (WebKit系) */
-  -ms-overflow-style: none; /* IE, Edge */
+    /* Chrome, Safari (WebKit系) */
+    -ms-overflow-style: none;
+    /* IE, Edge */
 }
+
 .scroll-hidden::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
