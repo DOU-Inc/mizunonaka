@@ -1688,6 +1688,7 @@ video {
 
 @media screen and (max-width: 900px) {
     .trailer .js-tabs {
+        max-width: 300px;
         width: 80%;
         transform: translate(-50%, 420%);
     }
@@ -1713,7 +1714,7 @@ video {
 
 @media screen and (max-width: 500px) {
     .trailer .js-tabs {
-        transform: translate(-50%, 200%);
+        transform: translate(-50%, 224%);
     }
 }
 
@@ -1814,6 +1815,7 @@ video {
 .cast-name {
     font-size: 26px;
     font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .cast .cast-list .cast-button {
@@ -2144,7 +2146,7 @@ video {
     width: 100%;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 2;
-    margin-top: 25em;
+    margin-top: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2189,8 +2191,9 @@ video {
 }
 
 .staff-list dt {
+    font-weight: 400;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .staff-list dd {
@@ -2199,6 +2202,7 @@ video {
     align-items: center;
     font-size: 20px;
     font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 
@@ -2235,7 +2239,7 @@ video {
 
 .staff-role {
     font-size: 16px;
-    font-weight: 100;
+    font-weight: 300;
     margin-bottom: .5em;
     color: rgba(255, 255, 255, 0.6);
 }
@@ -2330,7 +2334,7 @@ video {
 
 @media screen and (max-width: 768px) {
     .staff {
-        margin-bottom: 120px;
+        margin-bottom: 400px;
     }
 
     .staff-modal {
@@ -2438,7 +2442,6 @@ video {
 .comment-role {
     text-align: center;
     font-size: 16px;
-    font-weight: 100;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -2492,6 +2495,8 @@ video {
     transform: translateX(-50%);
     overflow-y: scroll;
     height: calc(100vh - 362px);
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .comment-lists.-modal {
@@ -2562,7 +2567,7 @@ video {
 
 .comment-role {
     font-size: 16px;
-    font-weight: 100;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -2667,13 +2672,25 @@ video {
 
 @media screen and (max-width: 1000px) {
     .comment-lists-container {
-        max-width: 540px;
+        max-width: 730px;
         width: 100%;
         margin: 0 auto;
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
+    .comment-lists {
+        column-count: 2;
+        column-gap: 40px;
+    }
+
+    .comment-list{
+        margin-bottom: 48px;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
     .comment .title {
         font-size: 44px;
     }
@@ -2714,14 +2731,6 @@ video {
         margin-bottom: 40px;
     }
 
-    .comment-lists.-modal {
-        column-count: auto;
-        overflow-y: scroll;
-        display: flex;
-        flex-direction: column;
-    }
-
-
     .comment-lists-wrap {
         padding: 32px 20px;
         height: calc(100vh - 182px);
@@ -2737,6 +2746,7 @@ video {
         right: 20px;
     }
 }
+
 
 /*
 // -----------------------------------------------------------------
@@ -2931,8 +2941,6 @@ video {
         width: 50px;
         height: auto;
     }
-
-    ;
 }
 
 
@@ -2973,4 +2981,19 @@ video {
     overflow: hidden;
     border-radius: 12px;
     /* 角をしっかりつけるなら */
+}
+
+
+
+.scroll-hidden {
+  overflow-y: scroll;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* Chrome, Safari (WebKit系) */
+  -ms-overflow-style: none; /* IE, Edge */
+}
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
 }

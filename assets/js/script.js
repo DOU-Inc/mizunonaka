@@ -531,6 +531,10 @@ document.addEventListener('DOMContentLoaded', () => {
     commentButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
 
+            // ===== js-tab-comment の-activeをリセットし、-famousに付与 =====
+            document.querySelectorAll('.js-tab-comment').forEach(btn => btn.classList.remove('-active'));
+            document.querySelector('.js-tab-comment.-famous')?.classList.add('-active');
+
             if (commentLists) {
                 commentLists.style.transition = 'opacity 0.5s ease';
                 commentLists.style.opacity = '0';
@@ -554,15 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetModal = commentModalBoxes[index];
             if (targetModal) {
                 targetModal.classList.add('-active');
-                // window.addEventListener('load', function () {
-                //     var lists = document.querySelector('.comment-lists');
-
-                //     new Masonry(lists, {
-                //         itemSelector: '.comment-list',
-                //         columnWidth: 100,
-                //         fitWidth: true
-                //     });
-                // });
             }
 
             // モーダルが開いたら、著名人のコメントを有効化
