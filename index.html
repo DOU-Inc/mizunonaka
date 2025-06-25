@@ -38,25 +38,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" media="all" />
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const linkElement = document.querySelector('link[href^="./assets/css/style.css"]');
-            if (linkElement) {
-                fetch('./assets/css/style.css', { method: 'HEAD' })
-                    .then(response => {
-                        const lastModified = response.headers.get('Last-Modified');
-                        if (lastModified) {
-                            const timestamp = new Date(lastModified).getTime();
-                            linkElement.href = `./assets/css/style.css?v=${timestamp}`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('CSSファイルの更新日時取得に失敗しました:', error);
-                        // エラー時はデフォルトのhrefをそのまま使用
-                    });
-            }
-        });
-    </script>
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -1722,25 +1703,6 @@
             </section>
         </section>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const scriptElement = document.querySelector('script[src^="./assets/js/script.js"]');
-            if (scriptElement) {
-                fetch('./assets/js/script.js', { method: 'HEAD' })
-                    .then(response => {
-                        const lastModified = response.headers.get('Last-Modified');
-                        if (lastModified) {
-                            const timestamp = new Date(lastModified).getTime();
-                            scriptElement.src = `./assets/js/script.js?v=${timestamp}`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('JavaScriptファイルの更新日時取得に失敗しました:', error);
-                        // エラー時はデフォルトのsrcをそのまま使用
-                    });
-            }
-        });
-    </script>
     <script src="./assets/js/script.js"></script>
 
 </body>
