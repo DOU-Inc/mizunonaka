@@ -631,7 +631,7 @@ document.querySelectorAll('.cast-list').forEach(list => {
     if (img && button) {
         // ボタンにホバー：1.2倍
         button.addEventListener('mouseenter', () => {
-            img.style.transform = 'scale(1.2)';
+            img.style.transform = 'scale(1.05)';
             button.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
         });
         button.addEventListener('mouseleave', () => {
@@ -641,7 +641,7 @@ document.querySelectorAll('.cast-list').forEach(list => {
 
         // 画像にホバー：1.2倍
         img.addEventListener('mouseenter', () => {
-            img.style.transform = 'scale(1.2)';
+            img.style.transform = 'scale(1.05)';
             button.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
         });
         img.addEventListener('mouseleave', () => {
