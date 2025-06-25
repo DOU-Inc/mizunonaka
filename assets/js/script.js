@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // モーダルを閉じたら、コメントは無効化
             const commentlists = document.querySelectorAll('.comment-lists.-modal');
-            const commentListsWrap = document.querySelectorAll('.comment-lists-wrap');            
+            const commentListsWrap = document.querySelectorAll('.comment-lists-wrap');
             commentlists.forEach(commentlist => {
                 commentlist.style.opacity = '0';
                 commentlist.style.pointerEvents = 'none';
@@ -932,7 +932,7 @@ gsap.fromTo(
 
 // MVのアニメーション
 window.addEventListener('load', () => {
-    // lenis.stop();
+    lenis.stop();
     const isMobile = window.innerWidth <= 768;
     const tl = gsap.timeline();
 
@@ -1291,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
-            
+
 
             } else {
                 // ✅ 親が -active じゃない場合は全て無効化
@@ -1302,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 commentListsWrap.forEach(list => {
                     list.style.opacity = '0';
                     list.style.pointerEvents = 'none';
-                });            
+                });
             }
         });
     });
