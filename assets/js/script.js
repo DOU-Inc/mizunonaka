@@ -131,7 +131,7 @@ function moveTitleSmoothly(titleElement) {
 
             // #comment .js-title のときだけ子要素 .title の font-size を変更
             if (titleElement.matches('#comment .js-title') && childTitle) {
-                childTitle.style.fontSize = '36px'; // お好みで
+                childTitle.classList.add('-open'); // ← 追加
             }
 
         } else {
@@ -150,7 +150,7 @@ function resetTitlePosition(titleElement) {
         const childTitle = titleElement.querySelector('.title');
         if (childTitle) {
             childTitle.style.transition = 'font-size 2s ease';
-            childTitle.style.fontSize = '44px'; // お好みで
+            childTitle.classList.add('-open'); // ← 追加
         }
     }
 }
@@ -562,9 +562,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // モーダルが開いたら、著名人のコメントを有効化
             const famousList = document.querySelector('.comment-lists.-modal.-famous');
+            const famousListwrap = document.querySelector('.comment-lists-wrap.-famous');
             if (famousList) {
                 famousList.style.opacity = '1';
                 famousList.style.pointerEvents = 'auto';
+                famousListwrap.style.opacity = '1';
+                famousListwrap.style.pointerEvents = 'auto';
             }
 
 
@@ -581,10 +584,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // モーダルを閉じたら、コメントは無効化
             const commentlists = document.querySelectorAll('.comment-lists.-modal');
+            const commentListsWrap = document.querySelectorAll('.comment-lists-wrap');            
             commentlists.forEach(commentlist => {
                 commentlist.style.opacity = '0';
                 commentlist.style.pointerEvents = 'none';
             });
+            commentListsWrap.forEach(commentlistwrap => {
+                commentlistwrap.style.opacity = '0';
+                commentlistwrap.style.pointerEvents = 'none';
+            });
+
+
 
             if (commentLists) {
                 commentLists.style.transition = 'opacity 0.5s ease 1.2s';
@@ -1245,6 +1255,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 💬 COMMENT TABS
     // -------------------
     const commentButtons = document.querySelectorAll('.js-tab-comment');
+    const commentListsWrap = document.querySelectorAll('.comment-lists-wrap');
     const commentLists = document.querySelectorAll('.comment-lists.-modal');
 
     commentButtons.forEach(button => {
@@ -1260,6 +1271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (modalBox && modalBox.classList.contains('-active')) {
                 // ✅ 親が -active なら type に合わせて表示切り替え
+
                 commentLists.forEach(list => {
                     if (list.classList.contains(type)) {
                         list.style.opacity = '1';
@@ -1269,12 +1281,28 @@ document.addEventListener('DOMContentLoaded', function () {
                         list.style.pointerEvents = 'none';
                     }
                 });
+                commentListsWrap.forEach(wrap => {
+                    if (wrap.classList.contains(type)) {
+                        wrap.style.opacity = '1';
+                        wrap.style.pointerEvents = 'auto';
+                    } else {
+                        wrap.style.opacity = '0';
+                        wrap.style.pointerEvents = 'none';
+                    }
+                });
+
+            
+
             } else {
                 // ✅ 親が -active じゃない場合は全て無効化
                 commentLists.forEach(list => {
                     list.style.opacity = '0';
                     list.style.pointerEvents = 'none';
                 });
+                commentListsWrap.forEach(list => {
+                    list.style.opacity = '0';
+                    list.style.pointerEvents = 'none';
+                });            
             }
         });
     });
