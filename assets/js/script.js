@@ -396,74 +396,164 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentCloseButtons = document.querySelectorAll('#comment .modal-box .close-button');
 
     // ===== CAST ボタン =====
-    castButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // 対象となる親の cast-list を取得
-            const castList = button.closest('.cast-list');
-            if (!castList) return;
+    // castButtons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         // 対象となる親の cast-list を取得
+    //         const castList = button.closest('.cast-list');
+    //         if (!castList) return;
 
-            const targetKey = castList.getAttribute('data-target');
-            if (!targetKey) return;
+    //         const targetKey = castList.getAttribute('data-target');
+    //         if (!targetKey) return;
 
-            // 該当のモーダルを取得
-            const targetModal = document.querySelector(`#cast .modal-box.-${targetKey}`);
-            if (!targetModal) return;
+    //         // 該当のモーダルを取得
+    //         const targetModal = document.querySelector(`#cast .modal-box.-${targetKey}`);
+    //         if (!targetModal) return;
 
-            // 表示切り替えなどの共通処理
-            if (castLists) {
-                castLists.style.transition = 'opacity 0.5s ease';
-                castLists.style.opacity = '0';
-                castLists.style.pointerEvents = 'none';
-            }
+    //         // 表示切り替えなどの共通処理
+    //         if (castLists) {
+    //             castLists.style.transition = 'opacity 0.5s ease';
+    //             castLists.style.opacity = '0';
+    //             castLists.style.pointerEvents = 'none';
+    //         }
 
-            if (header) {
-                disableScroll();
-                html.classList.add('noscroll');
-                header.style.opacity = '0';
-                header.style.pointerEvents = 'none';
-            }
+    //         if (header) {
+    //             disableScroll();
+    //             html.classList.add('noscroll');
+    //             header.style.opacity = '0';
+    //             header.style.pointerEvents = 'none';
+    //         }
 
-            if (staff) {
-                staff.style.opacity = '0';
-                staff.style.pointerEvents = 'none';
-            }
+    //         if (staff) {
+    //             staff.style.opacity = '0';
+    //             staff.style.pointerEvents = 'none';
+    //         }
 
-            moveTitleSmoothly?.(castTitle);
+    //         moveTitleSmoothly?.(castTitle);
 
-            targetModal.classList.add('-active');
-        });
+    //         targetModal.classList.add('-active');
+    //     });
+    // });
+
+    // // ===== CAST 閉じるボタン =====
+    // castCloseButtons.forEach(closeButton => {
+    //     closeButton.addEventListener('click', () => {
+    //         const targetModal = closeButton.closest('.modal-box');
+    //         if (targetModal) {
+    //             targetModal.classList.remove('-active');
+    //         }
+
+    //         if (castLists) {
+    //             castLists.style.transition = 'opacity 0.5s ease 1.2s';
+    //             castLists.style.opacity = '1';
+    //             castLists.style.pointerEvents = 'auto';
+    //         }
+
+    //         resetTitlePosition?.(castTitle);
+
+    //         enableScroll();
+    //         html.classList.remove('noscroll');
+
+    //         if (header) {
+    //             header.style.opacity = '1';
+    //             header.style.pointerEvents = 'auto';
+    //         }
+
+    //         if (staff) {
+    //             staff.style.opacity = '1';
+    //             staff.style.pointerEvents = 'auto';
+    //         }
+    //     });
+    // });
+
+    // ==== CAST: JSON + 遅延 fetch ==============================
+    (() => {
+    const listWrap   = document.querySelector('#cast .cast-lists');
+    const overlay    = document.getElementById('castOverlay');
+    const contentBox = document.getElementById('castContent');
+    const closeBtn   = document.getElementById('castClose');
+    const cache      = new Map();
+
+    // 1) リストクリック
+    listWrap.addEventListener('click', async (e) => {
+        const li = e.target.closest('.cast-list');
+        if (!li) return;
+
+
+        // 表示切り替えなどの共通処理
+        // if (castLists) {
+        //     castLists.style.transition = 'opacity 0.5s ease';
+        //     castLists.style.opacity = '0';
+        //     castLists.style.pointerEvents = 'none';
+        // }
+
+        if (header) {
+            disableScroll();
+            html.classList.add('noscroll');
+            header.style.opacity = '0';
+            header.style.pointerEvents = 'none';
+        }
+
+        // if (staff) {
+        //     staff.style.opacity = '0';
+        //     staff.style.pointerEvents = 'none';
+        // }
+
+        moveTitleSmoothly?.(castTitle);
+
+        // targetModal.classList.add('-active');
+
+
+        const id = li.dataset.target;            // "ishikawa"
+        contentBox.innerHTML = 'Loading…';
+        overlay.classList.remove('hidden');
+
+        // 2) JSON 取得（キャッシュあり）
+        let data = cache.get(id);
+        if (!data) {
+        data = await fetch(`./assets/json/${id}.json`).then(r => r.json());
+        cache.set(id, data);
+        }        
+
+        // 3) HTML を流し込む
+        contentBox.innerHTML = `
+            <img class="cast-bg-img" src="${data.photo}" alt="${data.name}">
+            <div class="cast-bg"></div>
+            <div class="cast-modal">
+                <div class="cast-profile">
+                    <div class="cast-profile-inner">
+                        <img src="${data.photo}" alt="${data.name}">
+                        <p class="cast-role -modal">${data.role}</p>
+                        <h2 class="cast-name -modal">${data.name}</h2>
+                    </div>
+                </div>
+                <div class="cast-det" data-lenis-prevent>
+                    <div class="cast-det-inner">
+                        <h3 class="cast-profile-title">PROFILE</h3>
+                        <p class="cast-profile-text">${data.profile}</p>
+                        <h3 class="cast-comment-title">COMMENT</h3>
+                        <p class="cast-comment-text">${data.comment}</p>
+                    </div>
+                </div>
+            </div>
+        `;        
     });
 
-    // ===== CAST 閉じるボタン =====
-    castCloseButtons.forEach(closeButton => {
-        closeButton.addEventListener('click', () => {
-            const targetModal = closeButton.closest('.modal-box');
-            if (targetModal) {
-                targetModal.classList.remove('-active');
-            }
+    // 4) 閉じる & メモリ解放
+    closeBtn.addEventListener('click', () => {
+        const img = contentBox.querySelector('img');
+        if (img) img.src = '';          // GPU / Heap から即解放
+        contentBox.innerHTML = '';
+        overlay.classList.add('hidden');
 
-            if (castLists) {
-                castLists.style.transition = 'opacity 0.5s ease 1.2s';
-                castLists.style.opacity = '1';
-                castLists.style.pointerEvents = 'auto';
-            }
+        resetTitlePosition?.(castTitle);
 
-            resetTitlePosition?.(castTitle);
+        enableScroll();
+        html.classList.remove('noscroll');
 
-            enableScroll();
-            html.classList.remove('noscroll');
-
-            if (header) {
-                header.style.opacity = '1';
-                header.style.pointerEvents = 'auto';
-            }
-
-            if (staff) {
-                staff.style.opacity = '1';
-                staff.style.pointerEvents = 'auto';
-            }
-        });
     });
+    })();
+
+
 
     // ===== STAFF ボタン =====
     staffButtons.forEach((button, index) => {

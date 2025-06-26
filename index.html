@@ -612,6 +612,7 @@
                         <button class="open-button button cast-button">＋</button>
                     </li>
                 </ul>
+                <!--
                 <div class="cast-modal-box modal-box js-modal-box -ishikawa">
                     <button class="close-button button" id="close">close</button>
                     <img class="cast-bg-img" src="./assets/img/ishikawa_open.webp" alt="石川瑠華">
@@ -1219,7 +1220,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  -->
         </section>
 
         <section id="staff" class="staff section">
@@ -1394,6 +1395,12 @@
                 </div>
 
             </div>
+            <div id="castOverlay" class="cast-overlay hidden">
+              <button id="castClose" class="close-button button">close</button>
+              <div id="castContent" class="overlay-inner cast-modal-box modal-box">Loading...</div>
+            </div>
+
+
         </section>
 
         <section id="comment" class="comment section">
@@ -1703,7 +1710,7 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v8"></script>
+    <script src="./assets/js/script.js?v10"></script>
 
 </body>
 
