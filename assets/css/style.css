@@ -969,8 +969,8 @@ video {
     transition: opacity 0.5s ease-in-out 1.5s;
 }
 
-#comment .title.-open{
-    font-size: 86px;    
+#comment .title.-open {
+    font-size: 44px;
 }
 
 .js-all-text {
@@ -986,8 +986,8 @@ video {
 }
 
 @media screen and (max-width: 768px) {
-    #comment .title.-open{
-        font-size: 36px;    
+    #comment .title.-open {
+        font-size: 36px;
     }
 
     .js-all-text {
