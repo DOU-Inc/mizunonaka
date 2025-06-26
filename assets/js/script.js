@@ -181,12 +181,12 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc_v3.mp4",
-        sp: "./assets/video/01_sp_v3.mp4",
+        pc: "./assets/video/01_pc_v4.mp4",
+        sp: "./assets/video/01_sp_v4.mp4",
     },
     "story-video": {
-        pc: "./assets/video/02_pc_v3.mp4",
-        sp: "./assets/video/02_sp_v3.mp4",
+        pc: "./assets/video/02_pc_v4.mp4",
+        sp: "./assets/video/02_sp_v4.mp4",
     },
     "normal": {
         pc: "./assets/video/03_pc_v3.mp4",
