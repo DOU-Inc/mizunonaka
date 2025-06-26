@@ -110,7 +110,7 @@ iframe {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 1;
     visibility: visible;
     animation: fadeIn 0.6s ease forwards;
@@ -1777,6 +1777,7 @@ video {
 .cast .title-box {
     position: sticky;
     top: 75px;
+    z-index: 1010;
 }
 
 
@@ -1866,6 +1867,10 @@ video {
 /* -active が付くと表示 */
 .modal-box.js-modal-box.-active {
     opacity: 1;
+    pointer-events: auto;
+}
+
+.cast-modal-box{
     pointer-events: auto;
 }
 
@@ -2020,6 +2025,7 @@ video {
 
     .cast-role.-modal {
         font-size: 13px;
+        margin-top: 1.5em;
     }
 
     .cast-name.-modal {
@@ -2076,6 +2082,14 @@ video {
 
     .cast-profile-inner {
         padding-top: 9em;
+    }
+
+    .cast-profile-inner img{
+        max-height: 225px;
+        width: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .cast .close-button {
@@ -2253,13 +2267,13 @@ video {
 }
 
 .staff-bg {
-    position: absolute;
+    /* position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(27, 36, 46, 0.7);
-    backdrop-filter: blur(10px);
+    background: rgba(27, 36, 46, 0.7); */
+    /* backdrop-filter: blur(10px); */
 }
 
 .staff-role {
@@ -2382,6 +2396,10 @@ video {
 
     .staff-list {
         margin-top: 40em;
+    }
+
+    .staff-bg {
+        object-position: 80%;        
     }
 
     /* モーダル */
@@ -3025,3 +3043,18 @@ video {
 .scroll-hidden::-webkit-scrollbar {
     display: none;
 }
+
+
+
+
+
+
+.cast-overlay{
+  position: fixed; inset: 0;
+  display:flex; justify-content:center; align-items:center;
+  background:rgba(0,0,0,.8); z-index:1000; color:#fff;
+}
+.cast-overlay.hidden{display:none}
+/* .overlay-inner{max-width:600px; padding:2rem; text-align:left} */
+/* .overlay-inner img{width:100%; height:auto; margin:1.2rem 0} */
+.close-button{position:absolute; top:1.5rem; right:1.5rem}
