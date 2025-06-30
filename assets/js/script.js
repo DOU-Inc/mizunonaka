@@ -467,55 +467,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==== CAST: JSON + 遅延 fetch ==============================
     (() => {
-    const listWrap   = document.querySelector('#cast .cast-lists');
-    const overlay    = document.getElementById('castOverlay');
-    const contentBox = document.getElementById('castContent');
-    const closeBtn   = document.getElementById('castClose');
-    const cache      = new Map();
+        const listWrap = document.querySelector('#cast .cast-lists');
+        const overlay = document.getElementById('castOverlay');
+        const contentBox = document.getElementById('castContent');
+        const closeBtn = document.getElementById('castClose');
+        const cache = new Map();
 
-    // 1) リストクリック
-    listWrap.addEventListener('click', async (e) => {
-        const li = e.target.closest('.cast-list');
-        if (!li) return;
-
-
-        // 表示切り替えなどの共通処理
-        // if (castLists) {
-        //     castLists.style.transition = 'opacity 0.5s ease';
-        //     castLists.style.opacity = '0';
-        //     castLists.style.pointerEvents = 'none';
-        // }
-
-        if (header) {
-            disableScroll();
-            html.classList.add('noscroll');
-            header.style.opacity = '0';
-            header.style.pointerEvents = 'none';
-        }
-
-        // if (staff) {
-        //     staff.style.opacity = '0';
-        //     staff.style.pointerEvents = 'none';
-        // }
-
-        moveTitleSmoothly?.(castTitle);
-
-        // targetModal.classList.add('-active');
+        // 1) リストクリック
+        listWrap.addEventListener('click', async (e) => {
+            const li = e.target.closest('.cast-list');
+            if (!li) return;
 
 
-        const id = li.dataset.target;            // "ishikawa"
-        contentBox.innerHTML = 'Loading…';
-        overlay.classList.remove('hidden');
+            // 表示切り替えなどの共通処理
+            // if (castLists) {
+            //     castLists.style.transition = 'opacity 0.5s ease';
+            //     castLists.style.opacity = '0';
+            //     castLists.style.pointerEvents = 'none';
+            // }
 
-        // 2) JSON 取得（キャッシュあり）
-        let data = cache.get(id);
-        if (!data) {
-        data = await fetch(`./assets/json/${id}.json`).then(r => r.json());
-        cache.set(id, data);
-        }        
+            if (header) {
+                disableScroll();
+                html.classList.add('noscroll');
+                header.style.opacity = '0';
+                header.style.pointerEvents = 'none';
+            }
 
-        // 3) HTML を流し込む
-        contentBox.innerHTML = `
+            // if (staff) {
+            //     staff.style.opacity = '0';
+            //     staff.style.pointerEvents = 'none';
+            // }
+
+            moveTitleSmoothly?.(castTitle);
+
+            // targetModal.classList.add('-active');
+
+
+            const id = li.dataset.target;            // "ishikawa"
+            contentBox.innerHTML = 'Loading…';
+            overlay.classList.remove('hidden');
+
+            // 2) JSON 取得（キャッシュあり）
+            let data = cache.get(id);
+            if (!data) {
+                data = await fetch(`./assets/json/${id}.json`).then(r => r.json());
+                cache.set(id, data);
+            }
+
+            // 3) HTML を流し込む
+            contentBox.innerHTML = `
             <img class="cast-bg-img" src="${data.photo}" alt="${data.name}">
             <div class="cast-bg"></div>
             <div class="cast-modal">
@@ -535,22 +535,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-        `;        
-    });
+        `;
+        });
 
-    // 4) 閉じる & メモリ解放
-    closeBtn.addEventListener('click', () => {
-        const img = contentBox.querySelector('img');
-        if (img) img.src = '';          // GPU / Heap から即解放
-        contentBox.innerHTML = '';
-        overlay.classList.add('hidden');
+        // 4) 閉じる & メモリ解放
+        closeBtn.addEventListener('click', () => {
+            const img = contentBox.querySelector('img');
+            if (img) img.src = '';          // GPU / Heap から即解放
+            contentBox.innerHTML = '';
+            overlay.classList.add('hidden');
 
-        resetTitlePosition?.(castTitle);
+            resetTitlePosition?.(castTitle);
 
-        enableScroll();
-        html.classList.remove('noscroll');
+            enableScroll();
+            html.classList.remove('noscroll');
 
-    });
+        });
     })();
 
 
@@ -1039,7 +1039,7 @@ window.addEventListener('load', () => {
                 renderer: 'svg',
                 loop: false,
                 autoplay: true,
-                path: './assets/json/data.json'
+                path: './assets/json/mv.json'
             });
         }
     });

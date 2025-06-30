@@ -677,12 +677,12 @@ progress::-webkit-progress-bar {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 90%;
 }
 
 #lottie-animation svg {
-    transform: scale(1.5) !important;
+    transform: scale(1) !important;
 }
 
 
@@ -737,10 +737,10 @@ progress::-webkit-progress-bar {
         width: 88%;
     }
 
-    #lottie-animation svg {
+    /* #lottie-animation svg {
         transform: scale(3) !important;
 
-    }
+    } */
 
     .mv .catch {
         font-size: 11px;
@@ -1870,7 +1870,7 @@ video {
     pointer-events: auto;
 }
 
-.cast-modal-box{
+.cast-modal-box {
     pointer-events: auto;
 }
 
@@ -2084,7 +2084,7 @@ video {
         padding-top: 9em;
     }
 
-    .cast-profile-inner img{
+    .cast-profile-inner img {
         max-height: 225px;
         width: auto;
         display: block;
@@ -2399,7 +2399,7 @@ video {
     }
 
     .staff-bg {
-        object-position: 80%;        
+        object-position: 80%;
     }
 
     /* モーダル */
@@ -3049,12 +3049,25 @@ video {
 
 
 
-.cast-overlay{
-  position: fixed; inset: 0;
-  display:flex; justify-content:center; align-items:center;
-  background:rgba(0,0,0,.8); z-index:1000; color:#fff;
+.cast-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .8);
+    z-index: 1000;
+    color: #fff;
 }
-.cast-overlay.hidden{display:none}
+
+.cast-overlay.hidden {
+    display: none
+}
+
 /* .overlay-inner{max-width:600px; padding:2rem; text-align:left} */
 /* .overlay-inner img{width:100%; height:auto; margin:1.2rem 0} */
-.close-button{position:absolute; top:1.5rem; right:1.5rem}
+.close-button {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem
+}
