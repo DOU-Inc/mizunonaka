@@ -37,26 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" media="all" />
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const linkElement = document.querySelector('link[href^="./assets/css/style.css"]');
-            if (linkElement) {
-                fetch('./assets/css/style.css', { method: 'HEAD' })
-                    .then(response => {
-                        const lastModified = response.headers.get('Last-Modified');
-                        if (lastModified) {
-                            const timestamp = new Date(lastModified).getTime();
-                            linkElement.href = `./assets/css/style.css?v=${timestamp}`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('CSSファイルの更新日時取得に失敗しました:', error);
-                        // エラー時はデフォルトのhrefをそのまま使用
-                    });
-            }
-        });
-    </script>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v3" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -135,6 +116,14 @@
                             <p class="date">7/25(金)〜</p>
                         </a>
                     </li>
+                    <li class="news-list">
+                        <a href="https://ttcg.jp/cinelibre_ikebukuro/movie/0012348.html" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">東京都</p>
+                            <p class="address">シネ・リーブル池袋</p>
+                            <p class="date">7/25(金)～</p>
+                        </a>
+                    </li>                    
                 </ul>
             </div>
         </div>
@@ -175,6 +164,13 @@
             <div class="inner">
                 <h2 class="title">NEWS</h2>
                 <ul class="news-lists">
+                    <li class="news-list">
+                        <a target="_blank" rel="noopener" href="https://ttcg.jp/cinelibre_ikebukuro/movie/0012348.html"
+                            class="link">
+                            <p class="date">2025.7.4</p>
+                            <p class="text">7/25(金)～ シネ・リーブル池袋で上映決定！</p>
+                        </a>
+                    </li>
                     <li class="news-list">
                         <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DKRiE5qTn5s" class="link">
                             <p class="date">2025.5.30</p>
@@ -501,26 +497,7 @@
             </div>
         </section>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const scriptElement = document.querySelector('script[src^="./assets/js/script.js"]');
-            if (scriptElement) {
-                fetch('./assets/js/script.js', { method: 'HEAD' })
-                    .then(response => {
-                        const lastModified = response.headers.get('Last-Modified');
-                        if (lastModified) {
-                            const timestamp = new Date(lastModified).getTime();
-                            scriptElement.src = `./assets/js/script.js?v=${timestamp}`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('JavaScriptファイルの更新日時取得に失敗しました:', error);
-                        // エラー時はデフォルトのsrcをそのまま使用
-                    });
-            }
-        });
-    </script>
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js?v2"></script>
 
 </body>
 
