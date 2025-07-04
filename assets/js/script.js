@@ -530,8 +530,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="cast-det-inner">
                         <h3 class="cast-profile-title">PROFILE</h3>
                         <p class="cast-profile-text">${data.profile}</p>
-                        <h3 class="cast-comment-title">COMMENT</h3>
-                        <p class="cast-comment-text">${data.comment}</p>
+                        ${
+                            data.comment
+                                ? `<h3 class="cast-comment-title">COMMENT</h3>
+                                <p class="cast-comment-text">${data.comment}</p>`
+                                : ''
+                        }
                     </div>
                 </div>
             </div>
