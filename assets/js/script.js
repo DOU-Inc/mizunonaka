@@ -1039,7 +1039,7 @@ window.addEventListener('load', () => {
                 renderer: 'svg',
                 loop: false,
                 autoplay: true,
-                path: './assets/json/mv.json'
+                path: './assets/json/mv.json?v5'
             });
         }
     });
