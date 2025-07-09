@@ -189,12 +189,12 @@ const videoMap = {
         sp: "./assets/video/02_sp_v4.mp4",
     },
     "normal": {
-        pc: "./assets/video/03_pc_v3.mp4",
-        sp: "./assets/video/03_sp_v3.mp4",
-    },
-    "teaser": {
         pc: "./assets/video/05_pc.mp4",
         sp: "./assets/video/05_sp.mp4",
+    },
+    "teaser": {
+        pc: "./assets/video/03_pc_v3.mp4",
+        sp: "./assets/video/03_sp_v3.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
@@ -270,6 +270,7 @@ function setupToggle(sectionSelector, buttonSelector) {
 
             // 対象要素を一括トグル
             blurLayer?.classList.toggle('-active');
+            blurLayer.offsetHeight;
             navList?.classList.toggle('-active');
             text?.classList.toggle('-active');
             inner?.classList.toggle('-active');

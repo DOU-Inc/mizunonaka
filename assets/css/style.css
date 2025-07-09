@@ -247,10 +247,13 @@ progress::-webkit-progress-bar {
 }
 
 .header .blur-layer {
-    width: 200px;
-    top: -80px;
-    left: -60px;
+    height: 800px;
+
+    bottom: -230%;
+    left: -320%;
     z-index: -1;
+    /* will-change: transform; 
+    transform: translateZ(0);  */
 }
 
 .header .nav {
@@ -316,9 +319,10 @@ progress::-webkit-progress-bar {
 }
 
 .header.-active .blur-layer {
-    width: 1200px;
+    transform: translate(-100%,100%) scale(4);
+    /* width: 1200px;
     top: 150px;
-    left: -1000px;
+    left: -1000px; */
 }
 
 .header.-active .modal-box {
@@ -386,7 +390,7 @@ progress::-webkit-progress-bar {
     }
 
     .nav picture {
-        width: 400px;
+        width: 280px;
     }
 }
 
@@ -426,20 +430,27 @@ progress::-webkit-progress-bar {
     }
 
     .header .blur-layer {
-        width: 150px;
-        top: -70px;
-        left: -55px;
+        bottom: -600%;
+        left: -610%;
     }
 
     .header.-active .blur-layer {
-        width: 800px;
-        top: 150px;
-        left: -300px;
+        transform: scale(6);     
+        /* width: 150vw;
+        height: 150vh; */
+        /* width: 800px; */
+        /* top: 150px;
+        left: -50%; */
+        /* top: 150px;
+        left: -1500%; */
+
+        /* left: -300px; */
     }
 
     .header .nav {
         justify-content: flex-start;
         align-items: flex-start;
+        padding-bottom: 12vw;
     }
 
     .nav-sns {
@@ -826,18 +837,19 @@ video {
     transition: all 1.2s ease-in-out;
     mask: url(#radial-mask);
     -webkit-mask: url(#radial-mask);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     background: rgba(255, 255, 255, 0.05);
     z-index: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    transform: scale(1.00001);
 }
 
 .blur-layer.-active {
-    transform: scale(4);
+    /* transform: scale(4); */
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
@@ -1188,6 +1200,7 @@ video {
     display: flex;
     padding: .95em 0;
     background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);    
     transition: background 0.5s;
 }
 

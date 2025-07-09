@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v17" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v19" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -94,27 +94,29 @@
     </div>
 
     <header id="header" class="header">
-        <button class="hamburger button" aria-label="メニュー" aria-controls="nav-menu" aria-expanded="false">
+        <div class="hamburger button" aria-label="メニュー" aria-controls="nav-menu" aria-expanded="false">
             <span class="hamburger__line"></span>
             <span class="hamburger__line"></span>
             <span class="hamburger__line"></span>
-            <!-- ブラーエフェクトのレイヤー -->
-            <div class="blur-layer js-blur-layer" id="blur-layer">
-                <!-- SVGマスク定義 -->
-                <svg width="0" height="0">
-                    <defs>
-                        <!-- 丸マスク -->
-                        <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5">
-                            <stop offset="60%" stop-color="white" stop-opacity="1" />
-                            <stop offset="100%" stop-color="white" stop-opacity="0" />
-                        </radialGradient>
-                        <mask id="radial-mask" maskContentUnits="objectBoundingBox">
-                            <rect x="0" y="0" width="1" height="1" fill="url(#radial-gradient)" />
-                        </mask>
-                    </defs>
-                </svg>
-            </div>
-        </button>
+        </div>
+
+        <!-- ブラーエフェクトのレイヤー -->
+        <div class="blur-layer js-blur-layer" id="blur-layer">
+            <!-- SVGマスク定義 -->
+            <svg width="0" height="0">
+                <defs>
+                    <!-- 丸マスク -->
+                    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5">
+                        <stop offset="60%" stop-color="white" stop-opacity="1" />
+                        <stop offset="100%" stop-color="white" stop-opacity="0" />
+                    </radialGradient>
+                    <mask id="radial-mask" maskContentUnits="objectBoundingBox">
+                        <rect x="0" y="0" width="1" height="1" fill="url(#radial-gradient)" />
+                    </mask>
+                </defs>
+            </svg>
+        </div>
+
         <div class="modal-box js-modal-box">
             <button class="close-button button js-btn" id="close-intro">close</button>
 
@@ -454,35 +456,36 @@
                 </div>
 
                 <div class="js-tabs">
-                    <button class="js-tab-movie -normal">ティザー予告</button>
-                    <button class="js-tab-movie -teaser">予告編映像</button>
-                </div>
-
-                <div class="js-movie -teaser">
-                    <img class="movie-img" src="./assets/img/trailer2.webp" alt="">
-                    <a data-fancybox data-src="#movie-teaser" href="#" class="link">
-                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
-                    </a>
-                    <div id="movie-teaser" style="display: none;">
-                        <iframe src="https://www.youtube.com/embed/SeTCdBqwOgc?si=tMxl_dLiDQCjDTFV"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
+                    <button class="js-tab-movie -normal">予告編映像</button>
+                    <button class="js-tab-movie -teaser">ティザー予告</button>
                 </div>
 
                 <div class="js-movie -normal">
-                    <img class="movie-img" src="./assets/img/trailer.webp" alt="">
+                    <img class="movie-img" src="./assets/img/trailer2.webp" alt="">
                     <a data-fancybox data-src="#movie-normal" href="#" class="link">
                         <img src="./assets/img/button.svg" alt="" class="movie-button-img">
                     </a>
                     <div id="movie-normal" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/rHCRf1jWvYM?si=qsPUx6R6jrrWTcBj"
+                             title="YouTube video player" frameborder="0" 
+                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                        
+                    </div>
+                </div>
+
+                <div class="js-movie -teaser">
+                    <img class="movie-img" src="./assets/img/trailer.webp" alt="">
+                    <a data-fancybox data-src="#movie-teaser" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>                    
+                    <div id="movie-teaser" style="display: none;">
                         <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -944,8 +947,6 @@
 
                                 <li class="comment-list">
                                     <p class="comment-text">
-                                        「水の中は苦しい、だけど、水の外も苦しい」<br>
-                                        上記のような台詞が、物語終盤にあった事で、日常にある些細な悩み、誰でも体験するであろう不安、そんなものたちと何ら変わりのないもの、それが「LGBTQ+」なのだと、気付かされ、とても印象的な台詞でした。<br>
                                         性的マイノリティである事を、ある種の表現として消費されてしまいがちですが、今作とはそれらとは違い。センシティブな内容ではあるけれど、丁寧に慎重にその在り方を模索する人々を捉え、最終的には誰もが前に一歩踏み出せる、そんな気持ちになれる、映画だったと思います。<br>
                                         監督の優しさが、滲み出ていたな、と思うシーンとセリフが幾つかありました。きっと、優しくなければ、今作を作ろうとも思えていないだろうし、誰かに寄り添える、寄り添おうと思うことができる、監督なのだろうなと鑑賞後は思ったりもしました。
                                     </p>
@@ -1139,7 +1140,7 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v14"></script>
+    <script src="./assets/js/script.js?v15"></script>
 
 </body>
 
