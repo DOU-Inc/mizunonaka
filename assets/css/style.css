@@ -19,7 +19,7 @@ body {
     font-family: "Lora", 'Noto Sans JP', sans-serif;
     width: 100%;
     height: auto;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
     letter-spacing: 0.05em;
 }
 
@@ -247,10 +247,13 @@ progress::-webkit-progress-bar {
 }
 
 .header .blur-layer {
-    width: 200px;
-    top: -80px;
-    left: -60px;
+    height: 800px;
+
+    bottom: -230%;
+    left: -320%;
     z-index: -1;
+    /* will-change: transform; 
+    transform: translateZ(0);  */
 }
 
 .header .nav {
@@ -316,9 +319,10 @@ progress::-webkit-progress-bar {
 }
 
 .header.-active .blur-layer {
-    width: 1200px;
+    transform: translate(-100%,100%) scale(4);
+    /* width: 1200px;
     top: 150px;
-    left: -1000px;
+    left: -1000px; */
 }
 
 .header.-active .modal-box {
@@ -386,7 +390,7 @@ progress::-webkit-progress-bar {
     }
 
     .nav picture {
-        width: 400px;
+        width: 280px;
     }
 }
 
@@ -426,20 +430,27 @@ progress::-webkit-progress-bar {
     }
 
     .header .blur-layer {
-        width: 150px;
-        top: -70px;
-        left: -55px;
+        bottom: -600%;
+        left: -610%;
     }
 
     .header.-active .blur-layer {
-        width: 800px;
-        top: 150px;
-        left: -300px;
+        transform: scale(6);     
+        /* width: 150vw;
+        height: 150vh; */
+        /* width: 800px; */
+        /* top: 150px;
+        left: -50%; */
+        /* top: 150px;
+        left: -1500%; */
+
+        /* left: -300px; */
     }
 
     .header .nav {
         justify-content: flex-start;
         align-items: flex-start;
+        padding-bottom: 12vw;
     }
 
     .nav-sns {
@@ -491,8 +502,14 @@ progress::-webkit-progress-bar {
     width: 100%;
     height: 100%;
     background-color: transparent;
-    gap: 200px 0;
+    gap: 60px 0;
     color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    #theater-content {
+        gap: 16px 0;
+    }
 }
 
 .theater {
@@ -505,6 +522,7 @@ progress::-webkit-progress-bar {
     border-radius: 40px 40px 0 0;
     border: 1px solid #fff;
     background: rgba(255, 255, 255, .15);
+    color: #fff;
 }
 
 .theater.-disp {
@@ -518,20 +536,35 @@ progress::-webkit-progress-bar {
     }
 }
 
-
-
 .theater-news {
     width: 100%;
     margin: 0 auto;
     padding: 0 50px;
 }
 
+#theater-content{
+    padding-bottom: 0;
+}
+
+#theater-content .title,
+#theater-content .subtitle
+{
+    color: #fff;
+}
+
+
+#fancybox-1 .fancybox__slide{
+    padding-bottom: 0;
+}
+
+
 #theater-content .news-title-list,
 #theater-content .link {
+    color: #fff;
     display: grid;
-    grid-template-columns: 20% 40% 40%;
+    grid-template-columns: 20% 55% 30%;        
     padding: 1.2em 0;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
     font-weight: 400;
 }
 
@@ -567,6 +600,28 @@ progress::-webkit-progress-bar {
     backdrop-filter: blur(20px);
 }
 
+.theater-news{
+    max-width: 1200px;
+}
+
+.news-title-list .prefecture{
+    padding-right: .5em;
+
+}
+
+.news-title-list .address{
+    padding-right: .5em;
+}
+
+#theater-content .news-lists {
+    max-height: calc(100vh - 276px);
+    overflow-y: auto;
+    padding-bottom: 2em;
+}
+
+
+
+
 @media screen and (max-width: 768px) {
     .fancybox__slide {
         padding: 8px !important;
@@ -580,6 +635,7 @@ progress::-webkit-progress-bar {
 
     #theater-content {
         padding: 10px;
+        padding-bottom: 0;
     }
 
     #theater-content .title-box {
@@ -594,8 +650,28 @@ progress::-webkit-progress-bar {
     }
 
     .theater-news {
-        width: 90%;
+        margin-top: 3.5em;
+        width: 100%;
         padding: 0;
+        transform: translateY(-40%);        
+    }
+
+    #theater-content .news-lists {
+        max-height: calc(100vh - 250px);
+    }
+
+
+    #theater-content .news-title-list,
+    #theater-content .news-list .link
+    {
+        grid-template-columns: 20% 58% 22%;        
+    }
+
+    #theater-content .news-title-list .date{
+        max-width: 6em;
+    }
+    #theater-content .news-lists .date{
+        max-width: 6em;
     }
 }
 
@@ -704,7 +780,7 @@ progress::-webkit-progress-bar {
 
 .mv .catch2 {
     color: rgba(255, 255, 255, 0.9);
-    font-weight: 100;
+    font-weight: 200;
     position: absolute;
     top: 50%;
     right: 2%;
@@ -824,18 +900,19 @@ video {
     transition: all 1.2s ease-in-out;
     mask: url(#radial-mask);
     -webkit-mask: url(#radial-mask);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     background: rgba(255, 255, 255, 0.05);
     z-index: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    transform: scale(1.00001);
 }
 
 .blur-layer.-active {
-    transform: scale(4);
+    /* transform: scale(4); */
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
@@ -1186,15 +1263,26 @@ video {
     display: flex;
     padding: .95em 0;
     background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);    
     transition: background 0.5s;
 }
 
 .news .news-list .link .date {
-    margin-right: 30px;
+    width: 7em;
     color: rgba(250, 250, 250, .85);
 }
 
+.news .news-list .link .text {
+    width: calc(100% - 6em);
+}
+
+
 @media screen and (max-width: 900px) {
+    .news .news-lists {
+        max-height: 63vh;
+        overflow-y: auto;
+    }
+
     .news .news-list .link {
         font-size: 14px;
     }
@@ -1211,6 +1299,10 @@ video {
     .news .news-list .link {
         flex-direction: column;
         gap: 10px 0;
+    }
+
+    .news .news-list .link .text {
+        width: 100%;
     }
 
 }
@@ -1269,7 +1361,7 @@ video {
 .intro .desc .text-box {
     text-align: center;
     position: absolute;
-    top: 334px;
+    top: 320px;
     left: 190px;
     width: 450px;
     z-index: 10;
@@ -1363,14 +1455,14 @@ video {
 
     .intro .title-box {
         width: 100%;
-        top: 8%;
+        top: 80px;
         left: 6%;
     }
 
     .intro .blur-layer {
         width: 150vw;
         left: -30%;
-        top: 13%;
+        top: 18vw;
     }
 
     .intro .desc .text-box .text,
@@ -1422,7 +1514,7 @@ video {
     display: block;
     position: absolute;
     top: 240px;
-    right: 430px;
+    right: 363px;
     transition: transform 1.5s ease;
     will-change: transform;
 }
@@ -1436,7 +1528,7 @@ video {
 .story .desc .text-box {
     text-align: center;
     position: absolute;
-    top: 370px;
+    top: 360px;
     right: 160px;
     width: 450px;
     z-index: 10;
@@ -1475,7 +1567,7 @@ video {
 
 .story .button {
     z-index: 10;
-    margin-top: 24px;
+    margin-top: 27px;
     backdrop-filter: blur(2px);
 }
 
@@ -1510,7 +1602,7 @@ video {
     }
 
     .story .title-box {
-        top: 8%;
+        top: 80px;
         right: 5%;
     }
 
@@ -1530,7 +1622,7 @@ video {
     .story .blur-layer {
         width: 150vw;
         right: -30%;
-        top: 6%;
+        top: 6vw;
     }
 
     .story .close-button {
@@ -1639,9 +1731,9 @@ video {
     height: 62px;
     border: none;
     border-radius: 100px 0 0 100px;
-    color: #fff;
     background: transparent;
     transition: background .5s;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 
@@ -1821,7 +1913,7 @@ video {
 .cast-name {
     font-size: 26px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .cast .cast-list .cast-button {
@@ -1956,10 +2048,12 @@ video {
 }
 
 .cast-profile-text {
+    color: rgba(255, 255, 255, 0.85);    
     margin-bottom: 4em;
 }
 
 .cast-comment-text {
+    color: rgba(255, 255, 255, 0.85);    
     padding-bottom: 10em;
 }
 
@@ -1972,6 +2066,19 @@ video {
 }
 
 @media screen and (max-width: 1000px) {
+
+    .cast-profile-inner{
+        width: 455px;
+    }
+
+    .cast-modal{
+        gap: 32px;
+    }
+
+    .cast-det-inner{
+        padding-top: 20px;
+    }
+
 
     .cast .inner {
         padding: 20px;
@@ -2055,6 +2162,10 @@ video {
 
 @media screen and (max-width: 768px) {
 
+    .cast-det-inner{
+        padding-top: 20px;
+    }
+
     .cast {
         margin-bottom: 32px;
     }
@@ -2077,7 +2188,7 @@ video {
     .cast-modal {
         max-width: 100%;
         width: 90%;
-        gap: 40px;
+        gap: 20px;
     }
 
     .cast-profile-inner {
@@ -2128,7 +2239,7 @@ video {
     height: 22px;
     font-size: 10px;
     line-height: 1;
-    margin-left: 1em;
+    margin-left: .3em;
 }
 
 .staff .inner {
@@ -2240,7 +2351,7 @@ video {
     align-items: center;
     font-size: 20px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 
@@ -2451,15 +2562,25 @@ video {
 
 .comment-lists.-inline {
     margin-top: 25vh;
-    column-count: 2;
-    max-width: 730px;
+    max-width: 1100px;
     padding-left: 2em;
     padding-right: 2em;
 }
 
-.comment-lists.-famous {
+/* .comment-lists.-famous {
     column-count: 2;
+} */
+
+/* .comment-lists.-modal.-famous {
+    column-count: 3;
 }
+
+@media screen and (max-width: 900px) {
+    .comment-lists.-famous {
+        column-count: 2;
+    }    
+} */
+
 
 .comment-list {
     display: block;
@@ -2475,7 +2596,7 @@ video {
 .comment-text {
     font-size: 15px;
     line-height: 2;
-    margin-bottom: 2em;
+    color: rgba(255, 255, 255, 0.85);    
 }
 
 .comment-text span {
@@ -2503,7 +2624,7 @@ video {
 
 .comment-button {
     text-align: center;
-    margin-top: 0;
+    margin-top: 3.8em;
 }
 
 @media screen and (max-width: 768px) {
@@ -2538,7 +2659,8 @@ video {
     left: 50%;
     transform: translateX(-50%);
     overflow-y: scroll;
-    height: calc(100vh - 362px);
+    height: calc(100vh - 320px);
+    padding-top: 40px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -2595,7 +2717,11 @@ video {
 .comment-lists.-modal.-famous {
     opacity: 1;
     pointer-events: auto;
-    max-width: 730px;
+    max-width: 1100px;
+}
+
+.comment-lists.-modal.-famous .comment-lists{
+    column-count: 3;
 }
 
 .comment-bg {
@@ -2661,7 +2787,7 @@ video {
     border: 1px solid #fff;
     border-radius: 100px;
     margin-top: 230px;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
 }
 
 .comment .js-tabs::before {
@@ -2714,6 +2840,19 @@ video {
     background: rgba(255, 255, 255, 0.45);
 }
 
+.comment-text + .comment-text{
+    margin-top: 1em;
+}
+
+.comment-text + .comment-name{
+    margin-top: .8em;
+}
+.comment-text + .comment-role
+{
+    margin-top: 1.8em;
+}
+
+
 @media screen and (max-width: 1000px) {
     .comment-lists-container {
         max-width: 730px;
@@ -2731,6 +2870,16 @@ video {
     .comment-list {
         margin-bottom: 48px;
     }
+
+    .comment-text + .comment-text{
+        margin-top: .4em;
+    }
+
+    .comment-text + .comment-name,
+    .comment-text + .comment-role{
+        margin-top: 1em;
+    }
+
 }
 
 
@@ -2745,9 +2894,7 @@ video {
 
     .comment-text {
         font-size: 14px;
-        margin-bottom: .8em;
     }
-
 
     .comment-role {
         font-size: 13px;

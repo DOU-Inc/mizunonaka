@@ -189,12 +189,12 @@ const videoMap = {
         sp: "./assets/video/02_sp_v4.mp4",
     },
     "normal": {
-        pc: "./assets/video/03_pc_v3.mp4",
-        sp: "./assets/video/03_sp_v3.mp4",
-    },
-    "teaser": {
         pc: "./assets/video/05_pc.mp4",
         sp: "./assets/video/05_sp.mp4",
+    },
+    "teaser": {
+        pc: "./assets/video/03_pc_v3.mp4",
+        sp: "./assets/video/03_sp_v3.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
@@ -270,6 +270,7 @@ function setupToggle(sectionSelector, buttonSelector) {
 
             // 対象要素を一括トグル
             blurLayer?.classList.toggle('-active');
+            blurLayer.offsetHeight;
             navList?.classList.toggle('-active');
             text?.classList.toggle('-active');
             inner?.classList.toggle('-active');
@@ -530,8 +531,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="cast-det-inner">
                         <h3 class="cast-profile-title">PROFILE</h3>
                         <p class="cast-profile-text">${data.profile}</p>
-                        <h3 class="cast-comment-title">COMMENT</h3>
-                        <p class="cast-comment-text">${data.comment}</p>
+                        ${
+                            data.comment
+                                ? `<h3 class="cast-comment-title">COMMENT</h3>
+                                <p class="cast-comment-text">${data.comment}</p>`
+                                : ''
+                        }
                     </div>
                 </div>
             </div>
@@ -1408,6 +1413,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Fancyboxのイベントにフックする
+Fancybox.bind("[data-fancybox]", {
+  on: {
+    reveal: () => {
+      lenis.stop(); // Fancybox表示時にスクロール停止
+    },
+    destroy: () => {
+      // body に .noscroll が付いていない場合のみ再開
+      if (!document.body.classList.contains('noscroll')) {        
+          lenis.start(); // Fancybox閉じたらスクロール再開
+      }
+    }
+  }
+});
 
 
 
