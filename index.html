@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v19" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v21" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -182,7 +182,7 @@
                         <p class="date">上映期間</p>
                     </li>
                 </ul>
-                <ul class="news-lists">
+                <ul class="news-lists" data-lenis-prevent>
                     <li class="news-list">
                         <a href="https://qualite.musashino-k.jp/movies/26156/" class="link" target="_blank"
                             rel="noopener noreferrer">
@@ -197,6 +197,70 @@
                             <p class="prefecture">東京都</p>
                             <p class="address">シネ・リーブル池袋</p>
                             <p class="date">7/25(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.jackandbetty.net/cinema/detail/3844/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">神奈川県</p>
+                            <p class="address">シネマ・ジャック＆ベティ</p>
+                            <p class="date">近日</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://takasaki-cc.jp/films/?movieId=1470" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">群馬県</p>
+                            <p class="address">シネマテークたかさき</p>
+                            <p class="date">8/15(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.ginsee.jp/roble/coming-soon/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">栃木県</p>
+                            <p class="address">小山シネマロブレ</p>
+                            <p class="date">8/15(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.ginsee.jp/hikariza/coming-soon/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">栃木県</p>
+                            <p class="address">宇都宮ヒカリ座</p>
+                            <p class="date">11/28(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://eiga.starcat.co.jp/schedule/detail/?thumbnail=10845" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">愛知県</p>
+                            <p class="address">センチュリーシネマ</p>
+                            <p class="date">8/8(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="http://www.naganoaioiza.com/category/1231977.html" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">長野県</p>
+                            <p class="address">長野相生座・ロキシー</p>
+                            <p class="date">9/12(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.theater-seven.com/itiran.html" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">大阪府</p>
+                            <p class="address">シアターセブン</p>
+                            <p class="date">8/9(土)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.motoei.com/post_future/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">兵庫県</p>
+                            <p class="address">元町映画館</p>
+                            <p class="date">8/9(土)〜</p>
                         </a>
                     </li>
                 </ul>
@@ -246,6 +310,12 @@
             <div class="inner">
                 <h2 class="title">NEWS</h2>
                 <ul class="news-lists">
+                    <li class="news-list">
+                        <a data-fancybox data-src="#theater-content" target="_blank" rel="noopener" href="#" class="js-theater link">
+                            <p class="date">2025.7.11</p>
+                            <p class="text">7/11(金)〜 上映館続々追加！</p>
+                        </a>
+                    </li>
                     <li class="news-list">
                         <a target="_blank" rel="noopener" href="https://ttcg.jp/cinelibre_ikebukuro/movie/0012348.html"
                             class="link">
@@ -549,7 +619,7 @@
                         <h2 class="cast-name">松宮倫</h2>
                         <button class="open-button button cast-button">＋</button>
                     </li>
-                    <li class="cast-list" data-target="hachijoin">
+                    <li class="cast-list" data-target="hachijoin_v2">
                         <div class="cast-img-box">
                             <img src="./assets/img/hachijoin.webp" alt="八条院蔵人">
                         </div>
@@ -852,6 +922,20 @@
                             <h3 class="comment-name">shuntaro<span>さん</span></h3>
                         </li>
 
+                        <li class="comment-list">
+                            <p class="comment-text">
+                                タイトルからも想像できるように、人は時に多くの矛盾を孕んだ行いをする。しかし、そんな矛盾もこの映画は大きく包みこみ、「それでいいんだよ」とそっと背中を押してくれる。</p>
+                            <p class="comment-text">
+                                「初めて握手を交わした時、わたし、この人と結婚する」と私の妻は思ったらしい。結婚後にそれを指摘すると「そんなこと言った覚えはない」と素っ気なくあしらわれた。</p>
+                            <p class="comment-text">
+                                何を言いたいかというと、相手に触れた時の感触は時にどれだけ多くの言葉を紡ぐよりも雄弁なのだ。</p>
+                            <p class="comment-text">
+                                過剰な言葉に頼らず、抑制が効いた演出で俳優たちの芝居を信じ、観る者たちを信じた作り手の想いが詰まっている。</p>
+                            <p class="comment-role">映画監督</p>
+                            <h3 class="comment-name">市井昌秀<span>さん</span></h3>
+                        </li>
+
+
 
                     </ul>
 
@@ -901,6 +985,19 @@
                                     </p>
                                     <p class="comment-role">bird and insect CEO</p>
                                     <h3 class="comment-name">shuntaro<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        タイトルからも想像できるように、人は時に多くの矛盾を孕んだ行いをする。しかし、そんな矛盾もこの映画は大きく包みこみ、「それでいいんだよ」とそっと背中を押してくれる。</p>
+                                    <p class="comment-text">
+                                        「初めて握手を交わした時、わたし、この人と結婚する」と私の妻は思ったらしい。結婚後にそれを指摘すると「そんなこと言った覚えはない」と素っ気なくあしらわれた。</p>
+                                    <p class="comment-text">
+                                        何を言いたいかというと、相手に触れた時の感触は時にどれだけ多くの言葉を紡ぐよりも雄弁なのだ。</p>
+                                    <p class="comment-text">
+                                        過剰な言葉に頼らず、抑制が効いた演出で俳優たちの芝居を信じ、観る者たちを信じた作り手の想いが詰まっている。</p>
+                                    <p class="comment-role">映画監督</p>
+                                    <h3 class="comment-name">市井昌秀<span>さん</span></h3>
                                 </li>
 
                             </ul>
@@ -1125,8 +1222,8 @@
                                 <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
                                     <dt>Web Coding:&nbsp;</dt>
                                     <div class="credit-list-data">
-                                        <dd>Ryuichi Umeno | DOU</dd>
                                         <dd>Daichi Oshima | DOU</dd>
+                                        <dd>Ryuichi Umeno | DOU</dd>
                                     </div>
                                 </a>
                             </dl>
@@ -1140,7 +1237,7 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v15"></script>
+    <script src="./assets/js/script.js?v16"></script>
 
 </body>
 

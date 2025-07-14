@@ -1413,6 +1413,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Fancyboxのイベントにフックする
+Fancybox.bind("[data-fancybox]", {
+  on: {
+    reveal: () => {
+      lenis.stop(); // Fancybox表示時にスクロール停止
+    },
+    destroy: () => {
+      // body に .noscroll が付いていない場合のみ再開
+      if (!document.body.classList.contains('noscroll')) {        
+          lenis.start(); // Fancybox閉じたらスクロール再開
+      }
+    }
+  }
+});
 
 
 
