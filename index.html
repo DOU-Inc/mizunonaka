@@ -26,7 +26,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="映画『水の中で深呼吸』公式サイト" />
     <meta property="og:url" content="https://mizunonaka-movie.jp/">
-    <meta property="og:image" content="https://mizunonaka-movie.jp/assets/img/ogp.png" />
+    <meta property="og:image" content="https://mizunonaka-movie.jp/assets/img/ogp.webp" />
     <meta property="og:site_name" content="映画『水の中で深呼吸』公式サイト" />
     <meta property="og:description" content="“普通”とは何か、“自分らしさ”とは何か。ひと夏のまぶしさの中で、自分だけの答えを探す物語。" />
     <meta name="twitter:card" content="summary_large_image">
@@ -37,7 +37,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v3" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v21" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -49,6 +49,9 @@
     <!-- swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- maonry -->
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
     <style>
         @font-face {
@@ -75,7 +78,7 @@
             touch-action: none;
         }
     </style>
-
+    <!-- <script src="https://webfont.fontplus.jp/accessor/script/fontplus.js?koC2Agorwlg%3D&box=6HUDATuJrfc%3D&aa=1&ab=2"></script> -->
 </head>
 
 <body id="body" class="noscroll-preload">
@@ -90,8 +93,80 @@
         <progress id="progress-bar" max="100" value="0"></progress>
     </div>
 
+    <header id="header" class="header">
+        <div class="hamburger button" aria-label="メニュー" aria-controls="nav-menu" aria-expanded="false">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+        </div>
+
+        <!-- ブラーエフェクトのレイヤー -->
+        <div class="blur-layer js-blur-layer" id="blur-layer">
+            <!-- SVGマスク定義 -->
+            <svg width="0" height="0">
+                <defs>
+                    <!-- 丸マスク -->
+                    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5">
+                        <stop offset="60%" stop-color="white" stop-opacity="1" />
+                        <stop offset="100%" stop-color="white" stop-opacity="0" />
+                    </radialGradient>
+                    <mask id="radial-mask" maskContentUnits="objectBoundingBox">
+                        <rect x="0" y="0" width="1" height="1" fill="url(#radial-gradient)" />
+                    </mask>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="modal-box js-modal-box">
+            <button class="close-button button js-btn" id="close-intro">close</button>
+
+            <div class="nav-sns js-sns">
+                <a target="_blank" rel="noopener" href="https://www.instagram.com/mizunonaka_movie" class="link">
+                    <img src="./assets/img/insta.svg" alt="insta">
+                </a>
+                <a target="_blank" rel="noopener" href="https://x.com/mizunonaka2025" class="link">
+                    <img src="./assets/img/x.svg" alt="x">
+                </a>
+                <a target="_blank" rel="noopener" href="https://note.com/mizunonaka_movie" class="link">
+                    <img src="./assets/img/note.svg" alt="note">
+                </a>
+            </div>
+
+            <div class="nav js-text-box" data-lenis-prevent>
+                <picture>
+                    <!-- スマホ用 -->
+                    <source srcset="./assets/img/mv_sp.webp" media="(max-width: 600px)">
+                    <!-- PC用（デフォルト） -->
+                    <img class="nav-logo js-nav-logo" src="./assets/img/mv.webp" alt="水の中で深呼吸">
+                </picture>
+                <ul class="nav-lists js-all-text">
+                    <li class="nav-list">
+                        <a href="#news">NEWS<br><span>お知らせ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#intro">INTRODUCTION<br><span>はじめに</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#story">STORY<br><span>あらすじ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#trailer">TRAILER<br><span>予告編</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#cast">CAST<br><span>キャスト</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#staff">STAFF<br><span>スタッフ</span></a>
+                    </li>
+                    <li class="nav-list">
+                        <a href="#comment">COMMENT<br><span>著名人・観客コメント</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
     <div class="container" id="container">
-        <div class="bg-sp"></div>
 
         <a data-fancybox data-src="#theater-content" href="#" class="theater js-theater">劇場情報</a>
         <div id="theater-content" style="display: none;">
@@ -107,7 +182,7 @@
                         <p class="date">上映期間</p>
                     </li>
                 </ul>
-                <ul class="news-lists">
+                <ul class="news-lists" data-lenis-prevent>
                     <li class="news-list">
                         <a href="https://qualite.musashino-k.jp/movies/26156/" class="link" target="_blank"
                             rel="noopener noreferrer">
@@ -121,9 +196,73 @@
                             rel="noopener noreferrer">
                             <p class="prefecture">東京都</p>
                             <p class="address">シネ・リーブル池袋</p>
-                            <p class="date">7/25(金)～</p>
+                            <p class="date">7/25(金)〜</p>
                         </a>
-                    </li>                    
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.jackandbetty.net/cinema/detail/3844/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">神奈川県</p>
+                            <p class="address">シネマ・ジャック＆ベティ</p>
+                            <p class="date">近日</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://takasaki-cc.jp/films/?movieId=1470" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">群馬県</p>
+                            <p class="address">シネマテークたかさき</p>
+                            <p class="date">8/15(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.ginsee.jp/roble/coming-soon/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">栃木県</p>
+                            <p class="address">小山シネマロブレ</p>
+                            <p class="date">8/15(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.ginsee.jp/hikariza/coming-soon/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">栃木県</p>
+                            <p class="address">宇都宮ヒカリ座</p>
+                            <p class="date">11/28(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://eiga.starcat.co.jp/schedule/detail/?thumbnail=10845" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">愛知県</p>
+                            <p class="address">センチュリーシネマ</p>
+                            <p class="date">8/8(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="http://www.naganoaioiza.com/category/1231977.html" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">長野県</p>
+                            <p class="address">長野相生座・ロキシー</p>
+                            <p class="date">9/12(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.theater-seven.com/itiran.html" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">大阪府</p>
+                            <p class="address">シアターセブン</p>
+                            <p class="date">8/9(土)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.motoei.com/post_future/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">兵庫県</p>
+                            <p class="address">元町映画館</p>
+                            <p class="date">8/9(土)〜</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -154,7 +293,14 @@
                     </div>
                 </div>
 
-                <video id="mv-video" muted autoplay playsinline loop></video>
+                <picture>
+                    <!-- スマホ用 -->
+                    <source srcset="./assets/img/mv_award_sp.webp" media="(max-width: 768px)">
+                    <!-- PC用（デフォルト） -->
+                    <img class="mv-award" src="./assets/img/mv_award_pc.webp" alt="受賞歴">
+                </picture>
+
+                <video class="mv-video" id="mv-video" muted autoplay playsinline loop></video>
 
 
             </div>
@@ -165,10 +311,16 @@
                 <h2 class="title">NEWS</h2>
                 <ul class="news-lists">
                     <li class="news-list">
+                        <a data-fancybox data-src="#theater-content" target="_blank" rel="noopener" href="#" class="js-theater link">
+                            <p class="date">2025.7.11</p>
+                            <p class="text">7/11(金)〜 上映館続々追加！</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
                         <a target="_blank" rel="noopener" href="https://ttcg.jp/cinelibre_ikebukuro/movie/0012348.html"
                             class="link">
                             <p class="date">2025.7.4</p>
-                            <p class="text">7/25(金)～ シネ・リーブル池袋で上映決定！</p>
+                            <p class="text">7/25(金)〜 シネ・リーブル池袋で上映決定！</p>
                         </a>
                     </li>
                     <li class="news-list">
@@ -364,140 +516,728 @@
         <section id="trailer" class="trailer section">
             <div class="inner">
                 <div class="video-wrapper">
-                    <video id="trailer-video" loop muted autoplay playsinline></video>
+                    <video id="normal" loop muted autoplay playsinline></video>
+                    <video id="teaser" loop muted autoplay playsinline></video>
                 </div>
 
                 <div class="title-box">
                     <h2 class="title">TRAILER</h2>
                     <p class="subtitle">予告編</p>
                 </div>
-                <div class="movie-box">
-                    <img class="movie-img" src="./assets/img/trailer.jpg" alt="">
-                    <a data-fancybox data-src="#movie" href="#" class="link">
-                        <img src="./assets/img/button.svg" alt="" class="movie-button">
+
+                <div class="js-tabs">
+                    <button class="js-tab-movie -normal">予告編映像</button>
+                    <button class="js-tab-movie -teaser">ティザー予告</button>
+                </div>
+
+                <div class="js-movie -normal">
+                    <img class="movie-img" src="./assets/img/trailer2.webp" alt="">
+                    <a data-fancybox data-src="#movie-normal" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
                     </a>
-                    <div id="movie" style="display: none;">
+                    <div id="movie-normal" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/rHCRf1jWvYM?si=qsPUx6R6jrrWTcBj"
+                             title="YouTube video player" frameborder="0" 
+                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                        
+                    </div>
+                </div>
+
+                <div class="js-movie -teaser">
+                    <img class="movie-img" src="./assets/img/trailer.webp" alt="">
+                    <a data-fancybox data-src="#movie-teaser" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>                    
+                    <div id="movie-teaser" style="display: none;">
                         <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
                             title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay playsinline; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
-
                 </div>
+
             </div>
         </section>
 
         <section id="cast" class="cast section">
-            <div class="inner">
+            <div class="inner js-inner">
                 <div class="swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="./assets/img/cast01.jpg?v2" alt="slider画像">
+                            <img src="./assets/img/cast01.webp" alt="slider画像">
                         </div>
                         <div class="swiper-slide">
-                            <img src="./assets/img/cast02.jpg?v2" alt="slider画像">
+                            <img src="./assets/img/cast02.webp" alt="slider画像">
                         </div>
                         <div class="swiper-slide">
-                            <img src="./assets/img/cast03.jpg?v2" alt="slider画像">
+                            <img src="./assets/img/cast03.webp" alt="slider画像">
                         </div>
                     </div>
                 </div>
-                <div class="title-box">
+                <div class="title-box js-title">
                     <h2 class="title">CAST</h2>
                     <p class="subtitle">キャスト</p>
                 </div>
                 <ul class="cast-lists">
-                    <li class="cast-list -margin">石川瑠華</li>
-                    <li class="cast-list">中島瑠菜</li>
-                    <li class="cast-list">倉田萌衣</li>
-                    <li class="cast-list">佐々木悠華</li>
-                    <li class="cast-list">松宮倫</li>
-                    <li class="cast-list -margin">八条院蔵人</li>
-                    <li class="cast-list">伊藤亜里子</li>
-                    <li class="cast-list">川瀬知佐子</li>
-                    <li class="cast-list">山本杏</li>
-                    <li class="cast-list">森川千滉</li>
-                    <li class="cast-list">倉林希和里</li>
-                    <li class="cast-list">小西有也</li>
-                    <li class="cast-list">野島透也</li>
-                    <li class="cast-list -margin2">池上秀治</li>
-                    <li class="cast-list">しゅはまはるみ</li>
+                    <li class="cast-list" data-target="ishikawa">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/ishikawa.webp" alt="石川瑠華">
+                        </div>
+                        <p class="cast-role">朝比奈葵役</p>
+                        <h2 class="cast-name">石川瑠華</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="nakajima">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/nakajima.webp" alt="中島瑠菜">
+                        </div>
+                        <p class="cast-role">小坂日菜役</p>
+                        <h2 class="cast-name">中島瑠菜</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="kurata">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/kurata.webp" alt="倉田萌衣">
+                        </div>
+                        <p class="cast-role">山下胡桃役</p>
+                        <h2 class="cast-name">倉田萌衣</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="sasaki">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/sasaki.webp" alt="佐々木悠華">
+                        </div>
+                        <p class="cast-role">佐久本梨花役</p>
+                        <h2 class="cast-name">佐々木悠華</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="matsumiya">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/matsumiya.webp" alt="松宮倫">
+                        </div>
+                        <p class="cast-role">都築玲那役</p>
+                        <h2 class="cast-name">松宮倫</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="hachijoin_v2">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/hachijoin.webp" alt="八条院蔵人">
+                        </div>
+                        <p class="cast-role">安藤昌樹役</p>
+                        <h2 class="cast-name">八条院蔵人</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="ito">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/ito.webp" alt="伊藤亜里子">
+                        </div>
+                        <p class="cast-role">大野理奈子役</p>
+                        <h2 class="cast-name">伊藤亜里子</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="kawase">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/kawase.webp" alt="川瀬知佐子">
+                        </div>
+                        <p class="cast-role">佐々木麻美役</p>
+                        <h2 class="cast-name">川瀬知佐子</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="yamamoto">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/yamamoto.webp" alt="山本杏">
+                        </div>
+                        <p class="cast-role">遠藤由夏役</p>
+                        <h2 class="cast-name">山本杏</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="morikawa">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/morikawa.webp" alt="森川千滉">
+                        </div>
+                        <p class="cast-role">唐島萌役</p>
+                        <h2 class="cast-name">森川千滉</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="kurabayashi">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/kurabayashi.webp" alt="倉林希和里">
+                        </div>
+                        <p class="cast-role">矢野さえ役</p>
+                        <h2 class="cast-name">倉林希和里</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="konishi">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/konishi.webp" alt="小西有也">
+                        </div>
+                        <p class="cast-role">大谷和樹役</p>
+                        <h2 class="cast-name">小西有也</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="nojima">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/nojima.webp" alt="野島透也">
+                        </div>
+                        <p class="cast-role">神楽宗介役</p>
+                        <h2 class="cast-name">野島透也</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="ikegami">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/ikegami.webp" alt="池上秀治">
+                        </div>
+                        <p class="cast-role">瀬戸雄馬役</p>
+                        <h2 class="cast-name">池上秀治</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
+                    <li class="cast-list" data-target="syuhama">
+                        <div class="cast-img-box">
+                            <img src="./assets/img/syuhama.webp" alt="しゅはまはるみ">
+                        </div>
+                        <p class="cast-role">朝比奈まどか役</p>
+                        <h2 class="cast-name">しゅはまはるみ</h2>
+                        <button class="open-button button cast-button">＋</button>
+                    </li>
                 </ul>
-            </div>
         </section>
 
-        <section id="footer" class="footer section">
-            <div class="inner">
-                <video id="footer-video" loop muted autoplay playsinline></video>
-
+        <section id="staff" class="staff section">
+            <div class="inner js-inner">
+                <div class="title-box js-title">
+                    <h2 class="title">STAFF</h2>
+                    <p class="subtitle">スタッフ</p>
+                </div>
+                <div class="staff-bg-box">
+                    <img src="./assets/img/staff_bg1.webp" alt="" class="staff-bg -one">
+                    <img src="./assets/img/staff_bg2.webp" alt="" class="staff-bg -two">
+                </div>
                 <dl class="staff-lists">
                     <div class="staff-list">
-                        <dt>エグゼクティブ プロデューサー</dt>
-                        <dd>King Guu</dd>
-                    </div>
-                    <div class="staff-list">
-                        <dt>プロデューサー</dt>
-                        <dd><span>亀山暢央</span><span>上原三由樹</span></dd>
+                        <dt>監督</dt>
+                        <dd>安井祥二<button class="open-button button staff-button">＋</button></dd>
                     </div>
                     <div class="staff-list">
                         <dt>脚本</dt>
-                        <dd><span>上原三由樹</span><span>岳谷麻日子</span></dd>
+                        <div class="staff-list-two">
+                            <dd>上原三由樹<button class="open-button button staff-button">＋</button></dd>
+                            <dd>岳谷 麻日子</dd>
+                        </div>
                     </div>
-                    <div class="staff-list -director">
-                        <dt>監督</dt>
-                        <dd>安井祥二</dd>
-                    </div>
-                </dl>
-                <div class="img-box">
-                    <img class="footer-img" src="./assets/img/mv.svg" alt="水の中で深呼吸">
-                    <div class="sns">
-                        <a target="_blank" rel="noopener" href="https://www.instagram.com/mizunonaka_movie"
-                            class="link">
-                            <img src="./assets/img/insta_footer.svg" alt="insta">
-                        </a>
-                        <a target="_blank" rel="noopener" href="https://x.com/mizunonaka2025" class="link">
-                            <img src="./assets/img/x_footer.svg" alt="x">
-                        </a>
-                        <a target="_blank" rel="noopener" href="https://note.com/mizunonaka_movie" class="link">
-                            <img src="./assets/img/note_footer.svg" alt="note">
-                        </a>
-                    </div>
-                    <div class="credit-box">
-                        <dl class="credit-lists">
-                            <div class="credit-list">
-                                <dt>Web Direction:&nbsp;</dt>
-
-                                <div class="credit-list-data">
-                                    <dd><a target="_blank" rel="noopener" href="https://hidetosato.com/"
-                                            class="credit-list">Hideto Sato | HIDETO SATO DESIGN</a></dd>
-                                    <dd>
-                                        <a target="_blank" rel="noopener" href="https://d-o-u.jp/"
-                                            class="credit-list">Ryuichi Umeno | DOU</a>
-                                    </dd>
+                    <div class="gsap-trigger">
+                        <div class="staff-list">
+                            <dt>エグゼクティブプロデューサー</dt>
+                            <dd>King Guu</dd>
+                        </div>
+                        <div class="staff-list -m1">
+                            <dt>プロデューサー</dt>
+                            <div class="staff-list-two">
+                                <dd>亀山暢央</dd>
+                                <dd>上原三由樹</dd>
+                            </div>
+                        </div>
+                        <div class="staff-list -m1">
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>助監督</dt>
+                                        <dd>福田良夫</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>撮影</dt>
+                                        <dd>平野晋吾</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>照明</dt>
+                                        <dd>笠井拓児</dd>
+                                    </dl>
                                 </div>
                             </div>
 
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
-                                <dt>Web Design:&nbsp;</dt>
-                                <dd>Ryuichi Umeno | DOU</dd>
-                            </a>
-                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
-                                <dt>Web Coding:&nbsp;</dt>
-                                <div class="credit-list-data">
-                                    <dd>Ryuichi Umeno | DOU</dd>
-                                    <dd>Daichi Oshima | DOU</dd>
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>録音</dt>
+                                        <dd>安光雪江</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>ヘアメイク</dt>
+                                        <dd>須見有樹子</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>衣装</dt>
+                                        <dd>村上久美子</dd>
+                                    </dl>
                                 </div>
-                            </a>
-                        </dl>
-                        <small class="copy">&copy;2025 <a target="_blank" rel="noopener"
-                                href="https://biyori.jpn.com/">biyori inc.</a>, <a target="_blank" rel="noopener"
-                                href="https://basil4u.com/">basil inc.</a></small>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>制作</dt>
+                                <div class="staff-list-two">
+                                    <dd>塩野谷 明</dd>
+                                    <dd>濱本敏治</dd>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>制作助手</dt>
+                                <div class="staff-list-two">
+                                    <dd>浅井美智恵</dd>
+                                    <dd>高石かれん</dd>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>水中カメラ ドローン撮影 ポスタースチール</dt>
+                                <dd>星野耕作</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>スチール</dt>
+                                <dd>福田ジン</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <div class="staff-column">
+                                    <dl>
+                                        <dt>カラリスト</dt>
+                                        <dd>斎藤一徳</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>編集</dt>
+                                        <div class="staff-list-two">
+                                            <dd>宮脇結花</dd>
+                                            <dd>進巧一</dd>
+                                        </div>
+                                    </dl>
+                                    <dl>
+                                        <dt>整音 MA</dt>
+                                        <dd>吉方淳二</dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>音楽</dt>
+                                <dd>おぎのあきこ</dd>
+                            </div>
+
+                            <div class="m-b">
+                                <dt>題字デザイン 宣伝アートディレクション</dt>
+                                <dd>木下芳夫</dd>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </dl>
+
+                <div class="staff-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="staff-bg"></div>
+                    <div class="staff-modal">
+                        <div class="staff-profile">
+                            <p class="staff-role">監督</p>
+                            <h2 class="staff-name -modal">安井祥二</h2>
+                        </div>
+                        <div class="staff-det" data-lenis-prevent>
+                            <h3 class="staff-profile-title">PROFILE</h3>
+                            <p class="staff-profile-text">
+                                岡山市生まれ
+                                『スイート』で第 30 回キネコ国際映画祭の国際審査員特別賞、PTA 賞のほか、<br>
+                                モントリオール日本映画祭の短編映画最優秀賞を受賞。<br>
+                                木村文乃主演の『紋の光』も現在公開中。<br>
+                                『つれづれ』『からっぽのシュークリーム』など、自身の経験をもとに紡いだ作品では、常に登場人物の内面に寄り添い、観る者の心を静かに揺さぶってきた。<br><br>
+                                本作は、初の商業長編作品となる。
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="staff-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="staff-bg"></div>
+                    <div class="staff-modal">
+                        <div class="staff-profile">
+                            <p class="staff-role">脚本</p>
+                            <h2 class="staff-name -modal">上原三由樹</h2>
+                        </div>
+                        <div class="staff-det" data-lenis-prevent>
+                            <h3 class="staff-profile-title">PROFILE</h3>
+                            <p class="staff-profile-text">
+                                2008年、伊参スタジオ映画祭にてシナリオ大賞を受賞したことを契機に映画制作を開始。以降、監督作として劇場公開作品『心のありか』（2023）、脚本を手がけた『TODOKU
+                                YO-NA』（2024）、『水の中で深呼吸』（2025）、プロデュースを担当した『Yokosuka1953』など、多岐にわたる映画制作に携わる。最新作『水の中で深呼吸』では、企画段階から作品に深く関与し、青春映画という枠にとらわれることなく、多面的に恋心を描き出すことに挑戦した。自身にとっても、新たな表現領域を切り拓く意欲的な作品となっている。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="castOverlay" class="cast-overlay hidden">
+                <button id="castClose" class="close-button button">close</button>
+                <div id="castContent" class="overlay-inner cast-modal-box modal-box">Loading...</div>
+            </div>
+
+
+        </section>
+
+        <section id="comment" class="comment section">
+            <div class="inner js-inner">
+                <video id="footer-video" loop muted autoplay playsinline></video>
+                <div class="title-box js-title">
+                    <h2 class="title">COMMENT</h2>
+                    <p class="subtitle">著名人・観客コメント</p>
+                </div>
+                <div class="comment-lists-container">
+                    <ul class="comment-lists -inline">
+                        <li class="comment-list">
+                            <p class="comment-text">
+                                懐かしく、ほろ苦く、瑞々しい、ド直球の青春映画を真正面から見た感覚！<br>
+                                泥臭い人間関係でありながらも、時々現れる水の上の静寂にほっとしたり、水中の活劇にワクワクしたり。<br>
+                                ひとりの男子に群がる女子の人間関係の描き分けが秀逸で、枠に収まらない石川瑠華を見守りたくなる。<br>
+                                その映画的な息遣いが安井監督の真骨頂なんだと思って感心した。
+                            </p>
+                            <p class="comment-role">映画監督</p>
+                            <h3 class="comment-name">篠原哲雄<span>さん</span></h3>
+                        </li>
+
+                        <li class="comment-list">
+                            <p class="comment-text">
+                                淡々と進む物語にドンドン引き込まれて行きます♪<br>
+                                それは彼女たちのリアリティ在る演技による処が大きいでしょう！<br>
+                                安井祥二監督の手腕ですねー♪<br>
+                                多感なあの頃に呼び戻され　自分もオリンピックパンのベンチで菓子パンを齧った気分になりました♪<br>
+                                切なくて　甘くて
+                            </p>
+                            <!-- <p class="comment-role">映画監督</p> -->
+                            <h3 class="comment-name">片岡鶴太郎<span>さん</span></h3>
+                        </li>
+
+                        <li class="comment-list">
+                            <p class="comment-text">
+                                とても美しく、全ての目線が優しい映画でした。色々な普通がある、ということは特に若い時ほど分からなくて悩むことだと思うので、多くの若い方にぜひ観てほしいです。
+                            </p>
+                            <p class="comment-role">bird and insect CEO</p>
+                            <h3 class="comment-name">shuntaro<span>さん</span></h3>
+                        </li>
+
+                        <li class="comment-list">
+                            <p class="comment-text">
+                                タイトルからも想像できるように、人は時に多くの矛盾を孕んだ行いをする。しかし、そんな矛盾もこの映画は大きく包みこみ、「それでいいんだよ」とそっと背中を押してくれる。</p>
+                            <p class="comment-text">
+                                「初めて握手を交わした時、わたし、この人と結婚する」と私の妻は思ったらしい。結婚後にそれを指摘すると「そんなこと言った覚えはない」と素っ気なくあしらわれた。</p>
+                            <p class="comment-text">
+                                何を言いたいかというと、相手に触れた時の感触は時にどれだけ多くの言葉を紡ぐよりも雄弁なのだ。</p>
+                            <p class="comment-text">
+                                過剰な言葉に頼らず、抑制が効いた演出で俳優たちの芝居を信じ、観る者たちを信じた作り手の想いが詰まっている。</p>
+                            <p class="comment-role">映画監督</p>
+                            <h3 class="comment-name">市井昌秀<span>さん</span></h3>
+                        </li>
+
+
+
+                    </ul>
+
+                    <div class="comment-button">
+                        <button class="open-button button" id="view-more-intro">view more</button>
+                    </div>
+                </div>
+
+
+                <div class="comment-modal-box modal-box js-modal-box">
+                    <button class="close-button button" id="close">close</button>
+                    <div class="comment-bg"></div>
+                    <div class="comment-tabs js-tabs">
+                        <button class="js-tab-comment -famous">著名人コメント</button>
+                        <button class="js-tab-comment -audience">観客コメント</button>
+                    </div>
+
+                    <div class="comment-lists-box">
+                        <div class="comment-lists-wrap -famous scroll-hidden" data-lenis-prevent>
+                            <ul class="comment-lists -modal -famous">
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        懐かしく、ほろ苦く、瑞々しい、ド直球の青春映画を真正面から見た感覚！<br>
+                                        泥臭い人間関係でありながらも、時々現れる水の上の静寂にほっとしたり、水中の活劇にワクワクしたり。<br>
+                                        ひとりの男子に群がる女子の人間関係の描き分けが秀逸で、枠に収まらない石川瑠華を見守りたくなる。<br>
+                                        その映画的な息遣いが安井監督の真骨頂なんだと思って感心した。
+                                    </p>
+                                    <p class="comment-role">映画監督</p>
+                                    <h3 class="comment-name">篠原 哲雄<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        淡々と進む物語にドンドン引き込まれて行きます♪<br>
+                                        それは彼女たちのリアリティ在る演技による処が大きいでしょう！<br>
+                                        安井祥二監督の手腕ですねー♪<br>
+                                        多感なあの頃に呼び戻され　自分もオリンピックパンのベンチで菓子パンを齧った気分になりました♪<br>
+                                        切なくて　甘くて
+                                    </p>
+                                    <!-- <p class="comment-role">映画監督</p> -->
+                                    <h3 class="comment-name">片岡鶴太郎<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        とても美しく、全ての目線が優しい映画でした。色々な普通がある、ということは特に若い時ほど分からなくて悩むことだと思うので、多くの若い方にぜひ観てほしいです。
+                                    </p>
+                                    <p class="comment-role">bird and insect CEO</p>
+                                    <h3 class="comment-name">shuntaro<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        タイトルからも想像できるように、人は時に多くの矛盾を孕んだ行いをする。しかし、そんな矛盾もこの映画は大きく包みこみ、「それでいいんだよ」とそっと背中を押してくれる。</p>
+                                    <p class="comment-text">
+                                        「初めて握手を交わした時、わたし、この人と結婚する」と私の妻は思ったらしい。結婚後にそれを指摘すると「そんなこと言った覚えはない」と素っ気なくあしらわれた。</p>
+                                    <p class="comment-text">
+                                        何を言いたいかというと、相手に触れた時の感触は時にどれだけ多くの言葉を紡ぐよりも雄弁なのだ。</p>
+                                    <p class="comment-text">
+                                        過剰な言葉に頼らず、抑制が効いた演出で俳優たちの芝居を信じ、観る者たちを信じた作り手の想いが詰まっている。</p>
+                                    <p class="comment-role">映画監督</p>
+                                    <h3 class="comment-name">市井昌秀<span>さん</span></h3>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="comment-lists-wrap -audience scroll-hidden" data-lenis-prevent>
+                            <ul class="comment-lists -modal -audience">
+                                <li class="comment-list -modal">
+                                    <p class="comment-text">
+                                        自分のことがわからず葛藤しながらも、周りがいわゆる”当たり前の道”をどんどん進む姿を見て「自分も何か答えを出さないといけない」と焦っていた学生時代を思い出しました。でも、この映画のように、「まだわからない」という状態を受け入れられていれば、もっと気持ちが楽になっていたのかもしれません。主人公が少しずつ歩みを進めるこの映画、そして無理に答えを出そうとしないこの映画がとても心地よかったです。
+                                    </p>
+                                    <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        曖昧なものを曖昧なままで終わらせてくれてありがたかったです
+                                        他のドラマで描かれるような綺麗にも、逆に汚い？悲しい？終わり方も意外と現実ではしないものだと感じています
+                                        ほとんどの現実のケースは、曖昧さと同居しながら長くそれを抱え、やっと小さな答えが出てくる？なんか、それの最初の方を描いてくださっていたように感じました
+                                        無理に答えを出さない映画の方が当事者の気持ちに寄り添っている気がしています。そういう人たちにとっての、ロールモデルのような映画になってくださったら嬉しいなって感じました。。
+                                    </p>
+                                    <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        どこか懐かしさを感じさせる雰囲気で、あおいがこれから10年どんな人と出会ってどう変わっていくかを見てみたい気持ちになりました
+                                    </p>
+                                    <h3 class="comment-name">匿名希望<span>さん</span></h3>
+                                </li>
+
+
+
+
+
+
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        映画のタイトル『水の中で深呼吸』や紹介文にあらわれる“悩み”から、息苦しさ、安らぎ、落ち着くためのひと呼吸のようなものを印象に持ちながら映画を観ました。人を好きになることを登場人物それぞれの立場でいろいろとおもいをめぐらせることができる作品でした。
+                                    </p>
+                                    <h3 class="comment-name">いちげん<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        性的マイノリティである事を、ある種の表現として消費されてしまいがちですが、今作とはそれらとは違い。センシティブな内容ではあるけれど、丁寧に慎重にその在り方を模索する人々を捉え、最終的には誰もが前に一歩踏み出せる、そんな気持ちになれる、映画だったと思います。<br>
+                                        監督の優しさが、滲み出ていたな、と思うシーンとセリフが幾つかありました。きっと、優しくなければ、今作を作ろうとも思えていないだろうし、誰かに寄り添える、寄り添おうと思うことができる、監督なのだろうなと鑑賞後は思ったりもしました。
+                                    </p>
+                                    <h3 class="comment-name">菊池銀河<span>さん</span></h3>
+                                </li>
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        10代の頃のまっすぐな姿と胸の奥にある痛み、それを、懐かしくも改めて感じることが出来ました。LGBTQ+を特別なことではなく自然のことのように描かれていて鑑賞後に瑞々しさだけが残るような素敵な映画でした。普通とは何か。特別ではなく、将来なりたいものがわからない、自分は何者なのか、そういうことと同じように考え、悩む、それでいいのではないかと感じました。
+                                    </p>
+                                    <h3 class="comment-name">上林三夏<span>さん</span></h3>
+                                </li>
+                                <!-- <li class="comment-list">
+                                    <p class="comment-text">
+                                        とても美しく、全ての目線が優しい映画でした。色々な普通がある、ということは特に若い時ほど分からなくて悩むことだと思うので、多くの若い方にぜひ観てほしいです。
+                                    </p>
+                                    <h3 class="comment-name">shuntaro<span>さん</span></h3>
+                                </li> -->
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        なんでしょう。一気に高校時代の感覚が蘇りました。自分は、ここまでどうやって生きてきたのだろうと思うと、ぼんやりしてしまいました。そして、美しく、瑞々しい水達が、私に活力をくれました。泳げないのにプールに入りたいなと思いました。
+                                    </p>
+                                    <h3 class="comment-name">髙木直子<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        作品を観て、主人公の葵に当時の自分が重なり、なんとも言えない懐かしい気持ちになりました。まるで、少し引いた視点から当時の自分を見つめているような感覚でした。<br>
+                                        中高生特有の社会性や世の中の捉え方が、とても繊細かつ見事に表現されていて感動しました。特に、息苦しいはずの水中の方が心が深呼吸できるという表現は秀逸でした。
+                                    </p>
+                                    <h3 class="comment-name">こんぺい<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        日常で存在しているけど言葉にしにくい気持ちがあるなぁと思いました。人を好きになるとか、自分はふつうじゃないのかなとか。そんな気持ちを瑞々しく表現してくれた映画でした。学生時代の悩みや、仲間との時間を思い出しました。
+                                    </p>
+                                    <h3 class="comment-name">mai<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        現社会に置いて考えさせる作品だと思いました。<br>
+                                        とても良かったです。
+                                    </p>
+                                    <h3 class="comment-name">A.K<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        小学生なので、内容的にはよくわからない事が多かったですが、「死んでるの？」「死んでる！」のくだりが面白かったです。
+                                        また、カエルがプールに飛び込むのが可愛かったです。(本人談)<br>
+
+                                        ----------<br>
+
+                                        LGBTQ+を題材にしていると聞いていたのですが、当事者の方々からしたら当たり前の感情だというのがよくわかりました。
+                                        普通に高校生の色々な悩みの中に同棲を思う恋愛感情が入っていて、「人を思う気持ちはみんな一緒なんだな」って事がよく感じ取れました。
+
+                                        主演の石川さんの表情や表現が素晴らしかったです！
+                                        (父親談)
+                                    </p>
+                                    <h3 class="comment-name">石橋俊刀<span>さん</span></h3>
+                                </li>
+
+
+
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        私自身、周りから押し付けられる｢女性らしさ｣に反発して生きています。女性をやめたいと思いながらも、男性になりたい訳でもない、曖昧な状態です。この映画を見て、そんな私を肯定してくれたような気持ちになりました。
+                                    </p>
+                                    <h3 class="comment-name">ゴン<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        新しい時代の青春を描いた映画だと思いました。こんな青春を送っていないけれど、しっかり人物への感情移入できました。「普通」とか「変」とかってなんだろう、と考えさせられました。
+                                    </p>
+                                    <h3 class="comment-name">岩本虎太郎<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        すごく映像が綺麗で、とても惹き込まれました。主人公の自分がよく分からなくなるというのはこの世代、年齢の子はよくある事だと思います。私自身もそうです。<br>
+                                        言葉にしたいことを上手く言葉に出来ないことがあります。<br>
+                                        その気持ちの複雑さが上手く映像になっていてとてもすごいなと思いました。<br>
+                                        水の使い方がとても綺麗でした。
+                                    </p>
+                                    <h3 class="comment-name">焼き鳥<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        思春期の時、母親に恋愛話や学校のことを聞かれるのが嫌で、早食いになったり、スクバが今流行りの形のものを使っていたり、現代の子達が共感し、映画に感情移入出来る細かい部分の作りがいいなと思いました。
+                                    </p>
+                                    <h3 class="comment-name">狩野<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        あおいさんの表情に惹き込まれるものがありました。綺麗な映像と合わせて、横から、上から、正面から、色んな角度で表される感情が素敵でした。<br>
+                                        セリフの無いシーンや、間を多く取っているシーン、逆に直ぐ場面が切り替わるシーンなど緩急があって、<br>
+                                        「今何を考えているんだろう」「これはこんな気持ちになったのかな」「この間に何があったんだろう」<br>
+                                        と自分と対話しながら客観的に見ることが出来ました。特に母との会話後の無言のシーンでは自分の持つ偏見について、考えながら見ることが出来ました。
+                                    </p>
+                                    <h3 class="comment-name">佐々木<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        水中というテーマが幻想的で吸い込まれるような見応えがありました。まだ未熟な高校生の難しい心情が細かく捉えられていて、役者の方々が丁寧に自然に演じていて臨場感に胸を打たれました。
+                                    </p>
+                                    <h3 class="comment-name">かぶ<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        75分とは思えないほどのぎゅっと凝縮した濃い内容で驚きました！<br>
+                                        特に主人公の無鉄砲で真っ直ぐな反面、内気な部分もあって自信もなくて心の中で実は深く考えている所にグッときました。映画の中で何度も出てきた"気になる人""好きな人"をきっかけに自分とはなんなのか、女の子らしいとは、という所まで葛藤する姿、更には親にも友達にも全てをさらけ出す事ができない姿は何か自分にもリンクする部分があって伝わってくるものがありました。<br>
+                                        また、各キャラクターが際立っていて順にフォーカスが当たっていったので、心情が感じられてそれぞれのキャラクターに共感を感じる部分がありました。<br>
+                                        葛藤する姿、苦笑いする姿、周りに言えないこと、同調はしたくないけど何か言える訳でもない姿、全てがリアルでまるで私の高校でもありそうな凄く身近な世界観でした。<br>
+                                        静かな疑問から始まり、激しい葛藤があり最後にはまた人生が続いていく終わりの映画は水のような、プールの波のような綺麗さや静かさが心に残りました。
+                                    </p>
+                                    <h3 class="comment-name">MM<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        感情の揺らぎがとても考えさせられました。面白くてあっという間に終わりました。
+                                    </p>
+                                    <h3 class="comment-name">yf<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        面白かったです。フィルムみたいな色が良かったです。水の中に飛び混んで息を止めている時の映像の表現が綺麗でした。理解することは完全には出来ないだろうけど、自分の思ってる普通とか変とかっていう枠組みをとっぱらって人と接したいと思いました。
+                                    </p>
+                                    <h3 class="comment-name">もん<span>さん</span></h3>
+                                </li>
+                                <li class="comment-list">
+                                    <p class="comment-text">
+                                        面白かったです。<br>
+                                        LGBTQについて考えるというメッセージについては、自分は上手に汲み取る事ができませんでした。それよりも、人間関係や環境によって悩みは複雑に絡み合って、思っているように物事は進まなくて、それでも社会に生きている自分はどうすれば呼吸しやすくなるのか、自分の考え方について考えさせられる作品だった。
+                                    </p>
+                                    <h3 class="comment-name">コウセイ<span>さん</span></h3>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <section id="footer" class="footer section">
+                <div class="inner">
+                    <div class="img-box">
+                        <img class="footer-img" src="./assets/img/mv.svg" alt="水の中で深呼吸">
+                        <div class="sns">
+                            <a target="_blank" rel="noopener" href="https://www.instagram.com/mizunonaka_movie"
+                                class="link">
+                                <img src="./assets/img/insta_footer.svg" alt="insta">
+                            </a>
+                            <a target="_blank" rel="noopener" href="https://x.com/mizunonaka2025" class="link">
+                                <img src="./assets/img/x_footer.svg" alt="x">
+                            </a>
+                            <a target="_blank" rel="noopener" href="https://note.com/mizunonaka_movie" class="link">
+                                <img src="./assets/img/note_footer.svg" alt="note">
+                            </a>
+                        </div>
+                        <div class="credit-box">
+                            <dl class="credit-lists">
+                                <div class="credit-list">
+                                    <dt>Web Direction:&nbsp;</dt>
+
+                                    <div class="credit-list-data">
+                                        <dd><a target="_blank" rel="noopener" href="https://hidetosato.com/"
+                                                class="credit-list">Hideto Sato | HIDETO SATO DESIGN</a></dd>
+                                        <dd>
+                                            <a target="_blank" rel="noopener" href="https://d-o-u.jp/"
+                                                class="credit-list">Ryuichi
+                                                Umeno | DOU</a>
+                                        </dd>
+                                    </div>
+                                </div>
+
+                                <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
+                                    <dt>Web Design:&nbsp;</dt>
+                                    <dd>Ryuichi Umeno | DOU</dd>
+                                </a>
+                                <a target="_blank" rel="noopener" href="https://d-o-u.jp/" class="credit-list m-left">
+                                    <dt>Web Coding:&nbsp;</dt>
+                                    <div class="credit-list-data">
+                                        <dd>Daichi Oshima | DOU</dd>
+                                        <dd>Ryuichi Umeno | DOU</dd>
+                                    </div>
+                                </a>
+                            </dl>
+                            <small class="copy">&copy;2025 <a target="_blank" rel="noopener"
+                                    href="https://biyori.jpn.com/">biyori
+                                    inc.</a>, <a target="_blank" rel="noopener" href="https://basil4u.com/">basil
+                                    inc.</a></small>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v2"></script>
+    <script src="./assets/js/script.js?v16"></script>
 
 </body>
 
