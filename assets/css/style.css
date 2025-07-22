@@ -1,3 +1,13 @@
+:root{
+  /* px 化した 1vh / 1vw */
+  --vh: 1vh;     /* 後で JSで上書きする */
+  --vw: 1vw;     /* 同上 */
+
+  /* 100vh,100vw  */
+  --app-h: 100vh;
+  --app-w: 100vw;
+}
+
 a {
     color: #fff;
 }
@@ -48,7 +58,7 @@ body.noscroll {
 section {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    min-height: var(--app-h);
     height: auto;
     transition: opacity 0.6s ease;
 }
@@ -57,7 +67,7 @@ section {
     overflow: visible;
     width: 100%;
     height: 100%;
-    min-height: 100vh;
+    min-height: var(--app-h);
     padding: 74px 94px;
     transition: top 0.4s ease, left 0.4s ease;
 }
@@ -76,7 +86,7 @@ iframe {
 
 @media screen and (max-width: 1440px) {
     .inner {
-        padding: 74px 6.5vw;
+        padding: 74px calc(var(--vw) * 6.5);
     }
 }
 
@@ -101,7 +111,7 @@ iframe {
 */
 #loading {
     width: 100%;
-    height: 100vh;
+    height: var(--app-h);
     background-color: black;
     position: fixed;
     top: 0;
@@ -198,8 +208,10 @@ progress::-webkit-progress-bar {
     right: 20px;
     width: 86px;
     height: 48px;
-    z-index: 1000;
+    z-index: 1020;
     transition: opacity .6s ease .5s;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .header .button {
@@ -295,14 +307,16 @@ progress::-webkit-progress-bar {
     width: fit-content;
     font-size: 45px;
     font-family: 'ogg';
+    font-weight: 500;
     line-height: 1.1;
     height: 70px;
-    margin-bottom: .4em;
+    margin-bottom: .4em;    
 }
 
 .header .nav-list a {
     height: 100%;
     display: block;
+    color:rgba(255, 255, 255, 0.9);
 }
 
 .header .nav-list span {
@@ -332,8 +346,6 @@ progress::-webkit-progress-bar {
 .header.-active .js-all-text {
     pointer-events: all;
     width: auto;
-    margin: 0;
-    padding: 0;
 }
 
 .header.-active .js-nav-logo {
@@ -352,7 +364,8 @@ progress::-webkit-progress-bar {
 .header.-active~.container .staff-lists,
 .header.-active~.container .comment-lists-container,
 .header.-active~.container .js-tabs,
-.header.-active~.container .js-movie {
+.header.-active~.container .js-movie
+{
     opacity: 0 !important;
     pointer-events: none;
 }
@@ -437,7 +450,7 @@ progress::-webkit-progress-bar {
     .header.-active .blur-layer {
         transform: scale(6);     
         /* width: 150vw;
-        height: 150vh; */
+        height: 150var(--app-h); */
         /* width: 800px; */
         /* top: 150px;
         left: -50%; */
@@ -450,22 +463,21 @@ progress::-webkit-progress-bar {
     .header .nav {
         justify-content: flex-start;
         align-items: flex-start;
-        padding-bottom: 12vw;
+        padding-bottom: calc(var(--vw) * 12);
     }
 
     .nav-sns {
         left: 30px;
         bottom: 15px;
-        gap: 7vw;
+        gap: 40px;
     }
 
     .nav-sns a {
-        width: 5.3vw;
+        width: 27px;
     }
 
-
     .nav picture {
-        width: 27vw;
+        width: calc(var(--vw) * 27);
     }
 
     .header .nav-lists {
@@ -473,14 +485,34 @@ progress::-webkit-progress-bar {
     }
 
     .header .nav-list {
-        font-size: 8.8vw;
-        height: 16vw;
+        font-size: 47px;
+        height: 86px;
         margin-bottom: .2em;
     }
 
 
     .header .nav-list span {
-        font-size: 2.7vw;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .nav-sns {
+        gap: calc(var(--vw) * 7);
+    }
+
+    .nav-sns a {
+        width: calc(var(--vw) * 5.3);
+    }
+
+    .header .nav-list {
+        font-size: calc(var(--vw) * 8.8);
+        height: calc(var(--vw) * 16);
+        margin-bottom: .2em;
+    }
+
+    .header .nav-list span {
+        font-size: calc(var(--vw) * 2.7);
     }
 }
 
@@ -614,7 +646,7 @@ progress::-webkit-progress-bar {
 }
 
 #theater-content .news-lists {
-    max-height: calc(100vh - 276px);
+    max-height: calc(var(--app-h) - 276px);
     overflow-y: auto;
     padding-bottom: 2em;
 }
@@ -650,15 +682,19 @@ progress::-webkit-progress-bar {
     }
 
     .theater-news {
-        margin-top: 3.5em;
+        margin-top: 3em;
         width: 100%;
         padding: 0;
-        transform: translateY(-40%);        
     }
 
     #theater-content .news-lists {
-        max-height: calc(100vh - 250px);
+        max-height: calc(var(--app-h) - 250px);
     }
+
+    #theater-content .news-list:last-child {
+        margin-bottom: 4em;
+    }
+
 
 
     #theater-content .news-title-list,
@@ -680,7 +716,10 @@ progress::-webkit-progress-bar {
 
 /* ------------------------------ movie ------------------------------ */
 #movie-normal,
-#movie-teaser {
+#movie-teaser,
+#movie-making,
+#movie-m30s
+{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -692,7 +731,10 @@ progress::-webkit-progress-bar {
 }
 
 #movie-normal .carousel__button,
-#movie-teaser .carousel__button {
+#movie-teaser .carousel__button,
+#movie-making .carousel__button,
+#movie-m30s .carousel__button
+{
     top: 40px;
     right: 40px;
     border: 1px solid #fff;
@@ -702,14 +744,25 @@ progress::-webkit-progress-bar {
 }
 
 #movie-normal .carousel__button::before,
-#movie-teaser .carousel__button::before {
+#movie-teaser .carousel__button::before, 
+#movie-making .carousel__button::before,
+#movie-m30s .carousel__button::before 
+{
     content: "close";
     font-size: 16px;
 }
 
 #movie-normal .carousel__button svg,
-#movie-teaser .carousel__button svg {
+#movie-teaser .carousel__button svg,
+#movie-making .carousel__button svg,
+#movie-m30s .carousel__button svg 
+{
     display: none;
+}
+
+.movie-img{
+    aspect-ratio: 40/17;
+    object-fit: cover;
 }
 
 /* ------------------------------ movie ------------------------------ */
@@ -743,7 +796,7 @@ progress::-webkit-progress-bar {
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: var(--app-h);
     z-index: 100;
 }
 
@@ -870,6 +923,7 @@ video {
     color: rgba(255, 255, 255, 0.8);
     font-size: 86px;
     font-family: 'ogg';
+    font-weight: 500;
 }
 
 .subtitle {
@@ -985,6 +1039,10 @@ video {
 // ----------------------------------------------------------------- 
 */
 
+.js-title{
+    transition: transform 2s ease;
+}
+
 
 .js-title.-active {
     transform: translateY(calc(-1 * 1px * var(--offset) + 40px));
@@ -1025,8 +1083,8 @@ video {
 }
 
 
-.js-title {
-
+.js-title
+{
     transition: transform 1s ease;
     will-change: transform;
 
@@ -1036,6 +1094,11 @@ video {
         top 0.8s ease-in-out 1s,
         opacity 0.4s ease 0.4s;
 }
+
+.cast .cast-lists{
+    transition: opacity 0.8s ease-in-out;    
+}
+
 
 .js-text {
     transition: opacity 0.8s ease-in-out 1s;
@@ -1047,7 +1110,7 @@ video {
 }
 
 #comment .title.-open {
-    font-size: 44px;
+    font-size: 86px;
 }
 
 .js-all-text {
@@ -1060,6 +1123,11 @@ video {
     line-height: 2;
     pointer-events: none;
     padding-bottom: 80px;
+}
+
+.header .js-all-text {
+    padding: 0;
+    margin: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -1279,7 +1347,7 @@ video {
 
 @media screen and (max-width: 900px) {
     .news .news-lists {
-        max-height: 63vh;
+        max-height: calc(var(--vh) * 63);
         overflow-y: auto;
     }
 
@@ -1350,7 +1418,7 @@ video {
 
 .modal-box {
     width: 100%;
-    height: 100vh;
+    height: var(--app-h);
     position: fixed;
     top: 0;
     left: 0;
@@ -1389,7 +1457,7 @@ video {
     overflow: scroll;
     /* width: 690px; */
     /* height: 500px; */
-    height: calc(100vh - 260px);
+    height: calc(var(--app-h) - 260px);
     width: 100%;
     ;
     margin: 0 auto;
@@ -1450,7 +1518,7 @@ video {
 
     .intro .all-text-box {
         top: 260px;
-        height: calc(100vh - 260px);
+        height: calc(var(--app-h) - 260px);
     }
 
     .intro .title-box {
@@ -1460,9 +1528,9 @@ video {
     }
 
     .intro .blur-layer {
-        width: 150vw;
+        width: calc(var(--vw) * 150);
         left: -30%;
-        top: 18vw;
+        top: calc(var(--vw) * 18);
     }
 
     .intro .desc .text-box .text,
@@ -1546,7 +1614,7 @@ video {
     left: 0;
 
     overflow: scroll;
-    height: calc(100vh - 200px);
+    height: calc(var(--app-h) - 200px);
     width: 100%;
     ;
     margin: 0 auto;
@@ -1620,9 +1688,9 @@ video {
     }
 
     .story .blur-layer {
-        width: 150vw;
+        width: calc(var(--vw) * 150);
         right: -30%;
-        top: 6vw;
+        top: calc(var(--vw) * 6);
     }
 
     .story .close-button {
@@ -1651,24 +1719,33 @@ video {
 */
 
 .trailer video {
-    top: -5vh;
-    left: -5vw;
-    width: 110vw;
-    height: 110vh;
+    top: calc(var(--vh) * -5);
+    left: calc(var(--vw) * -5);
+    width: calc(var(--vw) * 110);
+    height: calc(var(--vh) * 110);
     filter: blur(20px);
     transform: scale(1.1);
     /* ブラーによるはみ出し防止のため拡大 */
     transition: opacity 0.5s ease;
 }
 
-.trailer #normal,
-.trailer #teaser {
+.trailer #normal{
     z-index: -1;
 }
 
+.trailer #teaser {
+    z-index: -2;
+}
+
+
+
 #intro,
 #story,
-#trailer {
+#trailer,
+#comment,
+#cast,
+#staff
+{
     transition: opacity 0.6s ease;
 }
 
@@ -1713,24 +1790,12 @@ video {
     border-radius: 100px;
 }
 
-.trailer .js-tabs::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1px;
-    height: 15px;
-    background: #fff;
-}
-
 .trailer .js-tabs .js-tab-movie {
     font-size: 15px;
     line-height: 2;
     width: 166px;
     height: 62px;
     border: none;
-    border-radius: 100px 0 0 100px;
     background: transparent;
     transition: background .5s;
     color: rgba(255, 255, 255, 0.9);
@@ -1741,11 +1806,13 @@ video {
     border-radius: 100px 0 0 100px;
 }
 
+
+
 .trailer .js-tabs .js-tab-movie.-teaser {
     border-radius: 0 100px 100px 0;
 }
 
-.trailer .js-tabs .js-tab-movieb:hover {
+.trailer .js-tabs .js-tab-movie:hover {
     background: rgba(255, 255, 255, 0.45);
 }
 
@@ -1753,9 +1820,24 @@ video {
     background: rgba(255, 255, 255, 0.45);
 }
 
+.js-tab-movie{
+    position: relative;
+}
+
+.js-tab-movie + .js-tab-movie::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 15px;
+    background: #fff;
+}
+
 @media screen and (max-width: 900px) {
     .trailer video {
-        width: 120vw;
+        width: calc(var(--vw) * 120);
     }
 
 
@@ -1768,8 +1850,8 @@ video {
     }
 
     .trailer .js-tabs .js-tab-movie {
-        font-size: 14px;
-        width: 50%;
+        font-size: 11px;
+        width: 25%;
         height: 48px;
     }
 }
@@ -1788,8 +1870,8 @@ video {
 
 @media screen and (max-width: 900px) {
     .trailer .js-tabs {
-        max-width: 300px;
-        width: 80%;
+        max-width: 360px;
+        width: 93%;
         transform: translate(-50%, 420%);
     }
 }
@@ -2223,7 +2305,7 @@ video {
 */
 .staff {
     height: 100%;
-    margin-bottom: 40vh;
+    margin-bottom: calc(var(--vh) * 40);
 }
 
 .staff-button {
@@ -2295,7 +2377,7 @@ video {
     width: 100%;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 2;
-    margin-top: 80vh;
+    margin-top: calc(var(--vh) * 80);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2561,7 +2643,7 @@ video {
 }
 
 .comment-lists.-inline {
-    margin-top: 25vh;
+    margin-top: calc(var(--vh) * 12);
     max-width: 1100px;
     padding-left: 2em;
     padding-right: 2em;
@@ -2659,7 +2741,7 @@ video {
     left: 50%;
     transform: translateX(-50%);
     overflow-y: scroll;
-    height: calc(100vh - 320px);
+    height: calc(var(--app-h) - 320px);
     padding-top: 40px;
     padding-left: 20px;
     padding-right: 20px;
@@ -2924,7 +3006,7 @@ video {
 
     .comment-lists-wrap {
         padding: 32px 20px;
-        height: calc(100vh - 182px);
+        height: calc(var(--app-h) - 182px);
     }
 
     .comment .js-tabs {
@@ -2980,8 +3062,7 @@ video {
     width: 100%;
     opacity: 0;
     margin-top: 400px;
-    height: 70vh;
-
+    height: calc(var(--vh) * 70);
 }
 
 .footer .sns {
@@ -3069,7 +3150,7 @@ video {
         justify-content: start;
         align-items: start;
         position: absolute;
-        left: 4vw;
+        left: calc(var(--vw) * 4);
         bottom: 20px;
     }
 
@@ -3083,12 +3164,12 @@ video {
     }
 
     .footer .img-box {
-        margin-bottom: 25vh;
+        margin-bottom: calc(var(--vh) * 25);
         gap: 0 0;
     }
 
     .footer .sns {
-        margin-top: 5vh;
+        margin-top: calc(var(--vh) * 5);
     }
 
     .footer .sns img {
@@ -3105,7 +3186,7 @@ video {
         justify-content: start;
         align-items: start;
         position: absolute;
-        left: 4vw;
+        left: calc(var(--vw) * 4);
         bottom: 20px;
     }
 
@@ -3120,12 +3201,12 @@ video {
 
     .footer .img-box {
         margin-top: 200px;
-        margin-bottom: 25vh;
+        margin-bottom: calc(var(--vh) * 25);
         gap: 0 0;
     }
 
     .footer .sns {
-        margin-top: 5vh;
+        margin-top: calc(var(--vh) * 5);
     }
 
     .footer .sns img {

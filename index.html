@@ -12,7 +12,9 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5XTZSMLN');</script>
     <!-- End Google Tag Manager -->
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -22,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="“普通”とは何か、“自分らしさ”とは何か。ひと夏のまぶしさの中で、自分だけの答えを探す物語。" />
     <meta name="keywords"
-        content="水の中で深呼吸, 映画, 青春映画, LGBTQ, 恋と友情, 曖昧な関係, 石川瑠華, 安井祥二, 高校生映画, モントリオール映画祭, 日菜と葵, 日本映画, ひと夏の物語, 自分らしさ, 普通とは, インディーズ映画, ティーンムービー, ミニシアター, ボーダーレスな感情" />
+        content="水の中で深呼吸, 映画, 青春映画, LGBTQ, 恋と友情, 曖昧な関係, 石川瑠華, 安井祥二, 高校生映画, モントリオール映画祭, 日菜と葵, 日本映画, ひと夏の物語, 自分らしさ, 普通とは, ティーンムービー, ボーダーレスな感情" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="映画『水の中で深呼吸』公式サイト" />
     <meta property="og:url" content="https://mizunonaka-movie.jp/">
@@ -37,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v21" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v24" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -204,7 +206,7 @@
                             rel="noopener noreferrer">
                             <p class="prefecture">神奈川県</p>
                             <p class="address">シネマ・ジャック＆ベティ</p>
-                            <p class="date">近日</p>
+                            <p class="date">8/16(土)〜</p>
                         </a>
                     </li>
                     <li class="news-list">
@@ -245,6 +247,14 @@
                             <p class="prefecture">長野県</p>
                             <p class="address">長野相生座・ロキシー</p>
                             <p class="date">9/12(金)〜</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://demachiza.com/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="prefecture">京都府</p>
+                            <p class="address">出町座</p>
+                            <p class="date">8/8(金)〜</p>
                         </a>
                     </li>
                     <li class="news-list">
@@ -297,7 +307,7 @@
                     <!-- スマホ用 -->
                     <source srcset="./assets/img/mv_award_sp.webp" media="(max-width: 768px)">
                     <!-- PC用（デフォルト） -->
-                    <img class="mv-award" src="./assets/img/mv_award_pc.webp" alt="受賞歴">
+                    <img class="mv-award" src="./assets/img/mv_award_pc.webp" alt="デンマーク日本映画祭 最優秀長編映画賞 最優秀観客賞 最優秀撮影賞 最優秀女優賞「石川瑠華」最優秀男優賞「八条院蔵人」| モントリオール日本映画祭 最優秀初長編映画賞 最優秀新進俳優賞「石川瑠華」| 高崎映画祭「まちと映画」作品 | 伊参スタジオ映画祭 招待作品 | 香川レインボー映画祭 コンペティション部門">
                 </picture>
 
                 <video class="mv-video" id="mv-video" muted autoplay playsinline loop></video>
@@ -313,7 +323,7 @@
                     <li class="news-list">
                         <a data-fancybox data-src="#theater-content" target="_blank" rel="noopener" href="#" class="js-theater link">
                             <p class="date">2025.7.11</p>
-                            <p class="text">7/11(金)〜 上映館続々追加！</p>
+                            <p class="text">上映館続々追加！</p>
                         </a>
                     </li>
                     <li class="news-list">
@@ -518,6 +528,8 @@
                 <div class="video-wrapper">
                     <video id="normal" loop muted autoplay playsinline></video>
                     <video id="teaser" loop muted autoplay playsinline></video>
+                    <video id="making" loop muted autoplay playsinline></video>
+                    <video id="m30s" loop muted autoplay playsinline></video>
                 </div>
 
                 <div class="title-box">
@@ -526,7 +538,9 @@
                 </div>
 
                 <div class="js-tabs">
-                    <button class="js-tab-movie -normal">予告編映像</button>
+                    <button class="js-tab-movie -normal">本予告</button>
+                    <button class="js-tab-movie -making">メイキング</button>
+                    <button class="js-tab-movie -30s">30秒予告</button>
                     <button class="js-tab-movie -teaser">ティザー予告</button>
                 </div>
 
@@ -535,7 +549,7 @@
                     <a data-fancybox data-src="#movie-normal" href="#" class="link">
                         <img src="./assets/img/button.svg" alt="" class="movie-button-img">
                     </a>
-                    <div id="movie-normal" style="display: none;">
+                    <div id="movie-normal" class="movie-box" style="display: none;">
                         <iframe src="https://www.youtube.com/embed/rHCRf1jWvYM?si=qsPUx6R6jrrWTcBj"
                              title="YouTube video player" frameborder="0" 
                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -543,8 +557,35 @@
                     </div>
                 </div>
 
+                <div class="js-movie -making">
+                    <img class="movie-img" src="./assets/img/making.webp" alt="">
+                    <a data-fancybox data-src="#movie-making" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>                    
+                    <div id="movie-making"class="movie-box" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/Dxqresyk83I?si=1enrS2-GeCjy02MJ"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="js-movie -30s">
+                    <img class="movie-img"class="movie-box" src="./assets/img/m30s.webp" alt="">
+                    <a data-fancybox data-src="#movie-m30s" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>                    
+                    <div id="movie-m30s" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/mprxnnwbRZY?si=2iRwoQIe0kqec4ju"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+
                 <div class="js-movie -teaser">
-                    <img class="movie-img" src="./assets/img/trailer.webp" alt="">
+                    <img class="movie-img" class="movie-box" src="./assets/img/trailer.webp" alt="">
                     <a data-fancybox data-src="#movie-teaser" href="#" class="link">
                         <img src="./assets/img/button.svg" alt="" class="movie-button-img">
                     </a>                    
@@ -1237,7 +1278,7 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v16"></script>
+    <script src="./assets/js/script.js?v21"></script>
 
 </body>
 

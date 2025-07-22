@@ -1,3 +1,21 @@
+
+function setViewportVars(){
+  const h = window.innerHeight;
+  const w = window.innerWidth;
+  const doc = document.documentElement;
+
+  /* 1vh・1vw を px に換算（×0.01） */
+  doc.style.setProperty('--vh', `${h * 0.01}px`);
+  doc.style.setProperty('--vw', `${w * 0.01}px`);
+
+  /* 100vh・100vw そのもの（＝実表示サイズ）も保持しておくと便利 */
+  doc.style.setProperty('--app-h', `${h}px`);
+  doc.style.setProperty('--app-w', `${w}px`);
+}
+
+setViewportVars();                        /* 初期化 */
+window.addEventListener('resize', setViewportVars);  /* 回転・ツールバー開閉など */
+
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 //ローディング画面切り替え
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -142,7 +160,7 @@ function moveTitleSmoothly(titleElement) {
 }
 
 function resetTitlePosition(titleElement) {
-    titleElement.style.transition = 'transform 2s ease';
+    // titleElement.style.transition = 'transform 2s ease';
     titleElement.style.transform = `translate(0, 0)`; // 元の位置に戻すだけ！
 
     // #comment .js-title の場合、子要素 .title の font-size も戻す
@@ -181,7 +199,7 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc_v4.mp4",
+        pc: "./assets/video/01_pc_v5.mp4",
         sp: "./assets/video/01_sp_v4.mp4",
     },
     "story-video": {
@@ -195,6 +213,14 @@ const videoMap = {
     "teaser": {
         pc: "./assets/video/03_pc_v3.mp4",
         sp: "./assets/video/03_sp_v3.mp4",
+    },
+    "making": {
+        pc: "./assets/video/06_pc.mp4",
+        sp: "./assets/video/06_sp.mp4",
+    },
+    "m30s": {
+        pc: "./assets/video/07_pc.mp4",
+        sp: "./assets/video/07_sp.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
@@ -235,7 +261,7 @@ function setVideoSourceById(id) {
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-//intro,storyのモーダルのアニメーション
+//intro,story,menuのモーダルのアニメーション
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 function setupToggle(sectionSelector, buttonSelector) {
     const section = document.querySelector(sectionSelector);
@@ -257,9 +283,12 @@ function setupToggle(sectionSelector, buttonSelector) {
     const story = document.querySelector('#story');
     const intro = document.querySelector('#intro');
     const header = document.querySelector('#header');
+    const cast = document.querySelector('#cast');
+    const staff = document.querySelector('#staff');
+
 
     // セクション配列
-    const sections = [trailer, story, intro, header];
+    const sections = [trailer, story, intro, header, cast, staff];
     const html = document.documentElement;
 
     const buttons = section.querySelectorAll(buttonSelector);
@@ -549,6 +578,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (img) img.src = '';          // GPU / Heap から即解放
             contentBox.innerHTML = '';
             overlay.classList.add('hidden');
+
+            if (header) {
+                disableScroll();
+                html.classList.remove('noscroll');
+                header.style.opacity = '1';
+                header.style.pointerEvents = 'auto';
+            }
 
             resetTitlePosition?.(castTitle);
 
@@ -912,8 +948,8 @@ gsap.utils.toArray('.cast-list').forEach((el) => {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: el,
-                start: 'bottom bottom',
-                toggleActions: 'play none none none' // 一度だけ
+                start: '20% bottom',
+                toggleActions: 'play reverse play reverse'
             }
         }
     );
@@ -1063,7 +1099,7 @@ window.addEventListener('load', () => {
     });
 
     tl.to('.mv-award', {
-        opacity: 0.8,
+        opacity: 0.9,
         ease: 'power1.out',
         duration: 1,
     }, '<');
@@ -1280,10 +1316,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const normalVideo = document.getElementById('normal');
     const teaserVideo = document.getElementById('teaser');
+    const makingVideo = document.getElementById('making');
+    const m30sVideo = document.getElementById('m30s');
 
     movieButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const type = button.classList.contains('-teaser') ? '-teaser' : '-normal';
+        button.addEventListener('click', () => {            
+            // ボタンの種類を判定
+            let type = '';
+            if (button.classList.contains('-teaser')) {
+                type = '-teaser';
+            } else if (button.classList.contains('-normal')) {
+                type = '-normal';
+            } else if (button.classList.contains('-making')) {
+                type = '-making';
+            } else if (button.classList.contains('-30s')) {
+                type = '-30s';
+            }
+
+            // 現在activeなボタンの動画タイプを取得
+            const activeBtn = document.querySelector('.js-tab-movie.-active');
+            let activeKey = '';
+            if (activeBtn) {
+                if (activeBtn.classList.contains('-teaser')) {
+                    activeKey = '-teaser';
+                } else if (activeBtn.classList.contains('-normal')) {
+                    activeKey = '-normal';
+                } else if (activeBtn.classList.contains('-making')) {
+                    activeKey = '-making';
+                } else if (activeBtn.classList.contains('-30s')) {
+                    activeKey = '-30s';
+                }
+            }
 
             movieButtons.forEach(btn => btn.classList.remove('-active'));
             button.classList.add('-active');
@@ -1298,51 +1361,59 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            if (type === '-normal') {
-                const tl = gsap.timeline();
+            // 動画のfade切り替え（必要に応じて追加）
+            const videos = {
+                '-normal': normalVideo,
+                '-teaser': teaserVideo,
+                '-making': makingVideo,
+                '-30s': m30sVideo
+            };       
 
-                // teaser を fade out
-                tl.to(teaserVideo, {
-                    opacity: 0,
-                    duration: 0.3
-                })
-                    // 完全に消えたら zIndex を下げる
-                    .set(teaserVideo, {
-                        delay: 0.5,
-                        zIndex: -2
-                    })
-                    // normal を上に出す
-                    .set(normalVideo, {
-                        zIndex: -1
-                    })
-                    .to(teaserVideo, {
-                        opacity: 1,
-                        duration: 0
-                    });
 
-            } else {
-                const tl = gsap.timeline();
+            const tl = gsap.timeline();                        
 
-                // normal を fade out
-                tl.to(normalVideo, {
-                    opacity: 0,
-                    duration: 0.3
-                })
-                    // 完全に消えたら zIndex を下げる
-                    .set(normalVideo, {
-                        delay: 0.5,
-                        zIndex: -2
-                    })
-                    // teaser を上に出す
-                    .set(teaserVideo, {
-                        zIndex: -1
-                    })
-                    // teaser を fade in
-                    .to(normalVideo, {
-                        opacity: 1,
-                        duration: 0
-                    });
-            }
+            // activeKeyとkey以外の動画のopacityを0にする
+            Object.keys(videos).forEach(otherKey => {
+                if (otherKey !== activeKey && otherKey !== type && videos[otherKey]) {
+                    tl.set(videos[otherKey], { opacity: 0});
+                }
+            });
+
+            Object.keys(videos).forEach(key => {
+                if (videos[key]) {
+
+                    if(key === type && activeKey !== key) {
+
+                        // 現在activeな動画 を fade out
+                        tl.to(videos[activeKey], {
+                            opacity: 0,
+                            duration: .5
+                        })
+                        // 完全に消えたら zIndex を下げる
+                        .to(videos[activeKey], {
+                            zIndex: -2,
+                            duration: .5
+                        })
+                        // クリックされた動画 を上に出す
+                        .set(videos[key], {
+                            zIndex: -1
+                        })
+                        // クリックされた動画 を fade in
+                        .to(videos[key], {
+                            opacity: 1,
+                            duration: 0
+                        })
+                    }
+                }
+            });
+
+            // key以外の動画のopacityを1にする
+            Object.keys(videos).forEach(otherKey => {
+                if (otherKey !== type && videos[otherKey]) {
+                    tl.set(videos[otherKey], { opacity: 1,zIndex: -2 });
+                }
+            });
+
         });
     });
 
