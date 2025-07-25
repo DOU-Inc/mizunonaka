@@ -1312,6 +1312,8 @@ video {
 
 .news .news-lists {
     width: 100%;
+    /* max-height: calc(var(--vh) * 63);
+    overflow-y: auto; */
 }
 
 .news .news-list {
