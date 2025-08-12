@@ -647,6 +647,7 @@ progress::-webkit-progress-bar {
 
 #theater-content .news-lists {
     max-height: calc(var(--app-h) - 276px);
+    line-height: 1.6;
     overflow-y: auto;
     padding-bottom: 2em;
 }
@@ -1312,8 +1313,8 @@ video {
 
 .news .news-lists {
     width: 100%;
-    /* max-height: calc(var(--vh) * 63);
-    overflow-y: auto; */
+    max-height: calc(var(--vh) * 63);
+    overflow-y: auto;
 }
 
 .news .news-list {
@@ -2698,6 +2699,10 @@ video {
     font-size: 29px;
     font-weight: 400;
     text-align: center;
+}
+
+.comment-name.-small {
+    font-size: 27px;
 }
 
 .comment-name span {
