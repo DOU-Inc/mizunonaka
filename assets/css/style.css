@@ -1,11 +1,13 @@
-:root{
-  /* px 化した 1vh / 1vw */
-  --vh: 1vh;     /* 後で JSで上書きする */
-  --vw: 1vw;     /* 同上 */
+:root {
+    /* px 化した 1vh / 1vw */
+    --vh: 1vh;
+    /* 後で JSで上書きする */
+    --vw: 1vw;
+    /* 同上 */
 
-  /* 100vh,100vw  */
-  --app-h: 100vh;
-  --app-w: 100vw;
+    /* 100vh,100vw  */
+    --app-h: 100vh;
+    --app-w: 100vw;
 }
 
 a {
@@ -310,13 +312,13 @@ progress::-webkit-progress-bar {
     font-weight: 500;
     line-height: 1.1;
     height: 70px;
-    margin-bottom: .4em;    
+    margin-bottom: .4em;
 }
 
 .header .nav-list a {
     height: 100%;
     display: block;
-    color:rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .header .nav-list span {
@@ -333,7 +335,7 @@ progress::-webkit-progress-bar {
 }
 
 .header.-active .blur-layer {
-    transform: translate(-100%,100%) scale(4);
+    transform: translate(-100%, 100%) scale(4);
     /* width: 1200px;
     top: 150px;
     left: -1000px; */
@@ -364,8 +366,7 @@ progress::-webkit-progress-bar {
 .header.-active~.container .staff-lists,
 .header.-active~.container .comment-lists-container,
 .header.-active~.container .js-tabs,
-.header.-active~.container .js-movie
-{
+.header.-active~.container .js-movie {
     opacity: 0 !important;
     pointer-events: none;
 }
@@ -448,7 +449,7 @@ progress::-webkit-progress-bar {
     }
 
     .header.-active .blur-layer {
-        transform: scale(6);     
+        transform: scale(6);
         /* width: 150vw;
         height: 150var(--app-h); */
         /* width: 800px; */
@@ -574,18 +575,17 @@ progress::-webkit-progress-bar {
     padding: 0 50px;
 }
 
-#theater-content{
+#theater-content {
     padding-bottom: 0;
 }
 
 #theater-content .title,
-#theater-content .subtitle
-{
+#theater-content .subtitle {
     color: #fff;
 }
 
 
-#fancybox-1 .fancybox__slide{
+#fancybox-1 .fancybox__slide {
     padding-bottom: 0;
 }
 
@@ -594,7 +594,7 @@ progress::-webkit-progress-bar {
 #theater-content .link {
     color: #fff;
     display: grid;
-    grid-template-columns: 20% 55% 30%;        
+    grid-template-columns: 20% 55% 30%;
     padding: 1.2em 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.8);
     font-weight: 400;
@@ -632,16 +632,16 @@ progress::-webkit-progress-bar {
     backdrop-filter: blur(20px);
 }
 
-.theater-news{
+.theater-news {
     max-width: 1200px;
 }
 
-.news-title-list .prefecture{
+.news-title-list .prefecture {
     padding-right: .5em;
 
 }
 
-.news-title-list .address{
+.news-title-list .address {
     padding-right: .5em;
 }
 
@@ -699,15 +699,15 @@ progress::-webkit-progress-bar {
 
 
     #theater-content .news-title-list,
-    #theater-content .news-list .link
-    {
-        grid-template-columns: 20% 58% 22%;        
+    #theater-content .news-list .link {
+        grid-template-columns: 20% 58% 22%;
     }
 
-    #theater-content .news-title-list .date{
+    #theater-content .news-title-list .date {
         max-width: 6em;
     }
-    #theater-content .news-lists .date{
+
+    #theater-content .news-lists .date {
         max-width: 6em;
     }
 }
@@ -719,8 +719,7 @@ progress::-webkit-progress-bar {
 #movie-normal,
 #movie-teaser,
 #movie-making,
-#movie-m30s
-{
+#movie-m30s {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -734,8 +733,7 @@ progress::-webkit-progress-bar {
 #movie-normal .carousel__button,
 #movie-teaser .carousel__button,
 #movie-making .carousel__button,
-#movie-m30s .carousel__button
-{
+#movie-m30s .carousel__button {
     top: 40px;
     right: 40px;
     border: 1px solid #fff;
@@ -745,10 +743,9 @@ progress::-webkit-progress-bar {
 }
 
 #movie-normal .carousel__button::before,
-#movie-teaser .carousel__button::before, 
+#movie-teaser .carousel__button::before,
 #movie-making .carousel__button::before,
-#movie-m30s .carousel__button::before 
-{
+#movie-m30s .carousel__button::before {
     content: "close";
     font-size: 16px;
 }
@@ -756,12 +753,11 @@ progress::-webkit-progress-bar {
 #movie-normal .carousel__button svg,
 #movie-teaser .carousel__button svg,
 #movie-making .carousel__button svg,
-#movie-m30s .carousel__button svg 
-{
+#movie-m30s .carousel__button svg {
     display: none;
 }
 
-.movie-img{
+.movie-img {
     aspect-ratio: 40/17;
     object-fit: cover;
 }
@@ -1040,7 +1036,7 @@ video {
 // ----------------------------------------------------------------- 
 */
 
-.js-title{
+.js-title {
     transition: transform 2s ease;
 }
 
@@ -1084,8 +1080,7 @@ video {
 }
 
 
-.js-title
-{
+.js-title {
     transition: transform 1s ease;
     will-change: transform;
 
@@ -1096,8 +1091,8 @@ video {
         opacity 0.4s ease 0.4s;
 }
 
-.cast .cast-lists{
-    transition: opacity 0.8s ease-in-out;    
+.cast .cast-lists {
+    transition: opacity 0.8s ease-in-out;
 }
 
 
@@ -1311,17 +1306,37 @@ video {
     gap: 106px;
 }
 
+.news-lists-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
 .news .news-lists {
     width: 100%;
-    max-height: calc(var(--vh) * 63);
-    overflow-y: auto;
 }
 
 .news .news-list {
+    pointer-events: all;
+    opacity: 1;
     width: 690px;
     margin: 0 auto;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     line-height: 1.6;
+    transition: all 0.4s ease 0s;
+}
+
+
+.news .news-list.is-hidden {
+    pointer-events: none;
+    opacity: 0;
+    height: 0;
+    margin: 0;
+}
+
+.news .news-list:nth-child(6) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 
@@ -1334,7 +1349,7 @@ video {
     display: flex;
     padding: .95em 0;
     background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(3px);    
+    backdrop-filter: blur(3px);
     transition: background 0.5s;
 }
 
@@ -1349,10 +1364,6 @@ video {
 
 
 @media screen and (max-width: 900px) {
-    .news .news-lists {
-        max-height: calc(var(--vh) * 63);
-        overflow-y: auto;
-    }
 
     .news .news-list .link {
         font-size: 14px;
@@ -1732,7 +1743,7 @@ video {
     transition: opacity 0.5s ease;
 }
 
-.trailer #normal{
+.trailer #normal {
     z-index: -1;
 }
 
@@ -1747,8 +1758,7 @@ video {
 #trailer,
 #comment,
 #cast,
-#staff
-{
+#staff {
     transition: opacity 0.6s ease;
 }
 
@@ -1823,11 +1833,11 @@ video {
     background: rgba(255, 255, 255, 0.45);
 }
 
-.js-tab-movie{
+.js-tab-movie {
     position: relative;
 }
 
-.js-tab-movie + .js-tab-movie::before{
+.js-tab-movie+.js-tab-movie::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -2133,12 +2143,12 @@ video {
 }
 
 .cast-profile-text {
-    color: rgba(255, 255, 255, 0.85);    
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 4em;
 }
 
 .cast-comment-text {
-    color: rgba(255, 255, 255, 0.85);    
+    color: rgba(255, 255, 255, 0.85);
     padding-bottom: 10em;
 }
 
@@ -2152,15 +2162,15 @@ video {
 
 @media screen and (max-width: 1000px) {
 
-    .cast-profile-inner{
+    .cast-profile-inner {
         width: 455px;
     }
 
-    .cast-modal{
+    .cast-modal {
         gap: 32px;
     }
 
-    .cast-det-inner{
+    .cast-det-inner {
         padding-top: 20px;
     }
 
@@ -2247,7 +2257,7 @@ video {
 
 @media screen and (max-width: 768px) {
 
-    .cast-det-inner{
+    .cast-det-inner {
         padding-top: 20px;
     }
 
@@ -2681,7 +2691,7 @@ video {
 .comment-text {
     font-size: 15px;
     line-height: 2;
-    color: rgba(255, 255, 255, 0.85);    
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .comment-text span {
@@ -2809,7 +2819,7 @@ video {
     max-width: 1100px;
 }
 
-.comment-lists.-modal.-famous .comment-lists{
+.comment-lists.-modal.-famous .comment-lists {
     column-count: 3;
 }
 
@@ -2929,15 +2939,15 @@ video {
     background: rgba(255, 255, 255, 0.45);
 }
 
-.comment-text + .comment-text{
+.comment-text+.comment-text {
     margin-top: 1em;
 }
 
-.comment-text + .comment-name{
+.comment-text+.comment-name {
     margin-top: .8em;
 }
-.comment-text + .comment-role
-{
+
+.comment-text+.comment-role {
     margin-top: 1.8em;
 }
 
@@ -2960,12 +2970,12 @@ video {
         margin-bottom: 48px;
     }
 
-    .comment-text + .comment-text{
+    .comment-text+.comment-text {
         margin-top: .4em;
     }
 
-    .comment-text + .comment-name,
-    .comment-text + .comment-role{
+    .comment-text+.comment-name,
+    .comment-text+.comment-role {
         margin-top: 1em;
     }
 

@@ -1,16 +1,16 @@
 
-function setViewportVars(){
-  const h = window.innerHeight;
-  const w = window.innerWidth;
-  const doc = document.documentElement;
+function setViewportVars() {
+    const h = window.innerHeight;
+    const w = window.innerWidth;
+    const doc = document.documentElement;
 
-  /* 1vh・1vw を px に換算（×0.01） */
-  doc.style.setProperty('--vh', `${h * 0.01}px`);
-  doc.style.setProperty('--vw', `${w * 0.01}px`);
+    /* 1vh・1vw を px に換算（×0.01） */
+    doc.style.setProperty('--vh', `${h * 0.01}px`);
+    doc.style.setProperty('--vw', `${w * 0.01}px`);
 
-  /* 100vh・100vw そのもの（＝実表示サイズ）も保持しておくと便利 */
-  doc.style.setProperty('--app-h', `${h}px`);
-  doc.style.setProperty('--app-w', `${w}px`);
+    /* 100vh・100vw そのもの（＝実表示サイズ）も保持しておくと便利 */
+    doc.style.setProperty('--app-h', `${h}px`);
+    doc.style.setProperty('--app-w', `${w}px`);
 }
 
 setViewportVars();                        /* 初期化 */
@@ -191,6 +191,9 @@ function enableScroll() {
 //         moveTitleSmoothly(titleElement); // 再調整
 //     }
 // });
+
+
+
 
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
@@ -560,12 +563,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="cast-det-inner">
                         <h3 class="cast-profile-title">PROFILE</h3>
                         <p class="cast-profile-text">${data.profile}</p>
-                        ${
-                            data.comment
-                                ? `<h3 class="cast-comment-title">COMMENT</h3>
+                        ${data.comment
+                    ? `<h3 class="cast-comment-title">COMMENT</h3>
                                 <p class="cast-comment-text">${data.comment}</p>`
-                                : ''
-                        }
+                    : ''
+                }
                     </div>
                 </div>
             </div>
@@ -1320,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const m30sVideo = document.getElementById('m30s');
 
     movieButtons.forEach(button => {
-        button.addEventListener('click', () => {            
+        button.addEventListener('click', () => {
             // ボタンの種類を判定
             let type = '';
             if (button.classList.contains('-teaser')) {
@@ -1367,42 +1369,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 '-teaser': teaserVideo,
                 '-making': makingVideo,
                 '-30s': m30sVideo
-            };       
+            };
 
 
-            const tl = gsap.timeline();                        
+            const tl = gsap.timeline();
 
             // activeKeyとkey以外の動画のopacityを0にする
             Object.keys(videos).forEach(otherKey => {
                 if (otherKey !== activeKey && otherKey !== type && videos[otherKey]) {
-                    tl.set(videos[otherKey], { opacity: 0});
+                    tl.set(videos[otherKey], { opacity: 0 });
                 }
             });
 
             Object.keys(videos).forEach(key => {
                 if (videos[key]) {
 
-                    if(key === type && activeKey !== key) {
+                    if (key === type && activeKey !== key) {
 
                         // 現在activeな動画 を fade out
                         tl.to(videos[activeKey], {
                             opacity: 0,
                             duration: .5
                         })
-                        // 完全に消えたら zIndex を下げる
-                        .to(videos[activeKey], {
-                            zIndex: -2,
-                            duration: .5
-                        })
-                        // クリックされた動画 を上に出す
-                        .set(videos[key], {
-                            zIndex: -1
-                        })
-                        // クリックされた動画 を fade in
-                        .to(videos[key], {
-                            opacity: 1,
-                            duration: 0
-                        })
+                            // 完全に消えたら zIndex を下げる
+                            .to(videos[activeKey], {
+                                zIndex: -2,
+                                duration: .5
+                            })
+                            // クリックされた動画 を上に出す
+                            .set(videos[key], {
+                                zIndex: -1
+                            })
+                            // クリックされた動画 を fade in
+                            .to(videos[key], {
+                                opacity: 1,
+                                duration: 0
+                            })
                     }
                 }
             });
@@ -1410,7 +1412,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // key以外の動画のopacityを1にする
             Object.keys(videos).forEach(otherKey => {
                 if (otherKey !== type && videos[otherKey]) {
-                    tl.set(videos[otherKey], { opacity: 1,zIndex: -2 });
+                    tl.set(videos[otherKey], { opacity: 1, zIndex: -2 });
                 }
             });
 
@@ -1486,18 +1488,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Fancyboxのイベントにフックする
 Fancybox.bind("[data-fancybox]", {
-  on: {
-    reveal: () => {
-      lenis.stop(); // Fancybox表示時にスクロール停止
-    },
-    destroy: () => {
-      // body に .noscroll が付いていない場合のみ再開
-      if (!document.body.classList.contains('noscroll')) {        
-          lenis.start(); // Fancybox閉じたらスクロール再開
-      }
+    on: {
+        reveal: () => {
+            lenis.stop(); // Fancybox表示時にスクロール停止
+        },
+        destroy: () => {
+            // body に .noscroll が付いていない場合のみ再開
+            if (!document.body.classList.contains('noscroll')) {
+                lenis.start(); // Fancybox閉じたらスクロール再開
+            }
+        }
     }
-  }
 });
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//ニュースの件数制御
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+const moreNum = 6;
+const newsListItems = document.querySelectorAll('.js-news-list');
+
+// 要素数が6件以上のときだけ、7件目以降に is-hidden を付与
+if (newsListItems.length > moreNum) {
+    newsListItems.forEach((item, index) => {
+        if (index >= moreNum) {
+            item.classList.add('is-hidden');
+        }
+    });
+}
+
+const moreButton = document.querySelector('.js-news-button');
+if (moreButton) {
+    moreButton.addEventListener('click', () => {
+        // 一気に全部表示
+        document.querySelectorAll('.js-news-list.is-hidden')
+            .forEach(item => item.classList.remove('is-hidden'));
+
+        // 6番目の要素の border-bottom を削除（0インデックスなので[5]）
+        const sixthItem = document.querySelectorAll('.js-news-list')[5];
+        if (sixthItem) {
+            sixthItem.style.borderBottom = 'none';
+        }
+
+        // ボタンを非表示
+        moreButton.style.display = 'none';
+
+        // 安全に：Lenis → 次フレームで ScrollTrigger
+        if (window.lenis?.resize) window.lenis.resize();
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+}
+
+// var moreNum = 6;
+// $('.news-list:nth-child(n + ' + (moreNum + 1) + ')').addClass('is-hidden');
+// $('.button').on('click', function () {
+//     $('.news-list.is-hidden').slice(0, moreNum).removeClass('is-hidden');
+//     if ($('.news-list.is-hidden').length == 0) {
+//         $('.button').fadeOut();
+//     }
+// });
 
 
 
