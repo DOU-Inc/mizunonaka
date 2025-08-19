@@ -594,7 +594,7 @@ progress::-webkit-progress-bar {
 #theater-content .link {
     color: #fff;
     display: grid;
-    grid-template-columns: 20% 55% 30%;
+    grid-template-columns: 20% 55% 25%;
     padding: 1.2em 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.8);
     font-weight: 400;
@@ -1362,6 +1362,62 @@ video {
     width: calc(100% - 6em);
 }
 
+.correction {
+    font-size: 15px;
+    text-decoration: underline;
+    margin-top: -20px;
+}
+
+.correction-inner {
+    overflow-y: auto;
+}
+
+#correction {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: #fff;
+    max-height: calc(var(--app-h) - 276px);
+    padding: 0 20px;
+}
+
+#correction h3 {
+    font-size: 20px;
+    line-height: 2;
+}
+
+#correction p {
+    text-align: justify;
+    font-size: 16px;
+    margin-top: 1em;
+    line-height: 2;
+}
+
+#correction p:nth-of-type(1) {
+    margin-bottom: 2em;
+}
+
+#correction .carousel__button {
+    top: -60px;
+    right: 40px;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    padding: 1.5em 4.4em;
+    transition: background 0.3s;
+}
+
+#correction .carousel__button::before {
+    content: "close";
+    font-size: 16px;
+}
+
+#correction .carousel__button svg {
+    display: none;
+}
+
+
 
 @media screen and (max-width: 900px) {
 
@@ -1385,6 +1441,30 @@ video {
 
     .news .news-list .link .text {
         width: 100%;
+    }
+
+    .correction {
+        font-size: 14px;
+    }
+
+    #correction {
+        justify-content: flex-start;
+        max-height: 100%;
+        padding: 100px 20px 0;
+    }
+
+    #correction h3 {
+        font-size: 16px;
+    }
+
+    #correction p {
+        font-size: 11.5px;
+    }
+
+    #correction .carousel__button {
+        top: 20px;
+        right: 20px;
+
     }
 
 }
