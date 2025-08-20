@@ -1087,6 +1087,10 @@ window.addEventListener('load', () => {
         }
     });
 
+    tl.add(() => {
+        document.querySelector(".js-theater")?.classList.add("-disp");
+    }, "+=1.0");
+
     tl.to('.bg-black', {
         duration: 6,
         opacity: 0,
@@ -1111,10 +1115,7 @@ window.addEventListener('load', () => {
         duration: 1,
     }, '<');
 
-    // TODO: 劇場情報はGW後に公開！
-    tl.add(() => {
-        document.querySelector(".js-theater")?.classList.add("-disp");
-    }, "<");
+
 
 
     tl.call(() => {
