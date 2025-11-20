@@ -225,6 +225,10 @@ const videoMap = {
         pc: "./assets/video/07_pc.mp4",
         sp: "./assets/video/07_sp.mp4",
     },
+    "spoiler": {
+        pc: "./assets/video/08_pc.mp4",
+        sp: "./assets/video/08_sp.mp4",
+    },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
         sp: "./assets/video/04_sp_v3.mp4",
@@ -1321,6 +1325,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const teaserVideo = document.getElementById('teaser');
     const makingVideo = document.getElementById('making');
     const m30sVideo = document.getElementById('m30s');
+    const spoilerVideo = document.getElementById('spoiler');
 
     movieButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -1334,6 +1339,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 type = '-making';
             } else if (button.classList.contains('-30s')) {
                 type = '-30s';
+            } else if (button.classList.contains('-spoiler')) {
+                type = '-spoiler';
             }
 
             // 現在activeなボタンの動画タイプを取得
@@ -1348,6 +1355,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     activeKey = '-making';
                 } else if (activeBtn.classList.contains('-30s')) {
                     activeKey = '-30s';
+                } else if (activeBtn.classList.contains('-spoiler')) {
+                    activeKey = '-spoiler';
                 }
             }
 
@@ -1369,7 +1378,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 '-normal': normalVideo,
                 '-teaser': teaserVideo,
                 '-making': makingVideo,
-                '-30s': m30sVideo
+                '-30s': m30sVideo,
+                '-spoiler': spoilerVideo
             };
 
 

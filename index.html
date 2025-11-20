@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v32" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v35" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -189,8 +189,7 @@
                 </ul>
                 <ul class="news-lists" data-lenis-prevent>
                     <li class="news-list">
-                        <a href="https://www.theaterkino.net/" class="link" target="_blank"
-                            rel="noopener noreferrer">
+                        <a href="https://www.theaterkino.net/" class="link" target="_blank" rel="noopener noreferrer">
                             <p class="prefecture">北海道</p>
                             <p class="address">札幌 シアターキノ</p>
                             <p class="date">11/22(土)〜11/28(金)</p>
@@ -385,6 +384,29 @@
                     <ul class="news-lists">
 
                         <li class="news-list js-news-list">
+                            <a target="_blank" rel="noopener" href="https://youtu.be/zCuixtKacXc?si=bSjOwaUOzHIX1zVZ"
+                                class="link">
+                                <p class="date">2025.11.20</p>
+                                <p class="text">メイキング映像(ネタバレ篇)を公開しました</p>
+                            </a>
+                        </li>
+                        <li class="news-list js-news-list">
+                            <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DRLP9gdE9Gb/"
+                                class="link">
+                                <p class="date">2025.11.18</p>
+                                <p class="text">11/22(土) 札幌で舞台挨拶決定！</p>
+                            </a>
+                        </li>
+                        <li class="news-list js-news-list">
+                            <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DRBYqHhk6Tm/"
+                                class="link">
+                                <p class="date">2025.11.14</p>
+                                <p class="text">11/29(土) 栃木で舞台挨拶決定！</p>
+                            </a>
+                        </li>
+
+
+                        <li class="news-list js-news-list">
                             <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DOLWPJHk8lb/"
                                 class="link">
                                 <p class="date">2025.09.04</p>
@@ -404,10 +426,10 @@
                                 <p class="date">2025.08.28</p>
                                 <p class="text">札幌・代官山で新たに上映が決定！</p>
                             </a>
-                        </li>                        
+                        </li>
                         <li class="news-list js-news-list">
-                            <a target="_blank" rel="noopener"
-                                href="https://www.instagram.com/p/DNmf-xPTJq0/" class="link">
+                            <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DNmf-xPTJq0/"
+                                class="link">
                                 <p class="date">2025.08.19</p>
                                 <p class="text">9/6(土) 岡山でも舞台挨拶 & サイン会 開催！</p>
                             </a>
@@ -771,6 +793,7 @@
                     <video id="teaser" loop muted autoplay playsinline></video>
                     <video id="making" loop muted autoplay playsinline></video>
                     <video id="m30s" loop muted autoplay playsinline></video>
+                    <video id="spoiler" loop muted autoplay playsinline></video>
                 </div>
 
                 <div class="title-box">
@@ -781,8 +804,9 @@
                 <div class="js-tabs">
                     <button class="js-tab-movie -normal">本予告</button>
                     <button class="js-tab-movie -making">メイキング</button>
+                    <button class="js-tab-movie -spoiler">ネタバレ篇</button>
                     <button class="js-tab-movie -30s">30秒予告</button>
-                    <button class="js-tab-movie -teaser">ティザー予告</button>
+                    <button class="js-tab-movie -teaser">ティザー</button>
                 </div>
 
                 <div class="js-movie -normal">
@@ -832,6 +856,19 @@
                     </a>
                     <div id="movie-teaser" style="display: none;">
                         <iframe src="https://www.youtube.com/embed/3Ht6XpD2uTI?si=mIYUvCriZ5aiqe6X"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="js-movie -spoiler">
+                    <img class="movie-img" class="movie-box" src="./assets/img/spoiler.webp" alt="">
+                    <a data-fancybox data-src="#movie-spoiler" href="#" class="link">
+                        <img src="./assets/img/button.svg" alt="" class="movie-button-img">
+                    </a>
+                    <div id="movie-spoiler" style="display: none;">
+                        <iframe src="https://www.youtube.com/embed/zCuixtKacXc?si=whAkBuhjokHJOCCI"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -1544,7 +1581,7 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v25"></script>
+    <script src="./assets/js/script.js?v26"></script>
 
 </body>
 

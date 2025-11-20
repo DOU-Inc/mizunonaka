@@ -719,7 +719,8 @@ progress::-webkit-progress-bar {
 #movie-normal,
 #movie-teaser,
 #movie-making,
-#movie-m30s {
+#movie-m30s,
+#movie-spoiler {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -733,7 +734,8 @@ progress::-webkit-progress-bar {
 #movie-normal .carousel__button,
 #movie-teaser .carousel__button,
 #movie-making .carousel__button,
-#movie-m30s .carousel__button {
+#movie-m30s .carousel__button,
+#movie-spoiler .carousel__button {
     top: 40px;
     right: 40px;
     border: 1px solid #fff;
@@ -745,7 +747,8 @@ progress::-webkit-progress-bar {
 #movie-normal .carousel__button::before,
 #movie-teaser .carousel__button::before,
 #movie-making .carousel__button::before,
-#movie-m30s .carousel__button::before {
+#movie-m30s .carousel__button::before,
+#movie-spoiler .carousel__button::before {
     content: "close";
     font-size: 16px;
 }
@@ -753,7 +756,8 @@ progress::-webkit-progress-bar {
 #movie-normal .carousel__button svg,
 #movie-teaser .carousel__button svg,
 #movie-making .carousel__button svg,
-#movie-m30s .carousel__button svg {
+#movie-m30s .carousel__button svg,
+#movie-spoiler .carousel__button svg {
     display: none;
 }
 
@@ -1964,7 +1968,7 @@ video {
 @media screen and (max-width: 900px) {
     .trailer .js-tabs {
         max-width: 360px;
-        width: 93%;
+        width: 95%;
         transform: translate(-50%, 420%);
     }
 }
@@ -3267,6 +3271,7 @@ video {
 
     .footer .sns {
         margin-top: calc(var(--vh) * 5);
+        margin-right: 8px;
     }
 
     .footer .sns img {
