@@ -210,8 +210,8 @@ const videoMap = {
         sp: "./assets/video/02_sp_v4.mp4",
     },
     "normal": {
-        pc: "./assets/video/05_pc.mp4",
-        sp: "./assets/video/05_sp.mp4",
+        pc: "./assets/video/05_pc_v2.mp4",
+        sp: "./assets/video/05_sp_v2.mp4",
     },
     "teaser": {
         pc: "./assets/video/03_pc_v3.mp4",
@@ -226,8 +226,8 @@ const videoMap = {
         sp: "./assets/video/07_sp.mp4",
     },
     "spoiler": {
-        pc: "./assets/video/08_pc.mp4",
-        sp: "./assets/video/08_sp.mp4",
+        pc: "./assets/video/08_pc_v2.mp4",
+        sp: "./assets/video/08_sp_v2.mp4",
     },
     "footer-video": {
         pc: "./assets/video/04_pc_v3.mp4",
