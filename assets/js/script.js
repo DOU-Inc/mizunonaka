@@ -22,6 +22,8 @@ window.addEventListener('resize', setViewportVars);  /* 回転・ツールバー
 window.__loadingStart = performance.now();
 
 document.addEventListener("DOMContentLoaded", () => {
+    scrollPageToTop();
+
     const loader = document.getElementById("loading");
     const progressEl = document.getElementById("progress-bar");
 
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (progress >= 100 && loadingComplete) {
             clearInterval(interval);
 
-            const minDisplayTime = 2000;
+            const minDisplayTime = 500;
             const elapsed = performance.now() - window.__loadingStart;
             const delay = Math.max(minDisplayTime - elapsed, 0);
 
@@ -202,8 +204,8 @@ function enableScroll() {
 
 const videoMap = {
     "mv-video": {
-        pc: "./assets/video/01_pc_v5.mp4",
-        sp: "./assets/video/01_sp_v4.mp4",
+        pc: "./assets/video/01_pc_v6.mp4",
+        sp: "./assets/video/01_sp_v5.mp4",
     },
     "story-video": {
         pc: "./assets/video/02_pc_v4.mp4",
@@ -235,6 +237,101 @@ const videoMap = {
     },
 };
 
+const TRAILER_TAB_TO_VIDEO = {
+    '-normal': 'normal',
+    '-teaser': 'teaser',
+    '-making': 'making',
+    '-30s': 'm30s',
+    '-spoiler': 'spoiler',
+};
+
+let activeBackgroundVideoId = 'mv-video';
+let activeTrailerTab = '-normal';
+let isTrailerSectionActive = false;
+
+function getActiveTrailerVideoId() {
+    return TRAILER_TAB_TO_VIDEO[activeTrailerTab] || 'normal';
+}
+
+function activateBackgroundVideo(id, options = {}) {
+    if (!id || !videoMap[id]) return;
+
+    activeBackgroundVideoId = id;
+
+    Object.keys(videoMap).forEach(vid => {
+        const el = document.getElementById(vid);
+        if (!el || !el.getAttribute('src')) return;
+
+        if (vid === id) {
+            if (options.restart) el.currentTime = 0;
+            el.play().catch((e) => {
+                console.warn(`Autoplay failed for ${vid}:`, e);
+            });
+        } else {
+            el.pause();
+        }
+    });
+}
+
+function playBackgroundVideoIfActive(id) {
+    if (id === activeBackgroundVideoId) {
+        activateBackgroundVideo(id);
+    }
+}
+
+function initBackgroundVideoScrollControl() {
+    ScrollTrigger.create({
+        trigger: '#mv',
+        start: 'top top',
+        endTrigger: '#story',
+        end: 'top center',
+        onEnter: () => activateBackgroundVideo('mv-video'),
+        onEnterBack: () => activateBackgroundVideo('mv-video'),
+    });
+
+    ScrollTrigger.create({
+        trigger: '#story',
+        start: 'top center',
+        endTrigger: '#trailer',
+        end: 'top center',
+        onEnter: () => activateBackgroundVideo('story-video'),
+        onEnterBack: () => activateBackgroundVideo('story-video'),
+        onLeaveBack: () => activateBackgroundVideo('mv-video'),
+    });
+
+    ScrollTrigger.create({
+        trigger: '#trailer',
+        start: 'top center',
+        endTrigger: '#comment',
+        end: 'top center',
+        onEnter: () => {
+            isTrailerSectionActive = true;
+            activateBackgroundVideo(getActiveTrailerVideoId());
+        },
+        onEnterBack: () => {
+            isTrailerSectionActive = true;
+            activateBackgroundVideo(getActiveTrailerVideoId());
+        },
+        onLeave: () => {
+            isTrailerSectionActive = false;
+        },
+        onLeaveBack: () => {
+            isTrailerSectionActive = false;
+            activateBackgroundVideo('story-video');
+        },
+    });
+
+    ScrollTrigger.create({
+        trigger: '#comment',
+        start: 'top center',
+        endTrigger: '#footer',
+        end: 'bottom bottom',
+        onEnter: () => activateBackgroundVideo('footer-video', { restart: true }),
+        onEnterBack: () => activateBackgroundVideo('footer-video'),
+        onLeaveBack: () => activateBackgroundVideo(getActiveTrailerVideoId()),
+    });
+}
+
 function setVideoSourceById(id) {
     const video = document.getElementById(id);
     if (!video) return;
@@ -255,9 +352,7 @@ function setVideoSourceById(id) {
     // 動画を再読み込み・再生
     video.poster = ""; // ← 追加
     video.load();
-    video.play().catch((e) => {
-        console.warn(`Autoplay failed for ${id}:`, e);
-    });
+    playBackgroundVideoIfActive(id);
 }
 
 
@@ -1017,15 +1112,6 @@ gsap.fromTo(
             trigger: "#comment", // アニメーションを発動させるトリガー要素
             start: "top center", // #footer の上端が画面の上端に来たら発動
             toggleActions: "play reverse play reverse",
-            onEnter: () => {    // 潜る映像は頭から再生
-                const video = document.querySelector("#comment video");
-                if (video) {
-                    video.currentTime = 0; // ← ここで先頭に戻す！
-                    video.play().catch((e) => {
-                        console.warn("footer動画の再生失敗", e);
-                    });
-                }
-            },
         },
     }
 );
@@ -1153,6 +1239,16 @@ const lenis = new Lenis({
     lerp: 0.06, // 数値小さいほどぬるぬる（0〜1）
 })
 
+function scrollPageToTop() {
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+}
+
+scrollPageToTop();
+
+window.addEventListener('beforeunload', scrollPageToTop);
+window.addEventListener('pageshow', scrollPageToTop);
+
 function raf(time) {
     lenis.raf(time)
     requestAnimationFrame(raf)
@@ -1205,11 +1301,9 @@ function setVideoWithPoster(id, spPoster, pcPoster) {
     video.setAttribute("loop", "");
     video.setAttribute("src", src);
 
-    // 4. 再読み込み＆再生
+    // 4. 再読み込み（表示中セクションのみ再生）
     video.load();
-    video.play().catch((e) => {
-        console.warn(`Autoplay failed for ${id}:`, e);
-    });
+    playBackgroundVideoIfActive(id);
 }
 
 //   function setResponsivePoster(videoId, spPath, pcPath) {
@@ -1287,6 +1381,9 @@ window.addEventListener("DOMContentLoaded", () => {
         setVideoSourceById("mv-video");
     }
 
+    initBackgroundVideoScrollControl();
+    activateBackgroundVideo('mv-video');
+
     // 他の動画をScrollTriggerでロード
     Object.keys(videoMap).forEach(id => {
         const triggerSelector = `#${id.replace("-video", "")}`;
@@ -1362,6 +1459,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             movieButtons.forEach(btn => btn.classList.remove('-active'));
             button.classList.add('-active');
+            activeTrailerTab = type;
 
             movieBoxes.forEach(box => {
                 if (box.classList.contains(type)) {
@@ -1426,6 +1524,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     tl.set(videos[otherKey], { opacity: 1, zIndex: -2 });
                 }
             });
+
+            if (isTrailerSectionActive) {
+                activateBackgroundVideo(getActiveTrailerVideoId());
+            }
 
         });
     });

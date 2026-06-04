@@ -17,6 +17,7 @@
     <meta http-equiv="Expires" content="0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
+    <script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
     <meta name="format-detection" content="telephone=no" />
     <title>
         映画『水の中で深呼吸』公式サイト
@@ -37,41 +38,23 @@
     <link rel="icon" href="https://mizunonaka-movie.jp/assets/img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100..900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100;200;300;400;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v37" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
-    <!-- gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.35/dist/lenis.umd.min.js"></script>
     <!-- swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
-    <!-- maonry -->
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
     <style>
         @font-face {
             font-family: 'ogg';
             src: url('./assets/fonts/Ogg-Bold-BF646c18fc4aa63.woff') format('woff');
+            font-display: swap;
         }
     </style>
 
-    <script>
-        (function (d) {
-            var config = {
-                kitId: 'kke3zyu',
-                scriptTimeout: 3000,
-                async: true
-            },
-                h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
-        })(document);
-    </script>
     <style>
         html.noscroll-preload,
         body.noscroll-preload {
@@ -344,7 +327,6 @@
         <section id="mv" class="mv section">
             <div class="inner">
                 <!-- lottie -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
                 <div class="load-anime">
                     <div id="lottie-animation"></div>
                     <div class="bg-black"></div>
@@ -398,7 +380,8 @@
                             </a>
                         </li>
                         <li class="news-list js-news-list">
-                            <a target="_blank" rel="noopener" href="https://www.instagram.com/p/DToxVeNE7HC/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ=="
+                            <a target="_blank" rel="noopener"
+                                href="https://www.instagram.com/p/DToxVeNE7HC/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ=="
                                 class="link">
                                 <p class="date">2026.01.26</p>
                                 <p class="text">1月24日、25日　山形で舞台挨拶決定！</p>
@@ -1595,7 +1578,13 @@
             </section>
         </section>
     </div>
-    <script src="./assets/js/script.js?v29"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.35/dist/lenis.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
+    <script defer src="./assets/js/script.js?v33"></script>
 
 </body>
 
