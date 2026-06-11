@@ -191,6 +191,74 @@ progress::-webkit-progress-bar {
     }
 }
 
+/*
+// -----------------------------------------------------------------
+// サウンド選択
+// -----------------------------------------------------------------
+*/
+
+.sound-choice {
+    position: fixed;
+    inset: 0;
+    z-index: 1999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    background-color: #000;
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sound-choice__label {
+    font-size: 14px;
+    letter-spacing: 0.5em;
+    font-weight: 300;
+}
+
+.sound-choice__buttons {
+    display: flex;
+    gap: 24px;
+}
+
+.sound-choice__btn {
+    min-width: 120px;
+    padding: 14px 36px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.sound-choice__btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+@media screen and (max-width: 768px) {
+    .sound-choice {
+        gap: 36px;
+    }
+
+    .sound-choice__buttons {
+        gap: 16px;
+    }
+
+    .sound-choice__btn {
+        min-width: 120px;
+        font-size: 13px;
+    }
+}
+
 
 /*
 // -----------------------------------------------------------------
@@ -911,6 +979,13 @@ video {
     object-fit: cover;
     z-index: -4;
     pointer-events: none;
+}
+
+video.is-poster-fallback {
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .title-box {
@@ -2237,11 +2312,23 @@ video {
 }
 
 
-.cast .close-button {
+.cast .close-button,
+#castClose {
     position: absolute;
     top: 43px;
     right: 60px;
     z-index: 100;
+}
+
+#castClose {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out 1s;
+}
+
+#castClose.is-visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 @media screen and (max-width: 1000px) {
@@ -2382,10 +2469,12 @@ video {
         margin-right: auto;
     }
 
-    .cast .close-button {
+    .cast .close-button,
+    #castClose {
         top: 20px;
         right: 20px;
     }
+
 }
 
 
@@ -3400,4 +3489,151 @@ video {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem
+}
+
+/*
+// -----------------------------------------------------------------
+// BGMサウンドバー
+// -----------------------------------------------------------------
+*/
+
+.sound-bar {
+    position: fixed;
+    z-index: 101;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 20px;
+    color: #fff;
+    opacity: 0;
+    transition: right 0.6s ease 0.5s, background 0.3s ease;
+}
+
+.sound-bar.-header-visible {
+    right: 120px;
+}
+
+.sound-bar.-hidden {
+    visibility: hidden !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+}
+
+
+.sound-bar__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.sound-bar__toggle:focus-visible {
+    outline: 1px solid #fff;
+    outline-offset: 3px;
+}
+
+.sound-bar__icon {
+    display: block;
+}
+
+.sound-bar__icon--pause {
+    display: none;
+}
+
+.sound-bar__toggle.is-playing .sound-bar__icon--play {
+    display: none;
+}
+
+.sound-bar__toggle.is-playing .sound-bar__icon--pause {
+    display: block;
+}
+
+.sound-bar__visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+}
+
+.sound-bar__bar {
+    display: block;
+    width: 3px;
+    height: 6px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.45);
+    transform-origin: bottom center;
+}
+
+.sound-bar.is-playing .sound-bar__bar {
+    animation: soundBarBounce 0.9s ease-in-out infinite;
+}
+
+.sound-bar.is-playing .sound-bar__bar:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.sound-bar.is-playing .sound-bar__bar:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.sound-bar.is-playing .sound-bar__bar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.sound-bar.is-playing .sound-bar__bar:nth-child(4) {
+    animation-delay: 0.45s;
+}
+
+.sound-bar.is-playing .sound-bar__bar:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+@keyframes soundBarBounce {
+
+    0%,
+    100% {
+        height: 6px;
+        opacity: 0.45;
+    }
+
+    50% {
+        height: 18px;
+        opacity: 1;
+    }
+}
+
+.sound-bar__audio {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .sound-bar {
+        top: 10px;
+        right: 60px;
+        gap: 10px;
+        padding: 10px 16px;
+    }
+
+    .sound-bar.-header-visible {
+        right: 60px;
+    }
+
+
+    .sound-bar__toggle {
+        width: 15px;
+        height: 15px;
+    }
+
+    .sound-bar__visualizer {
+        height: 15px;
+    }
 }

@@ -38,9 +38,10 @@
     <link rel="icon" href="https://mizunonaka-movie.jp/assets/img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100;200;300;400;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100;200;300;400;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?v37" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?20260611_v2" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -76,6 +77,15 @@
     <div id="loading">
         <div class="spinner">ずっと一緒に笑っていたい。ただ、それだけ。</div>
         <progress id="progress-bar" max="100" value="0"></progress>
+    </div>
+
+    <!-- サウンド選択 -->
+    <div id="sound-choice" class="sound-choice" aria-hidden="true">
+        <p class="sound-choice__label">SOUND?</p>
+        <div class="sound-choice__buttons">
+            <button type="button" class="sound-choice__btn js-sound-choice-on">ON</button>
+            <button type="button" class="sound-choice__btn js-sound-choice-off">OFF</button>
+        </div>
     </div>
 
     <header id="header" class="header">
@@ -153,6 +163,31 @@
             </div>
         </div>
     </header>
+
+    <!-- BGMサウンドバー -->
+    <div id="sound-bar" class="sound-bar" aria-label="BGMコントロール">
+        <button type="button" class="sound-bar__toggle js-sound-toggle" aria-label="音楽を再生" aria-pressed="false">
+            <svg class="sound-bar__icon sound-bar__icon--play" width="14" height="16" viewBox="0 0 14 16" fill="none"
+                aria-hidden="true">
+                <path
+                    d="M13 7.26795C13.6667 7.65237 13.6667 8.54772 13 8.93205L2 15.2583C1.33333 15.6427 0.5 15.195 0.5 14.4264V1.5736C0.5 0.804974 1.33333 0.357298 2 0.74167L13 7.06795C13.6667 7.45237 13.6667 8.34772 13 8.73205V7.26795Z"
+                    fill="currentColor" />
+            </svg>
+            <svg class="sound-bar__icon sound-bar__icon--pause" width="12" height="14" viewBox="0 0 12 14" fill="none"
+                aria-hidden="true">
+                <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" fill="currentColor" />
+                <rect x="8" y="0.5" width="3.5" height="13" rx="0.5" fill="currentColor" />
+            </svg>
+        </button>
+        <div class="sound-bar__visualizer" aria-hidden="true">
+            <span class="sound-bar__bar"></span>
+            <span class="sound-bar__bar"></span>
+            <span class="sound-bar__bar"></span>
+            <span class="sound-bar__bar"></span>
+            <span class="sound-bar__bar"></span>
+        </div>
+        <audio id="bgm" class="sound-bar__audio" src="./assets/audio/sound.mp3" loop preload="metadata"></audio>
+    </div>
 
     <div class="container" id="container">
 
@@ -1584,7 +1619,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
-    <script defer src="./assets/js/script.js?v33"></script>
+    <script defer src="./assets/js/script.js?20260611"></script>
 
 </body>
 

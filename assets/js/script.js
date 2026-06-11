@@ -50,11 +50,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => {
                 loader.classList.add("loaded");
+
+                const notifyComplete = () => {
+                    window.dispatchEvent(new CustomEvent("loading:complete"));
+                };
+
+                loader.addEventListener("animationend", (e) => {
+                    if (e.animationName === "fadeOut") notifyComplete();
+                }, { once: true });
+
+                setTimeout(notifyComplete, 700);
             }, delay);
         }
     }, 20); // バーの進行速度
 });
 
+
+let soundBarShowTimer = null;
+
+function setSoundBarVisible(isVisible, { fade = false, duration = 0.8 } = {}) {
+    const soundBar = document.getElementById('sound-bar');
+    if (!soundBar) return;
+
+    if (soundBarShowTimer) {
+        clearTimeout(soundBarShowTimer);
+        soundBarShowTimer = null;
+    }
+
+    if (window.gsap) gsap.killTweensOf(soundBar);
+
+    if (!isVisible) {
+        soundBar.classList.add('-hidden');
+        return;
+    }
+
+    soundBar.classList.remove('-hidden');
+
+    if (fade && window.gsap) {
+        gsap.fromTo(soundBar, { autoAlpha: 0 }, {
+            autoAlpha: 0.9,
+            duration,
+            ease: 'power2.out',
+        });
+    }
+}
+
+function isAnyContentModalOpen() {
+    if (document.querySelector('#intro.-active, #story.-active, #header.-active')) return true;
+    if (document.querySelector('#castOverlay:not(.hidden)')) return true;
+    if (document.querySelector('#staff .modal-box.-active, #comment .modal-box.-active')) return true;
+    return false;
+}
+
+function tryShowSoundBarAfterModal() {
+    requestAnimationFrame(() => {
+        if (isAnyContentModalOpen()) return;
+
+        soundBarShowTimer = setTimeout(() => {
+            soundBarShowTimer = null;
+            if (!isAnyContentModalOpen()) {
+                setSoundBarVisible(true, { fade: true });
+            }
+        }, 1000);
+    });
+}
+
+function syncSoundBarWithHeader(isHeaderVisible) {
+    document.getElementById('sound-bar')?.classList.toggle('-header-visible', isHeaderVisible);
+}
+
+document.addEventListener('click', (e) => {
+    const openButton = e.target.closest('.open-button');
+    if (openButton && !openButton.classList.contains('js-news-button')) {
+        setSoundBarVisible(false);
+        return;
+    }
+
+    if (e.target.closest('.close-button, #castClose')) {
+        tryShowSoundBarAfterModal();
+    }
+});
+
+function setHeaderVisible(isVisible) {
+    const header = document.querySelector('#header');
+    if (!header) return;
+
+    header.style.opacity = isVisible ? '1' : '0';
+    header.style.pointerEvents = isVisible ? 'auto' : 'none';
+    syncSoundBarWithHeader(isVisible);
+}
 
 function handleBgSpFadeOnScroll() {
     const mvVideo = document.querySelector('.mv-video'); // MVの動画
@@ -69,8 +153,7 @@ function handleBgSpFadeOnScroll() {
     let isHeaderShown = false;
 
     // ヘッダー初期状態は非表示
-    header.style.opacity = '0';
-    header.style.pointerEvents = 'none';
+    setHeaderVisible(false);
 
 
     window.addEventListener('scroll', () => {
@@ -90,14 +173,15 @@ function handleBgSpFadeOnScroll() {
             isBlurRemoved = false;
         }
 
-        // ② MVを過ぎたらヘッダー表示
-        if (scrollY > mvBottom && !isHeaderShown) {
-            header.style.opacity = '1';
-            header.style.pointerEvents = 'auto';
+        // ② ヘッダー表示（SP: 少しスクロール / PC: MVを過ぎたら）
+        const isMobile = window.innerWidth <= 768;
+        const headerThreshold = isMobile ? 10 : mvBottom;
+
+        if (scrollY > headerThreshold && !isHeaderShown) {
+            setHeaderVisible(true);
             isHeaderShown = true;
-        } else if (scrollY <= mvBottom && isHeaderShown) {
-            header.style.opacity = '0';
-            header.style.pointerEvents = 'none';
+        } else if (scrollY <= headerThreshold && isHeaderShown) {
+            setHeaderVisible(false);
             isHeaderShown = false;
         }
     });
@@ -253,10 +337,47 @@ function getActiveTrailerVideoId() {
     return TRAILER_TAB_TO_VIDEO[activeTrailerTab] || 'normal';
 }
 
+function showPosterLayer(video, poster) {
+    if (!video || !poster) return;
+
+    video.setAttribute("poster", poster);
+    video.classList.add("is-poster-fallback");
+    video.style.backgroundImage = `url("${poster}")`;
+}
+
+function registerVideoPoster(id, spPoster, pcPoster) {
+    const video = document.getElementById(id);
+    if (!video || !videoMap[id]) return;
+
+    video.dataset.spPoster = spPoster;
+    video.dataset.pcPoster = pcPoster;
+    bindVideoPosterFallback(video);
+    showPosterLayer(video, isMobileTouchDevice() ? spPoster : pcPoster);
+}
+
+function ensureVideoLoaded(id) {
+    const video = document.getElementById(id);
+    if (!video || !videoMap[id] || video.getAttribute("src")) return;
+
+    const spPoster = video.dataset.spPoster;
+    const pcPoster = video.dataset.pcPoster;
+    if (spPoster && pcPoster) {
+        setVideoWithPoster(id, spPoster, pcPoster);
+        return;
+    }
+
+    setVideoWithPoster(
+        id,
+        videoMap[id].sp.replace(".mp4", "_poster.webp"),
+        videoMap[id].pc.replace(".mp4", "_poster.webp")
+    );
+}
+
 function activateBackgroundVideo(id, options = {}) {
     if (!id || !videoMap[id]) return;
 
     activeBackgroundVideoId = id;
+    ensureVideoLoaded(id);
 
     Object.keys(videoMap).forEach(vid => {
         const el = document.getElementById(vid);
@@ -332,6 +453,49 @@ function initBackgroundVideoScrollControl() {
     });
 }
 
+function getVideoPosterPath(video) {
+    if (!video) return "";
+    const isMobile = isMobileTouchDevice();
+    const fromDataset = isMobile ? video.dataset.spPoster : video.dataset.pcPoster;
+    return fromDataset || video.getAttribute("poster") || "";
+}
+
+function applyPosterFallback(video, poster) {
+    if (!video || !poster) return;
+
+    video.pause();
+    video.removeAttribute("src");
+    video.setAttribute("poster", poster);
+    video.classList.add("is-poster-fallback");
+    video.style.backgroundImage = `url("${poster}")`;
+    video.load();
+}
+
+function clearPosterFallback(video) {
+    if (!video) return;
+
+    video.classList.remove("is-poster-fallback");
+    video.style.backgroundImage = "";
+}
+
+function bindVideoPosterFallback(video) {
+    if (!video || video.dataset.posterFallbackBound) return;
+    video.dataset.posterFallbackBound = "1";
+
+    video.addEventListener("error", () => {
+        applyPosterFallback(video, getVideoPosterPath(video));
+    });
+
+    video.addEventListener("playing", () => {
+        if (video.id !== activeBackgroundVideoId) {
+            video.pause();
+            return;
+        }
+        clearPosterFallback(video);
+        video.removeAttribute("poster");
+    });
+}
+
 function setVideoSourceById(id) {
     const video = document.getElementById(id);
     if (!video) return;
@@ -349,8 +513,7 @@ function setVideoSourceById(id) {
     video.setAttribute("loop", "");
     video.setAttribute("src", src);
 
-    // 動画を再読み込み・再生
-    video.poster = ""; // ← 追加
+    // 動画を再読み込み・再生（poster は再生開始まで維持）
     video.load();
     playBackgroundVideoIfActive(id);
 }
@@ -604,49 +767,89 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentBox = document.getElementById('castContent');
         const closeBtn = document.getElementById('castClose');
         const cache = new Map();
+        let isCastAnimating = false;
+
+        const openCastOverlay = () => {
+            overlay.classList.remove('hidden');
+            closeBtn.classList.remove('is-visible');
+            void closeBtn.offsetWidth;
+            closeBtn.classList.add('is-visible');
+
+            if (!window.gsap) return;
+
+            gsap.killTweensOf([overlay, contentBox]);
+            gsap.fromTo(overlay, { autoAlpha: 0 }, {
+                autoAlpha: 1,
+                duration: 0.5,
+                delay: 1,
+                ease: 'ease-in-out',
+            });
+        };
+
+        const fadeInCastContent = () => {
+            if (!window.gsap) return;
+
+            gsap.fromTo(contentBox, { autoAlpha: 0 }, {
+                autoAlpha: 1,
+                duration: 0.5,
+                delay: 1,
+                ease: 'ease-in-out',
+            });
+        };
+
+        const closeCastOverlay = (onComplete) => {
+            closeBtn.classList.remove('is-visible');
+
+            const finish = () => {
+                overlay.classList.add('hidden');
+                closeBtn.classList.remove('is-visible');
+                if (window.gsap) {
+                    gsap.set(overlay, { autoAlpha: 1 });
+                    gsap.set(contentBox, { autoAlpha: 1 });
+                }
+                isCastAnimating = false;
+                onComplete?.();
+            };
+
+            if (!window.gsap) {
+                finish();
+                return;
+            }
+
+            gsap.killTweensOf([overlay, contentBox]);
+            gsap.to(overlay, {
+                autoAlpha: 0,
+                duration: 0.6,
+                ease: 'power2.in',
+                onComplete: finish,
+            });
+        };
 
         // 1) リストクリック
         listWrap.addEventListener('click', async (e) => {
             const li = e.target.closest('.cast-list');
-            if (!li) return;
-
-
-            // 表示切り替えなどの共通処理
-            // if (castLists) {
-            //     castLists.style.transition = 'opacity 0.5s ease';
-            //     castLists.style.opacity = '0';
-            //     castLists.style.pointerEvents = 'none';
-            // }
+            if (!li || isCastAnimating) return;
 
             if (header) {
                 disableScroll();
                 html.classList.add('noscroll');
-                header.style.opacity = '0';
-                header.style.pointerEvents = 'none';
+                setHeaderVisible(false);
             }
-
-            // if (staff) {
-            //     staff.style.opacity = '0';
-            //     staff.style.pointerEvents = 'none';
-            // }
 
             moveTitleSmoothly?.(castTitle);
 
-            // targetModal.classList.add('-active');
-
-
-            const id = li.dataset.target;            // "ishikawa"
+            const id = li.dataset.target;
             contentBox.innerHTML = 'Loading…';
-            overlay.classList.remove('hidden');
+            if (window.gsap) gsap.set(contentBox, { autoAlpha: 1, y: 0 });
 
-            // 2) JSON 取得（キャッシュあり）
+            openCastOverlay();
+
             let data = cache.get(id);
             if (!data) {
                 data = await fetch(`./assets/json/${id}.json`).then(r => r.json());
                 cache.set(id, data);
             }
 
-            // 3) HTML を流し込む
             contentBox.innerHTML = `
             <img class="cast-bg-img" src="${data.photo}" alt="${data.name}">
             <div class="cast-bg"></div>
@@ -671,27 +874,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+
+            fadeInCastContent();
         });
 
         // 4) 閉じる & メモリ解放
         closeBtn.addEventListener('click', () => {
-            const img = contentBox.querySelector('img');
-            if (img) img.src = '';          // GPU / Heap から即解放
-            contentBox.innerHTML = '';
-            overlay.classList.add('hidden');
+            if (isCastAnimating) return;
+            isCastAnimating = true;
 
-            if (header) {
-                disableScroll();
+            closeCastOverlay(() => {
+                const img = contentBox.querySelector('img');
+                if (img) img.src = '';
+                contentBox.innerHTML = '';
+
+                if (header) {
+                    html.classList.remove('noscroll');
+                    setHeaderVisible(true);
+                }
+
+                resetTitlePosition?.(castTitle);
+                enableScroll();
                 html.classList.remove('noscroll');
-                header.style.opacity = '1';
-                header.style.pointerEvents = 'auto';
-            }
-
-            resetTitlePosition?.(castTitle);
-
-            enableScroll();
-            html.classList.remove('noscroll');
-
+            });
         });
     })();
 
@@ -709,8 +914,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (header) {
                 disableScroll();
                 html.classList.add('noscroll');
-                header.style.opacity = '0';
-                header.style.pointerEvents = 'none';
+                setHeaderVisible(false);
             }
 
             if (cast) {
@@ -747,8 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
             html.classList.remove('noscroll');
 
             if (header) {
-                header.style.opacity = '1';
-                header.style.pointerEvents = 'auto';
+                setHeaderVisible(true);
             }
 
             if (cast) {
@@ -776,8 +979,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (header) {
                 disableScroll();
                 html.classList.add('noscroll');
-                header.style.opacity = '0';
-                header.style.pointerEvents = 'none';
+                setHeaderVisible(false);
             }
 
             moveTitleSmoothly?.(commentTitle);
@@ -845,8 +1047,7 @@ document.addEventListener('DOMContentLoaded', () => {
             html.classList.remove('noscroll');
 
             if (header) {
-                header.style.opacity = '1';
-                header.style.pointerEvents = 'auto';
+                setHeaderVisible(true);
             }
         });
     });
@@ -1154,18 +1355,15 @@ gsap.fromTo(
 
 
 // MVのアニメーション
-window.addEventListener('load', () => {
-    lenis.stop();
-    const isMobile = window.innerWidth <= 768;
-    const tl = gsap.timeline();
+window.__bgmEnabled = false;
 
-    gsap.set(".mv-sns", {
-        autoAlpha: 0,
-    });
+function startMvAnimation() {
+    const tl = gsap.timeline();
 
     tl.to('#lottie-animation', {
         opacity: 1,
-        delay: 1,
+        duration: 0.8,
+        ease: 'power2.out',
         onComplete: () => {
             lottie.loadAnimation({
                 container: document.getElementById('lottie-animation'),
@@ -1176,6 +1374,12 @@ window.addEventListener('load', () => {
             });
         }
     });
+
+    if (window.__bgmEnabled) {
+        tl.call(() => {
+            window.playBgm?.();
+        }, null, '<');
+    }
 
     tl.add(() => {
         document.querySelector(".js-theater")?.classList.add("-disp");
@@ -1200,21 +1404,80 @@ window.addEventListener('load', () => {
         duration: 1,
     }, '<');
 
-    tl.to(".mv-sns", {
+    tl.to(".mv-sns, .sound-bar", {
         autoAlpha: .9,
         duration: 1,
     }, '<');
 
-
-
-
     tl.call(() => {
         document.body.classList.remove("noscroll-preload");
         document.documentElement.classList.remove("noscroll-preload");
-        lenis.start(); // ← ここでlenisも解放！
+        lenis.start();
+    });
+}
+
+function showSoundChoice() {
+    const choice = document.getElementById('sound-choice');
+    if (!choice) return;
+
+    choice.setAttribute('aria-hidden', 'false');
+    choice.style.pointerEvents = 'auto';
+
+    gsap.fromTo(choice, {
+        autoAlpha: 0,
+    }, {
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: 'power2.out',
     });
 
-});
+    const handleChoice = (enableSound) => {
+        window.__bgmEnabled = enableSound;
+
+        gsap.to(choice, {
+            autoAlpha: 0,
+            duration: 0.6,
+            ease: 'power2.in',
+            onComplete: () => {
+                choice.setAttribute('aria-hidden', 'true');
+                choice.style.pointerEvents = 'none';
+                startMvAnimation();
+            }
+        });
+    };
+
+    choice.querySelector('.js-sound-choice-on')?.addEventListener('click', () => handleChoice(true), { once: true });
+    choice.querySelector('.js-sound-choice-off')?.addEventListener('click', () => handleChoice(false), { once: true });
+}
+
+(function initIntroSequence() {
+    let pageLoaded = false;
+    let loadingDone = false;
+    let soundChoiceShown = false;
+
+    const tryShowSoundChoice = () => {
+        if (pageLoaded && loadingDone && !soundChoiceShown) {
+            soundChoiceShown = true;
+            showSoundChoice();
+        }
+    };
+
+    window.addEventListener('load', () => {
+        pageLoaded = true;
+        lenis.stop();
+
+        gsap.set('#lottie-animation', { opacity: 0 });
+        gsap.set('.mv-sns, .sound-bar', { autoAlpha: 0 });
+        gsap.set('#sound-choice', { autoAlpha: 0, visibility: 'visible' });
+
+        tryShowSoundChoice();
+    });
+
+    window.addEventListener('loading:complete', () => {
+        loadingDone = true;
+        tryShowSoundChoice();
+    });
+})();
 
 gsap.to(
     ".sns-box", // アニメーションしたい要素
@@ -1288,8 +1551,12 @@ function setVideoWithPoster(id, spPoster, pcPoster) {
     const src = isMobile ? videoMap[id].sp : videoMap[id].pc;
     const poster = isMobile ? spPoster : pcPoster;
 
-    // 1. まずposterをセット（ここ超重要！）
-    video.setAttribute("poster", poster);
+    video.dataset.spPoster = spPoster;
+    video.dataset.pcPoster = pcPoster;
+    bindVideoPosterFallback(video);
+
+    // 1. poster を表示（再生開始まで CSS でも維持）
+    showPosterLayer(video, poster);
 
     // 2. すでに同じsrcならスキップ
     if (video.getAttribute("src") === src) return;
@@ -1348,23 +1615,18 @@ function isInstagramBrowser() {
 window.addEventListener("DOMContentLoaded", () => {
     const isInsta = isInstagramBrowser();
 
-    // poster切り替え
+    // poster切り替え（mv のみ即時読み込み、他は poster のみ先出し）
     setVideoWithPoster(
         "mv-video",
         "./assets/img/01_sp_poster.webp",
         "./assets/img/01_pc_poster.webp"
     );
-    setVideoWithPoster(
+    registerVideoPoster(
         "story-video",
         "./assets/img/02_sp_poster_v2.webp",
         "./assets/img/02_pc_poster.webp"
     );
-    setVideoWithPoster(
-        "trailer-video",
-        "./assets/img/03_sp_poster.webp",
-        "./assets/img/03_pc_poster.webp"
-    );
-    setVideoWithPoster(
+    registerVideoPoster(
         "footer-video",
         "./assets/img/04_sp_poster_v2.webp",
         "./assets/img/04_pc_poster.webp"
@@ -1395,11 +1657,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 const video = document.getElementById(id);
                 if (video) {
                     video.setAttribute("preload", "none"); // プリロードを無効化
-                    setVideoWithPoster(
-                        id,
-                        videoMap[id].sp.replace(".mp4", "_poster.webp"),
-                        videoMap[id].pc.replace(".mp4", "_poster.webp")
-                    );
+                    const spPoster = video.dataset.spPoster || videoMap[id].sp.replace(".mp4", "_poster.webp");
+                    const pcPoster = video.dataset.pcPoster || videoMap[id].pc.replace(".mp4", "_poster.webp");
+                    setVideoWithPoster(id, spPoster, pcPoster);
                 }
             },
         });
@@ -1662,5 +1922,46 @@ if (moreButton) {
 //     }
 // });
 
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// BGMサウンドバー
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+(function initSoundBar() {
+    const soundBar = document.getElementById('sound-bar');
+    const toggleBtn = document.querySelector('.js-sound-toggle');
+    const audio = document.getElementById('bgm');
+    if (!soundBar || !toggleBtn || !audio) return;
+
+    const updateUI = (isPlaying) => {
+        soundBar.classList.toggle('is-playing', isPlaying);
+        toggleBtn.classList.toggle('is-playing', isPlaying);
+        toggleBtn.setAttribute('aria-pressed', String(isPlaying));
+        toggleBtn.setAttribute('aria-label', isPlaying ? '音楽を停止' : '音楽を再生');
+    };
+
+    toggleBtn.addEventListener('click', async () => {
+        try {
+            if (audio.paused) {
+                await audio.play();
+            } else {
+                audio.pause();
+            }
+        } catch (err) {
+            console.warn('BGM playback failed:', err);
+        }
+    });
+
+    audio.addEventListener('play', () => updateUI(true));
+    audio.addEventListener('pause', () => updateUI(false));
+
+    window.playBgm = async () => {
+        try {
+            await audio.play();
+        } catch (err) {
+            console.warn('BGM playback failed:', err);
+        }
+    };
+
+    updateUI(false);
+})();
 
 
