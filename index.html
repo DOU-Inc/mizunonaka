@@ -41,7 +41,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Lora&family=Noto+Sans+JP:wght@100;200;300;400;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?20260611_v2" media="all" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?20260624" media="all" />
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" media="all" />
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
@@ -191,7 +191,115 @@
 
     <div class="container" id="container">
 
-        <a data-fancybox data-src="#theater-content" href="#" class="theater js-theater">劇場情報</a>
+        <div class="info-tabs js-info-tabs">
+            <a data-fancybox data-src="#streaming-content" href="#" class="streaming js-streaming">配信情報</a>
+            <a data-fancybox data-src="#theater-content" href="#" class="theater js-theater">劇場情報</a>
+        </div>
+        <div id="streaming-content" style="display: none;">
+            <div class="title-box">
+                <h2 class="title -streaming">STREAMING</h2>
+                <p class="subtitle">配信情報</p>
+            </div>
+            <div class="streaming-news">
+                <ul class="news-lists" data-lenis-prevent>
+                    <li class="news-title-list">
+                        <p class="date">2026/6/24〜</p>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.amazon.co.jp/gp/video/detail/B0H16DCPRL?pageTypeId=B0H16999V9&qid=1782259136554&pageTypeIdSource=ASIN&ref_=atv_sr_fle_c_Tn74RA_1_1_1&sr=1-1" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="service">Amazon Prime Video</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://tv.apple.com/jp" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">Apple TV</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://tv.dmm.com/vod/detail/?season=g5ec2nqzwwjzbzxbus7tz84d4" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">DMM TV</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://fod.fujitv.co.jp/title/d4t4/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">FOD</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://tv.google/intl/ja_jp/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">Google TV</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.hulu.jp/store/breathing-underwater" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">Hulu</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.jcom.co.jp/guide/starter/tv/stream/" class="link" target="_blank"
+                            rel="noopener noreferrer">
+                            <p class="service">J:COM STREAM</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://lemino.docomo.ne.jp/search/word/%E6%B0%B4%E3%81%AE%E4%B8%AD%E3%81%A7%E6%B7%B1%E5%91%BC%E5%90%B8" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">Lemino</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://lp.milplus.jp/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">milplus</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://music-book.jp/video/title/174YVR" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">music.jp</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.telasa.jp/videos/270685" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">TELASA</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://video.unext.jp/freeword?query=%E6%B0%B4%E3%81%AE%E4%B8%AD%E3%81%A7%E6%B7%B1%E5%91%BC%E5%90%B8&td=SID0303493" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">U-NEXT</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.youtube.com/watch?v=xabJMlqhpWs" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">YouTube</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://ktv-smart.jp/store/series.php?id=174YVR" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">カンテレドーガ</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.videomarket.jp/title/174YVR" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">ビデオマーケット</p>
+                        </a>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://www.videx.jp/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">ビデックス</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="news-lists" data-lenis-prevent>
+                    <li class="news-title-list">
+                        <p class="date">2026/6/27〜</p>
+                    </li>
+                    <li class="news-list">
+                        <a href="https://mfplus.jp/" class="link" target="_blank" rel="noopener noreferrer">
+                            <p class="service">ムービーフルPlus</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div id="theater-content" style="display: none;">
             <div class="title-box">
                 <h2 class="title">THEATER</h2>
@@ -202,7 +310,7 @@
                     <li class="news-title-list">
                         <p class="prefecture">都道府県</p>
                         <p class="address">劇場</p>
-                        <p class="date">上映期間</p>
+                        <p class="date">上映期間(2025年)</p>
                     </li>
                 </ul>
                 <ul class="news-lists" data-lenis-prevent>
@@ -406,6 +514,14 @@
                 <h2 class="title">NEWS</h2>
                 <div class="news-lists-inner">
                     <ul class="news-lists">
+
+                        <li class="news-list js-news-list">
+                            <a data-fancybox data-src="#streaming-content" target="_blank" rel="noopener" href="#"
+                                class="link">
+                                <p class="date">2026.06.24</p>
+                                <p class="text">本日より各社配信サービスにて配信開始！</p>
+                            </a>
+                        </li>
 
                         <li class="news-list js-news-list">
                             <a target="_blank" rel="noopener" href="https://nakachika.official.ec/items/143345397"
@@ -1619,7 +1735,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.2/lottie.min.js"></script>
-    <script defer src="./assets/js/script.js?20260611"></script>
+    <script defer src="./assets/js/script.js?20260624"></script>
 
 </body>
 

@@ -1382,7 +1382,7 @@ function startMvAnimation() {
     }
 
     tl.add(() => {
-        document.querySelector(".js-theater")?.classList.add("-disp");
+        document.querySelector(".js-info-tabs")?.classList.add("-disp");
     }, "+=1.0");
 
     tl.to('.bg-black', {
@@ -1860,12 +1860,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Fancyboxのイベントにフックする
+const infoTabs = document.querySelector('.js-info-tabs');
+
+function getInfoTabType(slide) {
+    const src = slide?.src;
+    const srcStr = typeof src === 'string' ? src : src?.id ? `#${src.id}` : '';
+
+    if (srcStr.includes('theater-content') || slide?.triggerEl?.classList.contains('js-theater')) {
+        return 'theater';
+    }
+    if (srcStr.includes('streaming-content') || slide?.triggerEl?.classList.contains('js-streaming')) {
+        return 'streaming';
+    }
+    return null;
+}
+
+function updateInfoTabsState(slide) {
+    if (!infoTabs) return;
+
+    const type = getInfoTabType(slide);
+    infoTabs.classList.remove('-is-open', '-theater-open', '-streaming-open');
+
+    if (!type) return;
+
+    infoTabs.classList.add('-is-open', `-${type}-open`);
+}
+
+function resetInfoTabsState() {
+    infoTabs?.classList.remove('-is-open', '-theater-open', '-streaming-open');
+}
+
 Fancybox.bind("[data-fancybox]", {
     on: {
-        reveal: () => {
+        reveal: (fancybox, slide) => {
             lenis.stop(); // Fancybox表示時にスクロール停止
+            updateInfoTabsState(slide);
         },
         destroy: () => {
+            resetInfoTabsState();
             // body に .noscroll が付いていない場合のみ再開
             if (!document.body.classList.contains('noscroll')) {
                 lenis.start(); // Fancybox閉じたらスクロール再開
